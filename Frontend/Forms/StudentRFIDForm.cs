@@ -31,6 +31,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
                 e.Handled = true;
             }
         }
+
+        private void StudentRfidCloseBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 
 }

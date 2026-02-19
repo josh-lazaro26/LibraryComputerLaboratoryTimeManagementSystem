@@ -50,31 +50,40 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
         public async Task<bool> AuthenticateRfid(string rfid)
         {
-            var payloadObj = new { rfid = rfid };
-            string jsonPayload = JsonConvert.SerializeObject(payloadObj);
+            try
+            {
+                var payloadObj = new { rfid = rfid };
+                string jsonPayload = JsonConvert.SerializeObject(payloadObj);
 
 
-            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-            var response = await Client.PostAsync("api/v1/auth/authenticate/admin/rfid", content);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                var response = await Client.PostAsync("api/v1/auth/authenticate/admin/rfid", content);
 
-            var body = await response.Content.ReadAsStringAsync();
+                var body = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
+                    return false;
+
+                var json = JObject.Parse(body);
+
+                // token
+                var newToken = (string)json["value"]?["accessToken"];
+                if (!string.IsNullOrWhiteSpace(newToken))
+                    ApiConfig.Token = newToken;
+
+                // student id
+                var admintoken = json["value"]?["id"];
+                if (admintoken != null && int.TryParse(admintoken.ToString(), out var sid))
+                    AdminDao.AdminId = sid;
+
+                return true;
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine($"Exeption: {ex.Message}");
                 return false;
+            }
 
-            var json = JObject.Parse(body);
-
-            // token
-            var newToken = (string)json["value"]?["accessToken"];
-            if (!string.IsNullOrWhiteSpace(newToken))
-                ApiConfig.Token = newToken;
-
-            // student id
-            var admintoken = json["value"]?["id"];
-            if (admintoken != null && int.TryParse(admintoken.ToString(), out var sid))
-                AdminDao.AdminId = sid;
-
-            return true;
         }
       
         public async Task<string> UpdateRfid(int userId, string rfidData)
@@ -275,9 +284,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             var response = await Client.GetAsync(urlBuilder.ToString());
             var body = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine(body);
-            //Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
-            //Console.WriteLine($"Body: {body}");
+            Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
+            Console.WriteLine($"Body Session: {body}");
 
             if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
                 return null;

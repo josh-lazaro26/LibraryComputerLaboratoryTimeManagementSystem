@@ -63,20 +63,77 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Animation.UIRes
 
         private void ResizeControls(Control.ControlCollection controls, float widthRatio, float heightRatio)
         {
+            float scale = Math.Min(widthRatio, heightRatio);
+
             foreach (Control ctrl in controls)
             {
                 Rectangle original = originalBounds[ctrl];
 
-                // Resize position & size
+                // ===== SAFE POSITION (NO SCATTERING) =====
                 ctrl.Left = (int)(original.Left * widthRatio);
                 ctrl.Top = (int)(original.Top * heightRatio);
-                ctrl.Width = (int)(original.Width * widthRatio);
-                ctrl.Height = (int)(original.Height * heightRatio);
 
-                // Resize font
+                int newWidth = (int)(original.Width * widthRatio);
+                int newHeight = (int)(original.Height * heightRatio);
+
+                // ===== PREVENT OVERFLOW INSIDE PANELS =====
+                if (ctrl.Parent != null)
+                {
+                    int maxWidth = ctrl.Parent.ClientSize.Width - ctrl.Left - 5; // margin safety
+                    if (newWidth > maxWidth)
+                        newWidth = maxWidth;
+                }
+
+                // ===== CONTROL-SPECIFIC RESIZING =====
+                if (ctrl is TextBox)
+                {
+                    // Keep textboxes clean and inside panel
+                    ctrl.Width = newWidth;
+                    ctrl.Height = original.Height; // Don't stretch vertically (prevents ugly UI)
+                }
+                else if (ctrl is Label)
+                {
+                    ctrl.Width = newWidth;
+                    ctrl.Height = original.Height; // Labels should not stretch vertically
+                }
+                else if (ctrl is Button)
+                {
+                    ctrl.Width = newWidth;
+                    ctrl.Height = (int)(original.Height * heightRatio * 1.05f);
+                }
+                else if (ctrl is Panel)
+                {
+                    // Panels scale normally (they are containers)
+                    ctrl.Width = newWidth;
+                    ctrl.Height = newHeight;
+                }
+                else
+                {
+                    ctrl.Width = newWidth;
+                    ctrl.Height = newHeight;
+                }
+
+                // ===== SAFE FONT SCALING (CONSISTENT LOGIN LOOK) =====
                 float originalFontSize = originalFontSizes[ctrl];
-                ctrl.Font = new Font(ctrl.Font.FontFamily, originalFontSize * Math.Min(widthRatio, heightRatio), ctrl.Font.Style);
 
+                if (ctrl is Label)
+                {
+                    ctrl.Font = new Font(ctrl.Font.FontFamily, originalFontSize * scale * 1.15f, ctrl.Font.Style);
+                }
+                else if (ctrl is Button)
+                {
+                    ctrl.Font = new Font(ctrl.Font.FontFamily, originalFontSize * scale * 1.1f, ctrl.Font.Style);
+                }
+                else if (ctrl is TextBox)
+                {
+                    ctrl.Font = new Font(ctrl.Font.FontFamily, originalFontSize * scale * 1.05f, ctrl.Font.Style);
+                }
+                else
+                {
+                    ctrl.Font = new Font(ctrl.Font.FontFamily, originalFontSize * scale, ctrl.Font.Style);
+                }
+
+                // ===== RECURSIVE =====
                 if (ctrl.HasChildren)
                 {
                     ResizeControls(ctrl.Controls, widthRatio, heightRatio);

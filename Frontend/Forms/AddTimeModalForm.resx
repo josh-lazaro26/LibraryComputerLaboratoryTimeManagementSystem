@@ -117,4 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="UpdateStudentTimeCloseBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAQ
+        lAAAEJQBAkcyUQAAAgFJREFUWEftmOFtAjEMhRmBDdpNYIN2g3aDsgFsQDdoN2EERmAERnjVQ07qe+fk
+        koNKqOL7VWEnebETx9fF4sF/B8ASwBrAHsARwBm/8O+D2V517E0xITsRMMXJxjzrfFcBYNMpRKGwN513
+        FgA+dXYTtwWwAvDkfBlF/saUUYSyH87eCYBvmZCLrNSvBID3QNiX+jURRIa7XqrfFBY1jh3MpX5VbGee
+        rfr0Yin2bNQnhDdCwty3mwoSKZ7D6YjbNU1Q2PSgRix9frPTkZcBo6vqBO/Ulqj5WFFN1KPE6uqcT2on
+        zk6iBX2EoXYiNW2t9ozkODw7weHMolRMKSUyR7jOBXuHEsV6E4lqFUMkbUe1ZySU5dzGojxFMcRucuKs
+        9oxzCnOvFERVxST8ALVlmpwcQZrI6KBH+AFqy0jK8qMZURCTqIqyepSopowNV6J4HQMxTJ2mryhKDvVB
+        7Rm59uFZiMQ4W5OolvJyQauo2omzk5FoFaV2Iq/Bi9ozlttqFXULjsQkaj7SSYSvwQDZ4V08rhqlco47
+        kaaPwtqaf2vqPeHh7CG4DKNOokrUds5Jn0V81A6rXxOFJr95Z3Zrb9PkJ4JIES7C37lgjpo9mvyt9EE5
+        LzJK4XOmB4r70HmvwnbPktAjLH1Qdp+9LlhdLWVs6PSfDXwPaeMX7N8KeXAP/AAAmD0HH9D1iQAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <metadata name="HrAndMinPanelElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="UpdateStudentTimeCloseBtnElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>142, 17</value>
+  </metadata>
+  <metadata name="DurationPanelElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>267, 17</value>
+  </metadata>
+  <metadata name="UpdateSessionBtnElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>392, 17</value>
+  </metadata>
+  <metadata name="AddTimeModalFormElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>517, 17</value>
+  </metadata>
 </root>

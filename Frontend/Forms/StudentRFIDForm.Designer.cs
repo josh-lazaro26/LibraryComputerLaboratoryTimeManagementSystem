@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentRFIDForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.StudentRfidCloseBtn = new System.Windows.Forms.Button();
             this.AdminRFIDScan = new System.Windows.Forms.Label();
             this.l = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -43,6 +44,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.panel1.Controls.Add(this.StudentRfidCloseBtn);
             this.panel1.Controls.Add(this.AdminRFIDScan);
             this.panel1.Controls.Add(this.l);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -53,12 +55,24 @@
             this.panel1.Size = new System.Drawing.Size(930, 625);
             this.panel1.TabIndex = 1;
             // 
+            // StudentRfidCloseBtn
+            // 
+            this.StudentRfidCloseBtn.FlatAppearance.BorderSize = 0;
+            this.StudentRfidCloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentRfidCloseBtn.Image = ((System.Drawing.Image)(resources.GetObject("StudentRfidCloseBtn.Image")));
+            this.StudentRfidCloseBtn.Location = new System.Drawing.Point(871, 3);
+            this.StudentRfidCloseBtn.Name = "StudentRfidCloseBtn";
+            this.StudentRfidCloseBtn.Size = new System.Drawing.Size(56, 52);
+            this.StudentRfidCloseBtn.TabIndex = 4;
+            this.StudentRfidCloseBtn.UseVisualStyleBackColor = true;
+            this.StudentRfidCloseBtn.Click += new System.EventHandler(this.StudentRfidCloseBtn_Click);
+            // 
             // AdminRFIDScan
             // 
             this.AdminRFIDScan.AutoSize = true;
             this.AdminRFIDScan.Font = new System.Drawing.Font("Roboto SemiBold", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdminRFIDScan.ForeColor = System.Drawing.Color.White;
-            this.AdminRFIDScan.Location = new System.Drawing.Point(215, 308);
+            this.AdminRFIDScan.Location = new System.Drawing.Point(181, 331);
             this.AdminRFIDScan.Name = "AdminRFIDScan";
             this.AdminRFIDScan.Size = new System.Drawing.Size(652, 58);
             this.AdminRFIDScan.TabIndex = 2;
@@ -122,5 +136,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox RFIDTextBox;
         private Bunifu.Framework.UI.BunifuElipse StudentRFIDFormElipse;
+        private System.Windows.Forms.Button StudentRfidCloseBtn;
     }
 }

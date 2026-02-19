@@ -189,8 +189,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Frontend\Animation\LabelAnimation\ControlExtensions.cs" />
+    <Compile Include="Frontend\Animation\LabelAnimation\LabelSwapAnimation.cs" />
     <Compile Include="Frontend\Animation\PanelHandler\PanelHandler.cs" />
+    <Compile Include="Frontend\Animation\PanelHandler\PanelPositionAnimator.cs" />
     <Compile Include="Frontend\Animation\Sidebar Animation\ButtonHoverEffect.cs" />
+    <Compile Include="Frontend\Animation\Sidebar Animation\SidebarAnimation.cs" />
     <Compile Include="Frontend\Animation\Sidebar Animation\SlidePanelController.cs" />
     <Compile Include="Frontend\Animation\UIResponsiveness\UIResizer.cs" />
     <Compile Include="Frontend\Animation\UIResponsiveness\UIResponsiveness.cs" />
@@ -236,8 +240,10 @@
     <Compile Include="Frontend\Models\Session\SessionDao.cs" />
     <Compile Include="Frontend\Models\Session\SessionDto.cs" />
     <Compile Include="Frontend\Models\Student\StudentDAO.cs" />
+    <Compile Include="Frontend\Models\Student\YearItem.cs" />
     <Compile Include="Frontend\Services\API Client\ApiConfig\ApiConfig.cs" />
     <Compile Include="Frontend\Services\AdminServices\AdminService.cs" />
+    <Compile Include="Frontend\Services\SignalR Services\SignalRService.cs" />
     <Compile Include="Frontend\Services\StudentServices\StudentServices.cs" />
     <Compile Include="Frontend\Services\UserServices\UserDTO.cs" />
     <Compile Include="Frontend\Services\UserServices\UserServices.cs" />

@@ -5,6 +5,7 @@ using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Admin;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Session;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Student;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminServices;
+using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.API_Client.ApiConfig;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.StudentServices;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.UserServices;
 using Newtonsoft.Json;
@@ -18,12 +19,12 @@ using static LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms.AddTim
 
 namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 {
-
     public partial class MainForm : Form
     {
         private PanelHandler _panelHandler;
         private int? _selectedAdminId;
-
+        private bool _isSidebarExpanded = false;
+        private PanelPositionAnimator _panelAnimator;
         private SlidePanelController _sidePanelController;
         private ButtonHoverEffect _sidebarHoverEffect;
         private UIResponsiveness _uiResponsiveness;
@@ -32,11 +33,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private UserServices _userService;
         private string _currentStudentRfid;
         private List<Button> _timeButtons;
-
+        private SidebarAnimator _sidebarAnimator;
         private List<Label> _timeLabels;
         private Dictionary<int, TimeSpan> _remainingBySessionId; // sessionId -> remaining
         private System.Windows.Forms.Timer _countdownTimer;
 
+        private readonly SignalRService _signalRService;
         public MainForm()
         {
             InitializeComponent();
@@ -48,16 +50,151 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             AdminDgv.CellClick += AdminDgv_CellClick;
             AdminDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             AdminDgv.MultiSelect = false;
+
+            _sidebarAnimator = new SidebarAnimator(SidebarPanel, 300, 55, 8, 5);
+
+            _signalRService = new SignalRService(() => Task.FromResult(ApiConfig.Token));
+
+            SignalRInitialize();
+
+            _signalRService.LoggedOutSession += (int sessionId) =>
+            {
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => HandleSessionTerminated(sessionId)));
+                    Console.WriteLine($"Session is terminated: {sessionId}");
+                }
+                else
+                {
+                    HandleSessionTerminated(sessionId);
+                }
+            };
+
+
+            _signalRService.NewStudentOpenedSession += (Object data) =>
+            {
+                try
+                {
+                    // Ensure UI thread
+                    if (InvokeRequired)
+                    {
+                        Invoke(new Action(() => HandleNewSession(data)));
+                    }
+                    else
+                    {
+                        HandleNewSession(data);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            };
+
+            StudentFirstNameTb.KeyPress += LettersOnly_KeyPress;
+            StudentMiddleNameTb.KeyPress += LettersOnly_KeyPress;
+            StudentLastNameTb.KeyPress += LettersOnly_KeyPress;
+            AdminFirstNameTb.KeyPress += LettersOnly_KeyPress;
+            AdminMiddleNameTb.KeyPress += LettersOnly_KeyPress;
+            AdminLastNameTb.KeyPress += LettersOnly_KeyPress;
         }
         private async void MainForm_Load(object sender, EventArgs e)
         {
             InitTimeButtons();
             WireTimeButtonClicks();
 
+            InitYearLevelComboBox(); 
             InitTimeLabelsAndTimer();
+
+            StudentCourseCb.SelectedIndex = 0;
+            ListOfStudentCourseCb.SelectedIndex = 0;
+            //_panelHandler.ShowOnly(DashboardPanel);
+
             await LoadAdminsAsync();
             await LoadStudentsAsync();
             await LoadActiveSessionsToButtons();
+        }
+
+
+        private void HandleNewSession(object data)
+        {
+            // If backend sends JSON string
+            SessionDto session;
+
+            if (data is string json)
+            {
+                session = JsonConvert.DeserializeObject<SessionDto>(json);
+            }
+            else
+            {
+                // If SignalR already sends object
+                session = JsonConvert.DeserializeObject<SessionDto>(data.ToString());
+            }
+
+            if (session == null) return;
+
+            // Find first vacant button
+            for (int i = 0; i < _timeButtons.Count; i++)
+            {
+                var btn = _timeButtons[i];
+                var lbl = _timeLabels[i];
+
+                if (btn.Tag == null) // vacant slot
+                {
+                    btn.Text = session.Name;
+                    btn.Tag = session;
+                    btn.Enabled = true;
+                    btn.ForeColor = SystemColors.ControlText;
+
+                    var remaining = ParseApiDuration(session.Duration);
+                    _remainingBySessionId[session.Id] = remaining;
+                    lbl.Text = ToMmSs(remaining);
+
+                    break;
+                }
+            }
+        }
+
+        private void HandleSessionTerminated(int sessionId)
+        {
+            for (int i = 0; i < _timeButtons.Count; i++)
+            {
+                var btn = _timeButtons[i];
+                var lbl = _timeLabels[i];
+
+                if (btn.Tag is SessionDto s && s.Id == sessionId)
+                {
+                    // Clear button (make it vacant again)
+                    btn.Text = "Vacant";
+                    btn.Tag = null;
+                    btn.Enabled = true;
+                    btn.ForeColor = SystemColors.ControlLight;
+
+                    lbl.Text = "00:00";
+
+                    // Remove from countdown dictionary
+                    if (_remainingBySessionId.ContainsKey(sessionId))
+                    {
+                        _remainingBySessionId.Remove(sessionId);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+
+        private void SignalRInitialize()
+        {
+            try
+            {
+                _ = _signalRService.InitializeAsync();
+                Console.WriteLine("signalR initialized");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void AdminDgv_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -78,6 +215,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             AdminMiddleNameTb.Text = admin.MiddleName;
             AdminLastNameTb.Text = admin.LastName;
         }
+
         public void AdminCreationVisibility()
         {
             if (SuperAdminState.isSuperAdmin)
@@ -89,16 +227,117 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 AdminCreation.Visible = false;
             }
         }
+
+        private void SetupAdminCreationAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            // Clear previous page animations (CRITICAL)
+            _panelAnimator.Clear();
+
+            // Register ONLY panels inside AdminCreationPanel
+            _panelAnimator.AddPanel(
+                AdminFields,
+                new Point(358, 124), // Sidebar Expanded
+                new Point(224, 124)  // Sidebar Collapsed
+            );
+
+            _panelAnimator.AddPanel(
+                AdminTablePanel,
+                new Point(784, 124), // Expanded
+                new Point(673, 124)  // Collapsed
+            );
+        }
+        private void SetupDashboardAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            // Clear previous page animations (CRITICAL)
+            _panelAnimator.Clear();
+
+            // Register ONLY panels inside AdminCreationPanel
+            _panelAnimator.AddPanel(
+                WelcomeAdminPanel,
+                new Point(385, 229), // Sidebar Expanded
+                new Point(261, 229)  // Sidebar Collapsed
+            );
+        }
+        private void SetupStudentRegistrationAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            // Clear previous page animations (CRITICAL)
+            _panelAnimator.Clear();
+
+            // Register ONLY panels inside AdminCreationPanel
+            _panelAnimator.AddPanel(
+                RegisterStudentFieldPanel,
+                new Point(299, 112), // Sidebar Expanded
+                new Point(167, 112)  // Sidebar Collapsed
+            );
+        }
+
+        private void SetupStudentCreationAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            // Clear previous page animations (CRITICAL)
+            _panelAnimator.Clear();
+
+            // Register ONLY panels inside AdminCreationPanel
+            _panelAnimator.AddPanel(
+                StudentFieldsPanel,
+                new Point(355, 127), // Sidebar Expanded
+                new Point(258, 127)  // Sidebar Collapsed
+            );
+
+            _panelAnimator.AddPanel(
+                StudentsTablePanel,
+                new Point(732, 127), // Expanded
+                new Point(644, 127)  // Collapsed
+            );
+        }
+
+        private void SetupTimeManagementAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            // Clear previous page animations (CRITICAL)
+            _panelAnimator.Clear();
+
+            // Register ONLY panels inside AdminCreationPanel
+            _panelAnimator.AddPanel(
+                TimeManagementBtnPanel1,
+                new Point(308, 123), // Sidebar Expanded
+                new Point(162, 123)  // Sidebar Collapsed
+            );
+
+            _panelAnimator.AddPanel(
+                TimeManagementBtnPanel2,
+                new Point(555, 123), // Expanded
+                new Point(442, 123)  // Collapsed
+            );
+
+            _panelAnimator.AddPanel(
+                TimeManagementBtnPanel3,
+                new Point(802, 123), // Expanded
+                new Point(716, 123)  // Collapsed
+            );
+
+            _panelAnimator.AddPanel(
+                TimeManagementBtnPanel4,
+                new Point(1050, 123), // Expanded
+                new Point(994, 123)  // Collapsed
+            );
+        }
+
         private void UIHandler()
         {
-            _sidePanelController = new SlidePanelController(
-                   SidePanelSlider,
-                   SliderBtn,
-                   Slider1Btn,
-                   expandedWidth: SidePanelSlider.Width,
-                   slideSpeed: 10
-               );
-
             _sidebarHoverEffect = new ButtonHoverEffect(
                 normalBackColor: Color.FromArgb(0, 68, 52),
                 hoverBackColor: Color.FromArgb(0, 102, 78),
@@ -109,23 +348,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(DashboardSidebarBtn);
             _sidebarHoverEffect.Attach(ListOfStudentsSidebarBtn);
             _sidebarHoverEffect.Attach(TimeManagementSidebarBtn);
-            _sidebarHoverEffect.Attach(ReportsSidebarBtn);
+            _sidebarHoverEffect.Attach(StudentManagementSidebarBtn);
+            _sidebarHoverEffect.Attach(SidebarBtn);
+            _sidebarHoverEffect.Attach(LogoutBtn);
+
             _sidebarHoverEffect.Attach(AdminCreation);
 
             _panelHandler = new PanelHandler();
             _panelHandler.AddPanels(DashboardPanel, StudentPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel);
-
-            // Initialize UI responsiveness
-            _uiResponsiveness = new UIResponsiveness(SidePanelSlider, stepSize: 10);
-            _uiResponsiveness.RegisterContentPanels(DashboardPanel, StudentPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel);
-            // Add ONLY the components you want centered
-            _uiResponsiveness.AddControlsToCenter(
-                FullNameTbPanel,
-                StudentIDTbPanel,
-                WelcomeAdminLabel,
-                RegisterStudentBtn,
-                StudentRegistrationLabel
-            );
         }
 
         private void WireTimeButtonClicks()
@@ -241,14 +471,20 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private void DashboardSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(DashboardPanel);
+            HeaderPanelLabel.Text = "Dashboard";
+            SetupDashboardAnimation();
         }
         private void StudentManagementSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(StudentPanel);
+            HeaderPanelLabel.Text = "Student Registration";
+            SetupStudentRegistrationAnimation();
         }
         private async void AdminCreation_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(AdminCreationPanel);
+            HeaderPanelLabel.Text = "Admin Creation";
+            SetupAdminCreationAnimation();
             await LoadAdminsAsync();
         }
         private void ReportsSidebarBtn_Click(object sender, EventArgs e)
@@ -258,10 +494,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private void ListOfStudentsSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(ListOfStudentsPanel);
+            HeaderPanelLabel.Text = "List of Students";
+            SetupStudentCreationAnimation();
         }
         private async void TimeManagementSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(TimeManagementPanel);
+            HeaderPanelLabel.Text = "Time Management";
+            SetupTimeManagementAnimation();
             await LoadActiveSessionsToButtons();
         }
 
@@ -308,6 +548,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             var resp = await _adminService.GetActiveSessions(pageNumber: 1, pageSize: 16);
             if (resp == null || !resp.IsSuccess || resp.Value?.Items == null) return;
 
+
             var sessions = resp.Value.Items.Take(_timeButtons.Count).ToList();
 
             _remainingBySessionId.Clear();
@@ -333,7 +574,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 {
                     btn.Text = "Vacant";
                     btn.Tag = null;
-                    btn.Enabled = false;
+                    btn.Enabled = true;
+                    btn.ForeColor = SystemColors.ControlLight;
 
                     lbl.Text = "00:00";
                 }
@@ -381,8 +623,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 LastName = StudentLastNameTb.Text,
                 RFID = _currentStudentRfid,
                 StudentId = StudentIDTb.Text,
-                Course = StudentCourseCb.SelectedItem?.ToString(),      
-                YearLevel = StudentYearLevelCb.SelectedItem?.ToString() 
+                Course = StudentCourseCb.SelectedItem?.ToString(),
+                YearLevel = StudentYearLevelCb.SelectedValue?.ToString()
             };
 
             RegisterStudentBtn.Enabled = false;
@@ -428,6 +670,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             foreach (var btn in _timeButtons)
             {
                 btn.Text = "Vacant";
+
+                btn.ForeColor = SystemColors.ControlLight;
+
             }
         }
 
@@ -440,6 +685,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 btn.Text = "Vacant";
                 btn.Tag = null;
                 btn.Enabled = false; // optional
+
+                btn.ForeColor = SystemColors.ControlLight;
             }
         }
         private async void txtSearch_TextChanged(object sender, EventArgs e)
@@ -513,6 +760,91 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             finally
             {
                 UpdateAdmin_Btn.Enabled = true;
+            }
+        }
+        private void InitYearLevelComboBox()
+        {
+            var years = new List<YearItem>
+            {
+                new YearItem { Value = 0, Text = "1st year" },
+                new YearItem { Value = 1, Text = "2nd year" },
+                new YearItem { Value = 2, Text = "3rd year" },
+                new YearItem { Value = 3, Text = "4th year" }
+            };
+
+            StudentYearLevelCb.DataSource = years;
+            StudentYearLevelCb.DisplayMember = "Text";   // what user sees
+            StudentYearLevelCb.ValueMember = "Value";    // actual stored value
+
+            ListOfStudentYearLevelCb.DataSource = years;
+            ListOfStudentYearLevelCb.DisplayMember = "Text";   // what user sees
+            ListOfStudentYearLevelCb.ValueMember = "Value";    // actual stored value
+        }
+
+        private void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            var RfidForm = new RFIDForm();
+            RfidForm.Show();
+            this.Close();
+        }
+
+        private void SidebarBtn_Click(object sender, EventArgs e)
+        {
+            _sidebarAnimator.Toggle();
+
+            // Animate based on which main panel is active
+            if (AdminCreationPanel.Visible)
+            {
+                SetupAdminCreationAnimation();
+                _panelAnimator?.Toggle();
+            }
+            else if (TimeManagementPanel.Visible)
+            {
+                SetupTimeManagementAnimation();
+                _panelAnimator?.Toggle();
+            }
+            else if (ListOfStudentsPanel.Visible)
+            {
+                SetupStudentCreationAnimation();
+                _panelAnimator?.Toggle();
+            }
+            else if (StudentPanel.Visible)
+            {
+                SetupStudentRegistrationAnimation();
+                _panelAnimator?.Toggle();
+            }
+            else if (DashboardPanel.Visible)
+            {
+                SetupDashboardAnimation();
+                _panelAnimator?.Toggle();
+            }
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void MaximizeBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MinimizeBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LettersOnly_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow control keys (Backspace, Delete, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Allow letters and space only
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != ' ')
+            {
+                e.Handled = true;
             }
         }
     }
