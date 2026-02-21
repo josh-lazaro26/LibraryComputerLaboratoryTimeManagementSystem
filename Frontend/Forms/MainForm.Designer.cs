@@ -278,6 +278,7 @@
             // 
             this.StudentManagementSidebarBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StudentManagementSidebarBtn.BackColor = System.Drawing.Color.Transparent;
+            this.StudentManagementSidebarBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.StudentManagementSidebarBtn.FlatAppearance.BorderSize = 0;
             this.StudentManagementSidebarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StudentManagementSidebarBtn.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
@@ -290,6 +291,7 @@
             this.StudentManagementSidebarBtn.Size = new System.Drawing.Size(300, 57);
             this.StudentManagementSidebarBtn.TabIndex = 3;
             this.StudentManagementSidebarBtn.Text = "        Registration";
+            this.StudentManagementSidebarBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.StudentManagementSidebarBtn.UseVisualStyleBackColor = false;
             this.StudentManagementSidebarBtn.Click += new System.EventHandler(this.StudentManagementSidebarBtn_Click);
             // 
@@ -297,6 +299,7 @@
             // 
             this.AdminCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.AdminCreation.BackColor = System.Drawing.Color.Transparent;
+            this.AdminCreation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.AdminCreation.FlatAppearance.BorderSize = 0;
             this.AdminCreation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AdminCreation.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
@@ -309,6 +312,7 @@
             this.AdminCreation.Size = new System.Drawing.Size(300, 57);
             this.AdminCreation.TabIndex = 6;
             this.AdminCreation.Text = "        Admin Creation";
+            this.AdminCreation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.AdminCreation.UseVisualStyleBackColor = false;
             this.AdminCreation.Click += new System.EventHandler(this.AdminCreation_Click);
             // 
@@ -316,6 +320,7 @@
             // 
             this.TimeManagementSidebarBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TimeManagementSidebarBtn.BackColor = System.Drawing.Color.Transparent;
+            this.TimeManagementSidebarBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.TimeManagementSidebarBtn.FlatAppearance.BorderSize = 0;
             this.TimeManagementSidebarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TimeManagementSidebarBtn.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
@@ -328,6 +333,7 @@
             this.TimeManagementSidebarBtn.Size = new System.Drawing.Size(300, 57);
             this.TimeManagementSidebarBtn.TabIndex = 5;
             this.TimeManagementSidebarBtn.Text = "        Time Management";
+            this.TimeManagementSidebarBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.TimeManagementSidebarBtn.UseVisualStyleBackColor = false;
             this.TimeManagementSidebarBtn.Click += new System.EventHandler(this.TimeManagementSidebarBtn_Click);
             // 
@@ -335,6 +341,7 @@
             // 
             this.ListOfStudentsSidebarBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ListOfStudentsSidebarBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ListOfStudentsSidebarBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ListOfStudentsSidebarBtn.FlatAppearance.BorderSize = 0;
             this.ListOfStudentsSidebarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ListOfStudentsSidebarBtn.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
@@ -347,6 +354,7 @@
             this.ListOfStudentsSidebarBtn.Size = new System.Drawing.Size(300, 57);
             this.ListOfStudentsSidebarBtn.TabIndex = 4;
             this.ListOfStudentsSidebarBtn.Text = "        List of Students";
+            this.ListOfStudentsSidebarBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ListOfStudentsSidebarBtn.UseVisualStyleBackColor = false;
             this.ListOfStudentsSidebarBtn.Click += new System.EventHandler(this.ListOfStudentsSidebarBtn_Click);
             // 
@@ -354,6 +362,7 @@
             // 
             this.DashboardSidebarBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.DashboardSidebarBtn.BackColor = System.Drawing.Color.Transparent;
+            this.DashboardSidebarBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.DashboardSidebarBtn.FlatAppearance.BorderSize = 0;
             this.DashboardSidebarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DashboardSidebarBtn.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
@@ -366,6 +375,7 @@
             this.DashboardSidebarBtn.Size = new System.Drawing.Size(300, 57);
             this.DashboardSidebarBtn.TabIndex = 2;
             this.DashboardSidebarBtn.Text = "        Dashboard";
+            this.DashboardSidebarBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.DashboardSidebarBtn.UseVisualStyleBackColor = false;
             this.DashboardSidebarBtn.Click += new System.EventHandler(this.DashboardSidebarBtn_Click);
             // 
@@ -973,11 +983,11 @@
             this.StudentBtnLabel16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel16.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel16.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel16.Location = new System.Drawing.Point(92, 523);
+            this.StudentBtnLabel16.Location = new System.Drawing.Point(66, 525);
             this.StudentBtnLabel16.Name = "StudentBtnLabel16";
-            this.StudentBtnLabel16.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel16.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel16.TabIndex = 32;
-            this.StudentBtnLabel16.Text = "00:00";
+            this.StudentBtnLabel16.Text = "00:00:00";
             // 
             // StudentBtnLabel4
             // 
@@ -985,11 +995,11 @@
             this.StudentBtnLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel4.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel4.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel4.Location = new System.Drawing.Point(92, 72);
+            this.StudentBtnLabel4.Location = new System.Drawing.Point(66, 75);
             this.StudentBtnLabel4.Name = "StudentBtnLabel4";
-            this.StudentBtnLabel4.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel4.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel4.TabIndex = 22;
-            this.StudentBtnLabel4.Text = "00:00";
+            this.StudentBtnLabel4.Text = "00:00:00";
             // 
             // StudentBtnLabel12
             // 
@@ -997,11 +1007,11 @@
             this.StudentBtnLabel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel12.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel12.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel12.Location = new System.Drawing.Point(92, 371);
+            this.StudentBtnLabel12.Location = new System.Drawing.Point(66, 375);
             this.StudentBtnLabel12.Name = "StudentBtnLabel12";
-            this.StudentBtnLabel12.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel12.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel12.TabIndex = 28;
-            this.StudentBtnLabel12.Text = "00:00";
+            this.StudentBtnLabel12.Text = "00:00:00";
             // 
             // StudentBtnLabel8
             // 
@@ -1009,23 +1019,26 @@
             this.StudentBtnLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel8.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel8.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel8.Location = new System.Drawing.Point(92, 224);
+            this.StudentBtnLabel8.Location = new System.Drawing.Point(66, 225);
             this.StudentBtnLabel8.Name = "StudentBtnLabel8";
-            this.StudentBtnLabel8.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel8.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel8.TabIndex = 25;
-            this.StudentBtnLabel8.Text = "00:00";
+            this.StudentBtnLabel8.Text = "00:00:00";
             // 
             // StudentTimeBtn4
             // 
             this.StudentTimeBtn4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn4.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn4.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn4.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn4.Location = new System.Drawing.Point(15, 7);
             this.StudentTimeBtn4.Name = "StudentTimeBtn4";
             this.StudentTimeBtn4.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn4.TabIndex = 4;
-            this.StudentTimeBtn4.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn4.Text = "Full name\r\n";
             this.StudentTimeBtn4.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn4.UseVisualStyleBackColor = false;
             // 
@@ -1033,13 +1046,16 @@
             // 
             this.StudentTimeBtn8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn8.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn8.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn8.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn8.Location = new System.Drawing.Point(15, 156);
             this.StudentTimeBtn8.Name = "StudentTimeBtn8";
             this.StudentTimeBtn8.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn8.TabIndex = 8;
-            this.StudentTimeBtn8.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn8.Text = "Full name\r\n";
             this.StudentTimeBtn8.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn8.UseVisualStyleBackColor = false;
             // 
@@ -1047,13 +1063,16 @@
             // 
             this.StudentTimeBtn12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn12.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn12.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn12.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn12.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn12.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn12.Location = new System.Drawing.Point(15, 306);
             this.StudentTimeBtn12.Name = "StudentTimeBtn12";
             this.StudentTimeBtn12.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn12.TabIndex = 12;
-            this.StudentTimeBtn12.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn12.Text = "Full name\r\n";
             this.StudentTimeBtn12.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn12.UseVisualStyleBackColor = false;
             // 
@@ -1061,13 +1080,16 @@
             // 
             this.StudentTimeBtn16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn16.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn16.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn16.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn16.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn16.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn16.Location = new System.Drawing.Point(15, 459);
             this.StudentTimeBtn16.Name = "StudentTimeBtn16";
             this.StudentTimeBtn16.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn16.TabIndex = 16;
-            this.StudentTimeBtn16.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn16.Text = "Full name\r\n";
             this.StudentTimeBtn16.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn16.UseVisualStyleBackColor = false;
             // 
@@ -1092,11 +1114,11 @@
             this.StudentBtnLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel3.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel3.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel3.Location = new System.Drawing.Point(87, 71);
+            this.StudentBtnLabel3.Location = new System.Drawing.Point(66, 75);
             this.StudentBtnLabel3.Name = "StudentBtnLabel3";
-            this.StudentBtnLabel3.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel3.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel3.TabIndex = 21;
-            this.StudentBtnLabel3.Text = "00:00";
+            this.StudentBtnLabel3.Text = "00:00:00";
             // 
             // StudentBtnLabel15
             // 
@@ -1104,11 +1126,11 @@
             this.StudentBtnLabel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel15.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel15.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel15.Location = new System.Drawing.Point(87, 522);
+            this.StudentBtnLabel15.Location = new System.Drawing.Point(66, 525);
             this.StudentBtnLabel15.Name = "StudentBtnLabel15";
-            this.StudentBtnLabel15.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel15.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel15.TabIndex = 31;
-            this.StudentBtnLabel15.Text = "00:00";
+            this.StudentBtnLabel15.Text = "00:00:00";
             // 
             // StudentBtnLabel7
             // 
@@ -1116,11 +1138,11 @@
             this.StudentBtnLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel7.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel7.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel7.Location = new System.Drawing.Point(87, 223);
+            this.StudentBtnLabel7.Location = new System.Drawing.Point(66, 225);
             this.StudentBtnLabel7.Name = "StudentBtnLabel7";
-            this.StudentBtnLabel7.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel7.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel7.TabIndex = 24;
-            this.StudentBtnLabel7.Text = "00:00";
+            this.StudentBtnLabel7.Text = "00:00:00";
             // 
             // StudentBtnLabel11
             // 
@@ -1128,23 +1150,26 @@
             this.StudentBtnLabel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel11.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel11.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel11.Location = new System.Drawing.Point(87, 370);
+            this.StudentBtnLabel11.Location = new System.Drawing.Point(66, 375);
             this.StudentBtnLabel11.Name = "StudentBtnLabel11";
-            this.StudentBtnLabel11.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel11.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel11.TabIndex = 27;
-            this.StudentBtnLabel11.Text = "00:00";
+            this.StudentBtnLabel11.Text = "00:00:00";
             // 
             // StudentTimeBtn3
             // 
             this.StudentTimeBtn3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn3.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn3.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn3.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn3.Location = new System.Drawing.Point(16, 6);
             this.StudentTimeBtn3.Name = "StudentTimeBtn3";
             this.StudentTimeBtn3.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn3.TabIndex = 3;
-            this.StudentTimeBtn3.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn3.Text = "Full name\r\n";
             this.StudentTimeBtn3.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn3.UseVisualStyleBackColor = false;
             // 
@@ -1152,13 +1177,16 @@
             // 
             this.StudentTimeBtn7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn7.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn7.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn7.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn7.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn7.Location = new System.Drawing.Point(16, 155);
             this.StudentTimeBtn7.Name = "StudentTimeBtn7";
             this.StudentTimeBtn7.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn7.TabIndex = 7;
-            this.StudentTimeBtn7.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn7.Text = "Full name\r\n";
             this.StudentTimeBtn7.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn7.UseVisualStyleBackColor = false;
             // 
@@ -1166,13 +1194,16 @@
             // 
             this.StudentTimeBtn11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn11.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn11.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn11.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn11.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn11.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn11.Location = new System.Drawing.Point(16, 305);
             this.StudentTimeBtn11.Name = "StudentTimeBtn11";
             this.StudentTimeBtn11.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn11.TabIndex = 11;
-            this.StudentTimeBtn11.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn11.Text = "Full name\r\n";
             this.StudentTimeBtn11.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn11.UseVisualStyleBackColor = false;
             // 
@@ -1180,13 +1211,16 @@
             // 
             this.StudentTimeBtn15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn15.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn15.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn15.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn15.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn15.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn15.Location = new System.Drawing.Point(16, 458);
             this.StudentTimeBtn15.Name = "StudentTimeBtn15";
             this.StudentTimeBtn15.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn15.TabIndex = 15;
-            this.StudentTimeBtn15.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn15.Text = "Full name\r\n";
             this.StudentTimeBtn15.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn15.UseVisualStyleBackColor = false;
             // 
@@ -1211,11 +1245,11 @@
             this.StudentBtnLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel2.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel2.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel2.Location = new System.Drawing.Point(78, 71);
+            this.StudentBtnLabel2.Location = new System.Drawing.Point(66, 75);
             this.StudentBtnLabel2.Name = "StudentBtnLabel2";
-            this.StudentBtnLabel2.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel2.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel2.TabIndex = 20;
-            this.StudentBtnLabel2.Text = "00:00";
+            this.StudentBtnLabel2.Text = "00:00:00";
             // 
             // StudentBtnLabel14
             // 
@@ -1223,11 +1257,11 @@
             this.StudentBtnLabel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel14.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel14.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel14.Location = new System.Drawing.Point(78, 522);
+            this.StudentBtnLabel14.Location = new System.Drawing.Point(66, 525);
             this.StudentBtnLabel14.Name = "StudentBtnLabel14";
-            this.StudentBtnLabel14.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel14.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel14.TabIndex = 30;
-            this.StudentBtnLabel14.Text = "00:00";
+            this.StudentBtnLabel14.Text = "00:00:00";
             // 
             // StudentBtnLabel6
             // 
@@ -1235,11 +1269,11 @@
             this.StudentBtnLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel6.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel6.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel6.Location = new System.Drawing.Point(78, 223);
+            this.StudentBtnLabel6.Location = new System.Drawing.Point(66, 225);
             this.StudentBtnLabel6.Name = "StudentBtnLabel6";
-            this.StudentBtnLabel6.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel6.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel6.TabIndex = 23;
-            this.StudentBtnLabel6.Text = "00:00";
+            this.StudentBtnLabel6.Text = "00:00:00";
             // 
             // StudentBtnLabel10
             // 
@@ -1247,23 +1281,26 @@
             this.StudentBtnLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel10.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel10.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel10.Location = new System.Drawing.Point(78, 370);
+            this.StudentBtnLabel10.Location = new System.Drawing.Point(66, 375);
             this.StudentBtnLabel10.Name = "StudentBtnLabel10";
-            this.StudentBtnLabel10.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel10.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel10.TabIndex = 26;
-            this.StudentBtnLabel10.Text = "00:00";
+            this.StudentBtnLabel10.Text = "00:00:00";
             // 
             // StudentTimeBtn2
             // 
             this.StudentTimeBtn2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn2.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn2.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn2.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn2.Location = new System.Drawing.Point(18, 6);
             this.StudentTimeBtn2.Name = "StudentTimeBtn2";
             this.StudentTimeBtn2.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn2.TabIndex = 2;
-            this.StudentTimeBtn2.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn2.Text = "Full name\r\n";
             this.StudentTimeBtn2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn2.UseVisualStyleBackColor = false;
             // 
@@ -1271,13 +1308,16 @@
             // 
             this.StudentTimeBtn6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn6.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn6.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn6.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn6.Location = new System.Drawing.Point(18, 155);
             this.StudentTimeBtn6.Name = "StudentTimeBtn6";
             this.StudentTimeBtn6.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn6.TabIndex = 6;
-            this.StudentTimeBtn6.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn6.Text = "Full name\r\n";
             this.StudentTimeBtn6.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn6.UseVisualStyleBackColor = false;
             // 
@@ -1285,13 +1325,16 @@
             // 
             this.StudentTimeBtn10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn10.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn10.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn10.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn10.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn10.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn10.Location = new System.Drawing.Point(18, 304);
             this.StudentTimeBtn10.Name = "StudentTimeBtn10";
             this.StudentTimeBtn10.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn10.TabIndex = 10;
-            this.StudentTimeBtn10.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn10.Text = "Full name\r\n";
             this.StudentTimeBtn10.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn10.UseVisualStyleBackColor = false;
             // 
@@ -1299,13 +1342,16 @@
             // 
             this.StudentTimeBtn14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn14.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn14.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn14.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn14.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn14.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn14.Location = new System.Drawing.Point(18, 458);
             this.StudentTimeBtn14.Name = "StudentTimeBtn14";
             this.StudentTimeBtn14.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn14.TabIndex = 14;
-            this.StudentTimeBtn14.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn14.Text = "Full name\r\n";
             this.StudentTimeBtn14.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn14.UseVisualStyleBackColor = false;
             // 
@@ -1331,11 +1377,11 @@
             this.StudentBtnLabel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel13.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel13.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel13.Location = new System.Drawing.Point(86, 522);
+            this.StudentBtnLabel13.Location = new System.Drawing.Point(66, 525);
             this.StudentBtnLabel13.Name = "StudentBtnLabel13";
-            this.StudentBtnLabel13.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel13.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel13.TabIndex = 29;
-            this.StudentBtnLabel13.Text = "00:00";
+            this.StudentBtnLabel13.Text = "00:00:00";
             // 
             // StudentBtnLabel1
             // 
@@ -1344,11 +1390,11 @@
             this.StudentBtnLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel1.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel1.Location = new System.Drawing.Point(86, 71);
+            this.StudentBtnLabel1.Location = new System.Drawing.Point(66, 75);
             this.StudentBtnLabel1.Name = "StudentBtnLabel1";
-            this.StudentBtnLabel1.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel1.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel1.TabIndex = 17;
-            this.StudentBtnLabel1.Text = "00:00";
+            this.StudentBtnLabel1.Text = "00:00:00";
             // 
             // StudentBtnLabel5
             // 
@@ -1357,11 +1403,11 @@
             this.StudentBtnLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel5.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel5.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel5.Location = new System.Drawing.Point(86, 223);
+            this.StudentBtnLabel5.Location = new System.Drawing.Point(66, 225);
             this.StudentBtnLabel5.Name = "StudentBtnLabel5";
-            this.StudentBtnLabel5.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel5.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel5.TabIndex = 18;
-            this.StudentBtnLabel5.Text = "00:00";
+            this.StudentBtnLabel5.Text = "00:00:00";
             // 
             // StudentBtnLabel9
             // 
@@ -1370,24 +1416,27 @@
             this.StudentBtnLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentBtnLabel9.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentBtnLabel9.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.StudentBtnLabel9.Location = new System.Drawing.Point(86, 370);
+            this.StudentBtnLabel9.Location = new System.Drawing.Point(66, 375);
             this.StudentBtnLabel9.Name = "StudentBtnLabel9";
-            this.StudentBtnLabel9.Size = new System.Drawing.Size(73, 33);
+            this.StudentBtnLabel9.Size = new System.Drawing.Size(105, 33);
             this.StudentBtnLabel9.TabIndex = 19;
-            this.StudentBtnLabel9.Text = "00:00";
+            this.StudentBtnLabel9.Text = "00:00:00";
             // 
             // StudentTimeBtn1
             // 
             this.StudentTimeBtn1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StudentTimeBtn1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn1.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn1.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn1.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn1.Location = new System.Drawing.Point(17, 6);
             this.StudentTimeBtn1.Name = "StudentTimeBtn1";
             this.StudentTimeBtn1.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn1.TabIndex = 1;
-            this.StudentTimeBtn1.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn1.Text = "Full name\r\n";
             this.StudentTimeBtn1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn1.UseVisualStyleBackColor = false;
             // 
@@ -1396,13 +1445,16 @@
             this.StudentTimeBtn5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StudentTimeBtn5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn5.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn5.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn5.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn5.Location = new System.Drawing.Point(17, 155);
             this.StudentTimeBtn5.Name = "StudentTimeBtn5";
             this.StudentTimeBtn5.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn5.TabIndex = 5;
-            this.StudentTimeBtn5.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn5.Text = "Full name\r\n";
             this.StudentTimeBtn5.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn5.UseVisualStyleBackColor = false;
             // 
@@ -1411,13 +1463,16 @@
             this.StudentTimeBtn9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StudentTimeBtn9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn9.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn9.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn9.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn9.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn9.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn9.Location = new System.Drawing.Point(17, 304);
             this.StudentTimeBtn9.Name = "StudentTimeBtn9";
             this.StudentTimeBtn9.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn9.TabIndex = 9;
-            this.StudentTimeBtn9.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn9.Text = "Full name\r\n";
             this.StudentTimeBtn9.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn9.UseVisualStyleBackColor = false;
             // 
@@ -1426,13 +1481,16 @@
             this.StudentTimeBtn13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StudentTimeBtn13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn13.FlatAppearance.BorderSize = 0;
+            this.StudentTimeBtn13.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.StudentTimeBtn13.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.StudentTimeBtn13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentTimeBtn13.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudentTimeBtn13.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.StudentTimeBtn13.Location = new System.Drawing.Point(17, 458);
             this.StudentTimeBtn13.Name = "StudentTimeBtn13";
             this.StudentTimeBtn13.Size = new System.Drawing.Size(200, 120);
             this.StudentTimeBtn13.TabIndex = 13;
-            this.StudentTimeBtn13.Text = "Full name\r\nCourse\r\n";
+            this.StudentTimeBtn13.Text = "Full name\r\n";
             this.StudentTimeBtn13.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.StudentTimeBtn13.UseVisualStyleBackColor = false;
             // 
@@ -2052,21 +2110,23 @@
             this.LogoutBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.LogoutBtn.Image = ((System.Drawing.Image)(resources.GetObject("LogoutBtn.Image")));
             this.LogoutBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.LogoutBtn.Location = new System.Drawing.Point(0, 651);
+            this.LogoutBtn.Location = new System.Drawing.Point(0, 642);
             this.LogoutBtn.Name = "LogoutBtn";
             this.LogoutBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.LogoutBtn.Size = new System.Drawing.Size(300, 57);
             this.LogoutBtn.TabIndex = 30;
             this.LogoutBtn.TabStop = false;
-            this.LogoutBtn.Text = "      Logout";
+            this.LogoutBtn.Text = "        Logout";
+            this.LogoutBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogoutBtn.UseVisualStyleBackColor = true;
+            this.LogoutBtn.Click += new System.EventHandler(this.LogoutBtn_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(48, 22);
+            this.pictureBox1.Location = new System.Drawing.Point(33, 19);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(198, 138);
+            this.pictureBox1.Size = new System.Drawing.Size(235, 160);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
@@ -2083,12 +2143,12 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
-            this.Controls.Add(this.DashboardPanel);
-            this.Controls.Add(this.StudentPanel);
-            this.Controls.Add(this.AdminCreationPanel);
             this.Controls.Add(this.TimeManagementPanel);
             this.Controls.Add(this.AdminReportsPanel);
             this.Controls.Add(this.ListOfStudentsPanel);
+            this.Controls.Add(this.DashboardPanel);
+            this.Controls.Add(this.StudentPanel);
+            this.Controls.Add(this.AdminCreationPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -2161,109 +2221,109 @@
         #endregion
 
 
-        private System.Windows.Forms.Panel DashboardPanel;
-        private System.Windows.Forms.Label WelcomeAdminLabel;
-        private System.Windows.Forms.Button TimeManagementSidebarBtn;
-        private System.Windows.Forms.Button DashboardSidebarBtn;
-        private System.Windows.Forms.Panel StudentPanel;
-        private System.Windows.Forms.Label StudentNameLabel;
-        private System.Windows.Forms.TextBox StudentFirstNameTb;
-        private System.Windows.Forms.Panel FullNameTbPanelR;
-        private System.Windows.Forms.Label StudentIDLabel;
-        private System.Windows.Forms.Panel StudentIDTbPanelR;
-        private System.Windows.Forms.TextBox StudentIDTb;
-        private System.Windows.Forms.Label CourseLabel;
-        private System.Windows.Forms.Button RegisterStudentBtn;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button AdminCreation;
-        private System.Windows.Forms.Panel AdminReportsPanel;
-        private System.Windows.Forms.DataGridView ReportsDataGridView;
-        private System.Windows.Forms.Panel AdminCreationPanel;
-        private System.Windows.Forms.Button PrintReportBtn;
-        private System.Windows.Forms.Panel TimeManagementPanel;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button StudentTimeBtn16;
-        private System.Windows.Forms.Button StudentTimeBtn15;
-        private System.Windows.Forms.Button StudentTimeBtn14;
-        private System.Windows.Forms.Button StudentTimeBtn12;
-        private System.Windows.Forms.Button StudentTimeBtn11;
-        private System.Windows.Forms.Button StudentTimeBtn10;
-        private System.Windows.Forms.Button StudentTimeBtn9;
-        private System.Windows.Forms.Button StudentTimeBtn8;
-        private System.Windows.Forms.Button StudentTimeBtn7;
-        private System.Windows.Forms.Button StudentTimeBtn6;
-        private System.Windows.Forms.Button StudentTimeBtn5;
-        private System.Windows.Forms.Button StudentTimeBtn4;
-        private System.Windows.Forms.Button StudentTimeBtn3;
-        private System.Windows.Forms.Button StudentTimeBtn2;
-        private System.Windows.Forms.Button StudentTimeBtn1;
-        private System.Windows.Forms.Button StudentTimeBtn13;
-        private System.Windows.Forms.Button RegisterAdminBtn;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel RfidTbPanelAc;
-        private System.Windows.Forms.TextBox AdminRfidTb;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel LastNameTbPanelAc;
-        private System.Windows.Forms.TextBox AdminLastNameTb;
-        private System.Windows.Forms.Panel MiddleNameTbPanelAc;
-        private System.Windows.Forms.TextBox AdminMiddleNameTb;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Panel FirstNameTbPanelAc;
-        private System.Windows.Forms.TextBox AdminFirstNameTb;
-        private System.Windows.Forms.Panel PersonnelIdTbPanelAc;
-        private System.Windows.Forms.TextBox IDPersonnelTb;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button StudentManagementSidebarBtn;
-        private System.Windows.Forms.Panel ListOfStudentsPanel;
-        private System.Windows.Forms.DataGridView AdminDgv;
-        private System.Windows.Forms.Button DeleteAdmin_Btn;
-        private System.Windows.Forms.Button UpdateAdmin_Btn;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Panel LastNameTbPanelR;
-        private System.Windows.Forms.TextBox StudentLastNameTb;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Panel MiddleNameTbPanelR;
-        private System.Windows.Forms.TextBox StudentMiddleNameTb;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox StudentCourseCb;
-        private System.Windows.Forms.ComboBox StudentYearLevelCb;
-        private System.Windows.Forms.Button RegisterRfidBtn;
-        private System.Windows.Forms.DataGridView ListOfStudentDgv;
-        private System.Windows.Forms.Button DeleteStudentBtn;
-        private System.Windows.Forms.Button UpdateStudentBtn;
-        private System.Windows.Forms.Panel LastNameTbPanelL;
-        private System.Windows.Forms.TextBox ListOfStudentLastNameTb;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Panel MiddleNameTbPanelL;
-        private System.Windows.Forms.TextBox ListOfStudentMiddleNameTb;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Panel FirstNameTbPanelL;
-        private System.Windows.Forms.TextBox ListOfStudentFirstNameTb;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Panel StudentIdTbPanelL;
-        private System.Windows.Forms.TextBox ListOfStudentStudentIdTb;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox ListOfStudentCourseCb;
-        private System.Windows.Forms.ComboBox ListOfStudentYearLevelCb;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label StudentBtnLabel1;
-        private System.Windows.Forms.Label StudentBtnLabel16;
-        private System.Windows.Forms.Label StudentBtnLabel15;
-        private System.Windows.Forms.Label StudentBtnLabel14;
-        private System.Windows.Forms.Label StudentBtnLabel13;
-        private System.Windows.Forms.Label StudentBtnLabel12;
-        private System.Windows.Forms.Label StudentBtnLabel11;
-        private System.Windows.Forms.Label StudentBtnLabel10;
-        private System.Windows.Forms.Label StudentBtnLabel8;
-        private System.Windows.Forms.Label StudentBtnLabel7;
-        private System.Windows.Forms.Label StudentBtnLabel6;
-        private System.Windows.Forms.Label StudentBtnLabel4;
-        private System.Windows.Forms.Label StudentBtnLabel3;
-        private System.Windows.Forms.Label StudentBtnLabel2;
-        private System.Windows.Forms.Label StudentBtnLabel9;
-        private System.Windows.Forms.Label StudentBtnLabel5;
+        public System.Windows.Forms.Panel DashboardPanel;
+        public System.Windows.Forms.Label WelcomeAdminLabel;
+        public System.Windows.Forms.Button TimeManagementSidebarBtn;
+        public System.Windows.Forms.Button DashboardSidebarBtn;
+        public System.Windows.Forms.Panel StudentPanel;
+        public System.Windows.Forms.Label StudentNameLabel;
+        public System.Windows.Forms.TextBox StudentFirstNameTb;
+        public System.Windows.Forms.Panel FullNameTbPanelR;
+        public System.Windows.Forms.Label StudentIDLabel;
+        public System.Windows.Forms.Panel StudentIDTbPanelR;
+        public System.Windows.Forms.TextBox StudentIDTb;
+        public System.Windows.Forms.Label CourseLabel;
+        public System.Windows.Forms.Button RegisterStudentBtn;
+        public System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Button AdminCreation;
+        public System.Windows.Forms.Panel AdminReportsPanel;
+        public System.Windows.Forms.DataGridView ReportsDataGridView;
+        public System.Windows.Forms.Panel AdminCreationPanel;
+        public System.Windows.Forms.Button PrintReportBtn;
+        public System.Windows.Forms.Panel TimeManagementPanel;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Button StudentTimeBtn16;
+        public System.Windows.Forms.Button StudentTimeBtn15;
+        public System.Windows.Forms.Button StudentTimeBtn14;
+        public System.Windows.Forms.Button StudentTimeBtn12;
+        public System.Windows.Forms.Button StudentTimeBtn11;
+        public System.Windows.Forms.Button StudentTimeBtn10;
+        public System.Windows.Forms.Button StudentTimeBtn9;
+        public System.Windows.Forms.Button StudentTimeBtn8;
+        public System.Windows.Forms.Button StudentTimeBtn7;
+        public System.Windows.Forms.Button StudentTimeBtn6;
+        public System.Windows.Forms.Button StudentTimeBtn5;
+        public System.Windows.Forms.Button StudentTimeBtn4;
+        public System.Windows.Forms.Button StudentTimeBtn3;
+        public System.Windows.Forms.Button StudentTimeBtn2;
+        public System.Windows.Forms.Button StudentTimeBtn1;
+        public System.Windows.Forms.Button StudentTimeBtn13;
+        public System.Windows.Forms.Button RegisterAdminBtn;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Panel RfidTbPanelAc;
+        public System.Windows.Forms.TextBox AdminRfidTb;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Panel LastNameTbPanelAc;
+        public System.Windows.Forms.TextBox AdminLastNameTb;
+        public System.Windows.Forms.Panel MiddleNameTbPanelAc;
+        public System.Windows.Forms.TextBox AdminMiddleNameTb;
+        public System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.Panel FirstNameTbPanelAc;
+        public System.Windows.Forms.TextBox AdminFirstNameTb;
+        public System.Windows.Forms.Panel PersonnelIdTbPanelAc;
+        public System.Windows.Forms.TextBox IDPersonnelTb;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Button StudentManagementSidebarBtn;
+        public System.Windows.Forms.Panel ListOfStudentsPanel;
+        public System.Windows.Forms.DataGridView AdminDgv;
+        public System.Windows.Forms.Button DeleteAdmin_Btn;
+        public System.Windows.Forms.Button UpdateAdmin_Btn;
+        public System.Windows.Forms.Label label13;
+        public System.Windows.Forms.Panel LastNameTbPanelR;
+        public System.Windows.Forms.TextBox StudentLastNameTb;
+        public System.Windows.Forms.Label label12;
+        public System.Windows.Forms.Panel MiddleNameTbPanelR;
+        public System.Windows.Forms.TextBox StudentMiddleNameTb;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.ComboBox StudentCourseCb;
+        public System.Windows.Forms.ComboBox StudentYearLevelCb;
+        public System.Windows.Forms.Button RegisterRfidBtn;
+        public System.Windows.Forms.DataGridView ListOfStudentDgv;
+        public System.Windows.Forms.Button DeleteStudentBtn;
+        public System.Windows.Forms.Button UpdateStudentBtn;
+        public System.Windows.Forms.Panel LastNameTbPanelL;
+        public System.Windows.Forms.TextBox ListOfStudentLastNameTb;
+        public System.Windows.Forms.Label label16;
+        public System.Windows.Forms.Panel MiddleNameTbPanelL;
+        public System.Windows.Forms.TextBox ListOfStudentMiddleNameTb;
+        public System.Windows.Forms.Label label15;
+        public System.Windows.Forms.Panel FirstNameTbPanelL;
+        public System.Windows.Forms.TextBox ListOfStudentFirstNameTb;
+        public System.Windows.Forms.Label label14;
+        public System.Windows.Forms.Panel StudentIdTbPanelL;
+        public System.Windows.Forms.TextBox ListOfStudentStudentIdTb;
+        public System.Windows.Forms.Label label17;
+        public System.Windows.Forms.ComboBox ListOfStudentCourseCb;
+        public System.Windows.Forms.ComboBox ListOfStudentYearLevelCb;
+        public System.Windows.Forms.Label label18;
+        public System.Windows.Forms.Label label19;
+        public System.Windows.Forms.Label StudentBtnLabel1;
+        public System.Windows.Forms.Label StudentBtnLabel16;
+        public System.Windows.Forms.Label StudentBtnLabel15;
+        public System.Windows.Forms.Label StudentBtnLabel14;
+        public System.Windows.Forms.Label StudentBtnLabel13;
+        public System.Windows.Forms.Label StudentBtnLabel12;
+        public System.Windows.Forms.Label StudentBtnLabel11;
+        public System.Windows.Forms.Label StudentBtnLabel10;
+        public System.Windows.Forms.Label StudentBtnLabel8;
+        public System.Windows.Forms.Label StudentBtnLabel7;
+        public System.Windows.Forms.Label StudentBtnLabel6;
+        public System.Windows.Forms.Label StudentBtnLabel4;
+        public System.Windows.Forms.Label StudentBtnLabel3;
+        public System.Windows.Forms.Label StudentBtnLabel2;
+        public System.Windows.Forms.Label StudentBtnLabel9;
+        public System.Windows.Forms.Label StudentBtnLabel5;
         private Bunifu.Framework.UI.BunifuElipse MainFormElipse;
         private Bunifu.Framework.UI.BunifuElipse StudentTimeBtn2Elipse;
         private Bunifu.Framework.UI.BunifuElipse StudentTimeBtn3Elipse;
@@ -2307,26 +2367,26 @@
         private Bunifu.Framework.UI.BunifuElipse ReportsDataGridViewElipse;
         private Bunifu.Framework.UI.BunifuElipse PrintReportBtnElipse;
         private Bunifu.Framework.UI.BunifuElipse StudentTimeBtn1Elipse;
-        private System.Windows.Forms.Panel HeaderPanel;
-        private System.Windows.Forms.Panel SidebarPanel;
+        public System.Windows.Forms.Panel HeaderPanel;
+        public System.Windows.Forms.Panel SidebarPanel;
         public System.Windows.Forms.Button ListOfStudentsSidebarBtn;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label HeaderPanelLabel;
-        private System.Windows.Forms.Button SidebarBtn;
-        private System.Windows.Forms.Button LogoutBtn;
-        private System.Windows.Forms.Panel AdminFields;
-        private System.Windows.Forms.Panel AdminTablePanel;
-        private System.Windows.Forms.Panel TimeManagementBtnPanel1;
-        private System.Windows.Forms.Panel TimeManagementBtnPanel4;
-        private System.Windows.Forms.Panel TimeManagementBtnPanel3;
-        private System.Windows.Forms.Panel TimeManagementBtnPanel2;
-        private System.Windows.Forms.Panel StudentsTablePanel;
-        private System.Windows.Forms.Panel StudentFieldsPanel;
-        private System.Windows.Forms.Panel WelcomeAdminPanel;
-        private System.Windows.Forms.Panel RegisterStudentFieldPanel;
-        private System.Windows.Forms.Button CloseBtn;
-        private System.Windows.Forms.Button MaximizeBtn;
-        private System.Windows.Forms.Button MinimizeBtn;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.Label HeaderPanelLabel;
+        public System.Windows.Forms.Button SidebarBtn;
+        public System.Windows.Forms.Button LogoutBtn;
+        public System.Windows.Forms.Panel AdminFields;
+        public System.Windows.Forms.Panel AdminTablePanel;
+        public System.Windows.Forms.Panel TimeManagementBtnPanel1;
+        public System.Windows.Forms.Panel TimeManagementBtnPanel4;
+        public System.Windows.Forms.Panel TimeManagementBtnPanel3;
+        public System.Windows.Forms.Panel TimeManagementBtnPanel2;
+        public System.Windows.Forms.Panel StudentsTablePanel;
+        public System.Windows.Forms.Panel StudentFieldsPanel;
+        public System.Windows.Forms.Panel WelcomeAdminPanel;
+        public System.Windows.Forms.Panel RegisterStudentFieldPanel;
+        public System.Windows.Forms.Button CloseBtn;
+        public System.Windows.Forms.Button MaximizeBtn;
+        public System.Windows.Forms.Button MinimizeBtn;
         private Bunifu.Framework.UI.BunifuElipse StudentTimeBtn7Elipse;
         private Bunifu.Framework.UI.BunifuElipse SidebarBtnElipse;
     }

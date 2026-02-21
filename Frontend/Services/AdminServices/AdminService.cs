@@ -42,7 +42,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
             catch (Exception ex) 
             {
-                Console.WriteLine($"Error here:{ex.Message}");
+                Console.WriteLine($"Error here:{ex}");
                 return null;
             }
             
@@ -350,8 +350,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
         {
             var urlBuilder = new StringBuilder("api/v1/admins");
             var hasAny = false;
-
-            void AddParam(string name, string value)
+            // Optional debug parse (remove later)
+            try
+            {
+                void AddParam(string name, string value)
             {
                 if (!hasAny)
                 {
@@ -387,9 +389,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             //Console.WriteLine("Body:");
             //Console.WriteLine(body);
 
-            // Optional debug parse (remove later)
-            try
-            {
+
                 var obj = JObject.Parse(body);
 
                 // NOTE: adjust this depending on what /admins returns
@@ -397,19 +397,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 var itemsCount = obj["value"]?["items"]?.Count() ?? 0;
 
                 //Console.WriteLine("Admin items count: " + itemsCount);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Request failed.");
+                    return null;
+                }
+
+                return body;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Failed to parse admins JSON: " + ex.Message);
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Request failed.");
                 return null;
             }
-
-            return body;
         }
 
     }

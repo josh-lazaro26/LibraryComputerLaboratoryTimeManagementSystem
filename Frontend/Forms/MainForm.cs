@@ -24,8 +24,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private PanelHandler _panelHandler;
         private int? _selectedAdminId;
         private bool _isSidebarExpanded = false;
-        private PanelPositionAnimator _panelAnimator;
-        private SlidePanelController _sidePanelController;
+        public PanelPositionAnimator _panelAnimator;
         private ButtonHoverEffect _sidebarHoverEffect;
         private UIResponsiveness _uiResponsiveness;
         private AdminService _adminService;
@@ -33,8 +32,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private UserServices _userService;
         private string _currentStudentRfid;
         private List<Button> _timeButtons;
-        private SidebarAnimator _sidebarAnimator;
+        public SidebarAnimator _sidebarAnimator;
         private List<Label> _timeLabels;
+        private bool _isSidebarOpen = false;
         private Dictionary<int, TimeSpan> _remainingBySessionId; // sessionId -> remaining
         private System.Windows.Forms.Timer _countdownTimer;
 
@@ -103,18 +103,22 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             InitTimeButtons();
             WireTimeButtonClicks();
 
-            InitYearLevelComboBox(); 
+            InitYearLevelComboBox();
             InitTimeLabelsAndTimer();
 
             StudentCourseCb.SelectedIndex = 0;
             ListOfStudentCourseCb.SelectedIndex = 0;
             //_panelHandler.ShowOnly(DashboardPanel);
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.Apply(this);
+                _panelAnimator?.Toggle();
+            }
 
             await LoadAdminsAsync();
             await LoadStudentsAsync();
             await LoadActiveSessionsToButtons();
         }
-
 
         private void HandleNewSession(object data)
         {
@@ -144,7 +148,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     btn.Text = session.Name;
                     btn.Tag = session;
                     btn.Enabled = true;
-                    btn.ForeColor = SystemColors.ControlText;
+                    btn.ForeColor = SystemColors.ControlLight;
 
                     var remaining = ParseApiDuration(session.Duration);
                     _remainingBySessionId[session.Id] = remaining;
@@ -170,7 +174,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
 
-                    lbl.Text = "00:00";
+                    lbl.Text = "00:00:00";
 
                     // Remove from countdown dictionary
                     if (_remainingBySessionId.ContainsKey(sessionId))
@@ -182,7 +186,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 }
             }
         }
-
 
         private void SignalRInitialize()
         {
@@ -233,51 +236,55 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (_panelAnimator == null)
                 _panelAnimator = new PanelPositionAnimator(5, 8);
 
-            // Clear previous page animations (CRITICAL)
             _panelAnimator.Clear();
 
-            // Register ONLY panels inside AdminCreationPanel
-            _panelAnimator.AddPanel(
-                AdminFields,
-                new Point(358, 124), // Sidebar Expanded
-                new Point(224, 124)  // Sidebar Collapsed
-            );
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                // Snap panels to correct position based on sidebar state
+                SnapPanelsToCurrentState();
+                return;
+            }
 
-            _panelAnimator.AddPanel(
-                AdminTablePanel,
-                new Point(784, 124), // Expanded
-                new Point(673, 124)  // Collapsed
-            );
+            _panelAnimator.AddPanel(AdminFields, new Point(358, 124), new Point(224, 124));
+            _panelAnimator.AddPanel(AdminTablePanel, new Point(784, 124), new Point(673, 124));
+            SnapPanelsToCurrentState();
         }
+
         private void SetupDashboardAnimation()
         {
             if (_panelAnimator == null)
                 _panelAnimator = new PanelPositionAnimator(5, 8);
 
-            // Clear previous page animations (CRITICAL)
             _panelAnimator.Clear();
 
-            // Register ONLY panels inside AdminCreationPanel
-            _panelAnimator.AddPanel(
-                WelcomeAdminPanel,
-                new Point(385, 229), // Sidebar Expanded
-                new Point(261, 229)  // Sidebar Collapsed
-            );
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
+
+            _panelAnimator.AddPanel(WelcomeAdminPanel, new Point(385, 229), new Point(261, 229));
+            SnapPanelsToCurrentState();
         }
+
         private void SetupStudentRegistrationAnimation()
         {
             if (_panelAnimator == null)
                 _panelAnimator = new PanelPositionAnimator(5, 8);
 
-            // Clear previous page animations (CRITICAL)
             _panelAnimator.Clear();
 
-            // Register ONLY panels inside AdminCreationPanel
-            _panelAnimator.AddPanel(
-                RegisterStudentFieldPanel,
-                new Point(299, 112), // Sidebar Expanded
-                new Point(167, 112)  // Sidebar Collapsed
-            );
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
+
+            _panelAnimator.AddPanel(RegisterStudentFieldPanel, new Point(299, 112), new Point(167, 112));
+            SnapPanelsToCurrentState();
         }
 
         private void SetupStudentCreationAnimation()
@@ -285,21 +292,18 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (_panelAnimator == null)
                 _panelAnimator = new PanelPositionAnimator(5, 8);
 
-            // Clear previous page animations (CRITICAL)
             _panelAnimator.Clear();
 
-            // Register ONLY panels inside AdminCreationPanel
-            _panelAnimator.AddPanel(
-                StudentFieldsPanel,
-                new Point(355, 127), // Sidebar Expanded
-                new Point(258, 127)  // Sidebar Collapsed
-            );
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
 
-            _panelAnimator.AddPanel(
-                StudentsTablePanel,
-                new Point(732, 127), // Expanded
-                new Point(644, 127)  // Collapsed
-            );
+            _panelAnimator.AddPanel(StudentFieldsPanel, new Point(355, 127), new Point(258, 127));
+            _panelAnimator.AddPanel(StudentsTablePanel, new Point(732, 127), new Point(644, 127));
+            SnapPanelsToCurrentState();
         }
 
         private void SetupTimeManagementAnimation()
@@ -307,33 +311,25 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (_panelAnimator == null)
                 _panelAnimator = new PanelPositionAnimator(5, 8);
 
-            // Clear previous page animations (CRITICAL)
             _panelAnimator.Clear();
 
-            // Register ONLY panels inside AdminCreationPanel
-            _panelAnimator.AddPanel(
-                TimeManagementBtnPanel1,
-                new Point(308, 123), // Sidebar Expanded
-                new Point(162, 123)  // Sidebar Collapsed
-            );
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
 
-            _panelAnimator.AddPanel(
-                TimeManagementBtnPanel2,
-                new Point(555, 123), // Expanded
-                new Point(442, 123)  // Collapsed
-            );
+            _panelAnimator.AddPanel(TimeManagementBtnPanel1, new Point(308, 123), new Point(162, 123));
+            _panelAnimator.AddPanel(TimeManagementBtnPanel2, new Point(555, 123), new Point(442, 123));
+            _panelAnimator.AddPanel(TimeManagementBtnPanel3, new Point(802, 123), new Point(716, 123));
+            _panelAnimator.AddPanel(TimeManagementBtnPanel4, new Point(1050, 123), new Point(994, 123));
+            SnapPanelsToCurrentState();
+        }
 
-            _panelAnimator.AddPanel(
-                TimeManagementBtnPanel3,
-                new Point(802, 123), // Expanded
-                new Point(716, 123)  // Collapsed
-            );
-
-            _panelAnimator.AddPanel(
-                TimeManagementBtnPanel4,
-                new Point(1050, 123), // Expanded
-                new Point(994, 123)  // Collapsed
-            );
+        private void SnapPanelsToCurrentState()
+        {
+            _panelAnimator?.SnapToState(!_sidebarAnimator.IsExpanded);
         }
 
         private void UIHandler()
@@ -344,6 +340,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 normalForeColor: Color.White,
                 hoverForeColor: Color.White
             );
+
 
             _sidebarHoverEffect.Attach(DashboardSidebarBtn);
             _sidebarHoverEffect.Attach(ListOfStudentsSidebarBtn);
@@ -438,7 +435,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 }
                 else
                 {
-                    lbl.Text = "00:00";
+                    lbl.Text = "00:00:00";
                 }
             }
         }
@@ -448,25 +445,17 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (!TimeSpan.TryParse(durationStr, out var ts))
                 return TimeSpan.Zero;
 
-            // your API often returns negative spans like "-00:00:35..."
+            // API often returns negative spans like "-00:00:35..."
             // use absolute value so you can count down visually
             return ts.Duration();
         }
 
         private static string ToMmSs(TimeSpan ts)
         {
-            if (ts <= TimeSpan.Zero) return "00:00";
+            if (ts <= TimeSpan.Zero) return "00:00:00";
 
-            // If there is 1 hour or more, show hh:mm:ss
-            if (ts.TotalHours >= 1)
-            {
-                return ts.ToString(@"hh\:mm\:ss");
-            }
-
-            // Otherwise just show mm:ss
-            return ts.ToString(@"mm\:ss");
+            return ts.ToString(@"hh\:mm\:ss");
         }
-
 
         private void DashboardSidebarBtn_Click(object sender, EventArgs e)
         {
@@ -577,7 +566,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
 
-                    lbl.Text = "00:00";
+                    lbl.Text = "00:00:00:00";
                 }
             }
         }
@@ -586,10 +575,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             if (_timeLabels == null) return;
             foreach (var lbl in _timeLabels)
-                lbl.Text = "00:00";
+                lbl.Text = "00:00:00";
         }
-
-
 
         private async void RegisterAdminBtn_Click(object sender, EventArgs e)
         {
@@ -629,7 +616,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             RegisterStudentBtn.Enabled = false;
 
-            var isSuccess = await _studentServices.CreateStudents(student); // assuming _studentService injected
+            var isSuccess = await _studentServices.CreateStudents(student); 
 
             RegisterStudentBtn.Enabled = true;
 
@@ -762,6 +749,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 UpdateAdmin_Btn.Enabled = true;
             }
         }
+
         private void InitYearLevelComboBox()
         {
             var years = new List<YearItem>
@@ -781,18 +769,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             ListOfStudentYearLevelCb.ValueMember = "Value";    // actual stored value
         }
 
-        private void LogoutBtn_Click(object sender, EventArgs e)
-        {
-            var RfidForm = new RFIDForm();
-            RfidForm.Show();
-            this.Close();
-        }
-
         private void SidebarBtn_Click(object sender, EventArgs e)
         {
             _sidebarAnimator.Toggle();
 
-            // Animate based on which main panel is active
+            // If maximized, always use scaled positions
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                _panelAnimator?.Toggle();
+                return;
+            }
+
+            // Normal window - use original hardcoded positions
             if (AdminCreationPanel.Visible)
             {
                 SetupAdminCreationAnimation();
@@ -827,12 +816,21 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
         private void MaximizeBtn_Click(object sender, EventArgs e)
         {
-
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                MainFormResponsiveLayout.RestoreNormalLayout(this); // Full restore
+            }
+            else if (this.WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                MainFormResponsiveLayout.Apply(this);
+            }
         }
 
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
-
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void LettersOnly_KeyPress(object sender, KeyPressEventArgs e)
@@ -846,6 +844,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             {
                 e.Handled = true;
             }
+        }
+
+        private void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            var RfidForm = new RFIDForm();
+            RfidForm.Show();
+            this.Close();
         }
     }
 }

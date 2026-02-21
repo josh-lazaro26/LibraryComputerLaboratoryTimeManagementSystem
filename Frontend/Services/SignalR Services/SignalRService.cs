@@ -1,6 +1,7 @@
 ﻿using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 internal class SignalRService
@@ -18,19 +19,20 @@ internal class SignalRService
     }
 
     protected SignalRService() { }
-
     public async Task InitializeAsync()
     {
         _connection = new HubConnectionBuilder()
             .WithUrl("https://library-laboratory-management-system.onrender.com/api/v1/hubs/session", options =>
             {
                 options.AccessTokenProvider = _tokenProvider;
+                options.HttpMessageHandlerFactory = _ => new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
             })
             .WithAutomaticReconnect()
             .Build();
-
         RegisterHandlers();
-
         await _connection.StartAsync();
     }
     public HubConnection GetHubConnection()

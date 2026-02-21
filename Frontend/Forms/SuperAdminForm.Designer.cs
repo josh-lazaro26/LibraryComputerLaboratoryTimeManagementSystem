@@ -40,15 +40,14 @@
             this.ShowPasswordPb = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.SuperAdminFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.SuperAdminLoginBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.SuperAdminUsernamePanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.SuperAdminPasswordPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.bunifuElipse4 = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.MinimizeBtn = new System.Windows.Forms.Button();
             this.MaximizeBtn = new System.Windows.Forms.Button();
             this.CloseBtn = new System.Windows.Forms.Button();
             this.LoginPanel = new System.Windows.Forms.Panel();
+            this.SuperAdminFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.SuperAdminUsernamePanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.SuperAdminPasswordPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.SuperAdminLoginBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.SuperAdminPasswordPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HidePasswordPb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ShowPasswordPb)).BeginInit();
@@ -183,31 +182,6 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Password";
             // 
-            // SuperAdminFormElipse
-            // 
-            this.SuperAdminFormElipse.ElipseRadius = 20;
-            this.SuperAdminFormElipse.TargetControl = this;
-            // 
-            // SuperAdminLoginBtnElipse
-            // 
-            this.SuperAdminLoginBtnElipse.ElipseRadius = 10;
-            this.SuperAdminLoginBtnElipse.TargetControl = this.SuperAdminLoginBtn;
-            // 
-            // SuperAdminUsernamePanelElipse
-            // 
-            this.SuperAdminUsernamePanelElipse.ElipseRadius = 15;
-            this.SuperAdminUsernamePanelElipse.TargetControl = this.SuperAdminUsernamePanel;
-            // 
-            // SuperAdminPasswordPanelElipse
-            // 
-            this.SuperAdminPasswordPanelElipse.ElipseRadius = 15;
-            this.SuperAdminPasswordPanelElipse.TargetControl = this.SuperAdminPasswordPanel;
-            // 
-            // bunifuElipse4
-            // 
-            this.bunifuElipse4.ElipseRadius = 20;
-            this.bunifuElipse4.TargetControl = this;
-            // 
             // MinimizeBtn
             // 
             this.MinimizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -262,6 +236,26 @@
             this.LoginPanel.Size = new System.Drawing.Size(640, 600);
             this.LoginPanel.TabIndex = 14;
             // 
+            // SuperAdminFormElipse
+            // 
+            this.SuperAdminFormElipse.ElipseRadius = 20;
+            this.SuperAdminFormElipse.TargetControl = this;
+            // 
+            // SuperAdminUsernamePanelElipse
+            // 
+            this.SuperAdminUsernamePanelElipse.ElipseRadius = 10;
+            this.SuperAdminUsernamePanelElipse.TargetControl = this.SuperAdminUsernamePanel;
+            // 
+            // SuperAdminPasswordPanelElipse
+            // 
+            this.SuperAdminPasswordPanelElipse.ElipseRadius = 10;
+            this.SuperAdminPasswordPanelElipse.TargetControl = this.SuperAdminPasswordPanel;
+            // 
+            // SuperAdminLoginBtnElipse
+            // 
+            this.SuperAdminLoginBtnElipse.ElipseRadius = 10;
+            this.SuperAdminLoginBtnElipse.TargetControl = this.SuperAdminLoginBtn;
+            // 
             // SuperAdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
@@ -300,14 +294,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox ShowPasswordPb;
         private System.Windows.Forms.PictureBox HidePasswordPb;
-        private Bunifu.Framework.UI.BunifuElipse SuperAdminFormElipse;
-        private Bunifu.Framework.UI.BunifuElipse SuperAdminLoginBtnElipse;
-        private Bunifu.Framework.UI.BunifuElipse SuperAdminUsernamePanelElipse;
-        private Bunifu.Framework.UI.BunifuElipse SuperAdminPasswordPanelElipse;
-        private Bunifu.Framework.UI.BunifuElipse bunifuElipse4;
         private System.Windows.Forms.Button CloseBtn;
         private System.Windows.Forms.Button MaximizeBtn;
         private System.Windows.Forms.Button MinimizeBtn;
         private System.Windows.Forms.Panel LoginPanel;
+        private Bunifu.Framework.UI.BunifuElipse SuperAdminFormElipse;
+        private Bunifu.Framework.UI.BunifuElipse SuperAdminUsernamePanelElipse;
+        private Bunifu.Framework.UI.BunifuElipse SuperAdminPasswordPanelElipse;
+        private Bunifu.Framework.UI.BunifuElipse SuperAdminLoginBtnElipse;
     }
 }

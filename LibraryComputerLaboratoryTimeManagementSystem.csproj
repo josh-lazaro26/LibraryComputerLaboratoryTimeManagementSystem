@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bunifu.Licensing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=f89b4760ba7dcb6b, processorArchitecture=MSIL">
+      <HintPath>packages\Bunifu.Licensing.6.3.0\lib\net472\Bunifu.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Bunifu.UI.WinForms, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Bunifu.UI.WinForms.9.1.0\lib\net472\Bunifu.UI.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="Bunifu.UI.WinForms.1.5.3, Version=1.5.3.0, Culture=neutral, PublicKeyToken=e8e24ccd28363fe9, processorArchitecture=MSIL">
       <HintPath>packages\Bunifu.UI.WinForms.1.5.3.2.0.0\lib\net452\Bunifu.UI.WinForms.1.5.3.dll</HintPath>
     </Reference>
@@ -87,7 +93,7 @@
       <HintPath>packages\Microsoft.Extensions.Primitives.10.0.3\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
@@ -96,9 +102,13 @@
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.CodeDom, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.CodeDom.9.0.4\lib\net462\System.CodeDom.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Diagnostics.DiagnosticSource.10.0.3\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -195,7 +205,6 @@
     <Compile Include="Frontend\Animation\PanelHandler\PanelPositionAnimator.cs" />
     <Compile Include="Frontend\Animation\Sidebar Animation\ButtonHoverEffect.cs" />
     <Compile Include="Frontend\Animation\Sidebar Animation\SidebarAnimation.cs" />
-    <Compile Include="Frontend\Animation\Sidebar Animation\SlidePanelController.cs" />
     <Compile Include="Frontend\Animation\UIResponsiveness\UIResizer.cs" />
     <Compile Include="Frontend\Animation\UIResponsiveness\UIResponsiveness.cs" />
     <Compile Include="Frontend\Forms\AddTimeModalForm.cs">
@@ -235,6 +244,7 @@
       <DependentUpon>SuperAdminForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Frontend\HelperClasses\TimeHelper.cs" />
+    <Compile Include="Frontend\Layouts\MainFormResponsiveLayout.cs" />
     <Compile Include="Frontend\Models\Admin\AdminDao.cs" />
     <Compile Include="Frontend\Models\Admin\AdminDto.cs" />
     <Compile Include="Frontend\Models\Session\SessionDao.cs" />
@@ -251,12 +261,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frontend\Forms\AddTimeModalForm.resx">
       <DependentUpon>AddTimeModalForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\Forms\RFIDForm.resx">
       <DependentUpon>RFIDForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\Forms\StartServer.resx">
       <DependentUpon>StartServer.cs</DependentUpon>

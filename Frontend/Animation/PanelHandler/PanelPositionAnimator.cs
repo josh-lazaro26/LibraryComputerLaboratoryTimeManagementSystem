@@ -85,4 +85,14 @@ public class PanelPositionAnimator
             return Math.Max(current - step, target);
         return current;
     }
+    public void SnapToState(bool collapsed)
+    {
+        foreach (var item in _panels)
+        {
+            item.Panel.Location = collapsed
+                ? item.CollapsedPosition
+                : item.ExpandedPosition;
+        }
+        _isCollapsed = collapsed;
+    }
 }
