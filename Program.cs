@@ -21,7 +21,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
                 { 1, TimeSpan.FromMinutes(120) } // key = 1, value = 2 hours
             };
 
-            Application.Run(new MainForm());
+            Application.Run(new StartServer());
 
         }
     }

@@ -108,7 +108,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             StudentCourseCb.SelectedIndex = 0;
             ListOfStudentCourseCb.SelectedIndex = 0;
-            //_panelHandler.ShowOnly(DashboardPanel);
+            _panelHandler.ShowOnly(DashboardPanel);
             if (this.WindowState == FormWindowState.Maximized)
             {
                 MainFormResponsiveLayout.Apply(this);
