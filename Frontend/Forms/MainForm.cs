@@ -37,6 +37,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private bool _isSidebarOpen = false;
         private Dictionary<int, TimeSpan> _remainingBySessionId; // sessionId -> remaining
         private System.Windows.Forms.Timer _countdownTimer;
+        private string _selectedStudentId;
 
         private readonly SignalRService _signalRService;
         public MainForm()
@@ -97,6 +98,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             AdminFirstNameTb.KeyPress += LettersOnly_KeyPress;
             AdminMiddleNameTb.KeyPress += LettersOnly_KeyPress;
             AdminLastNameTb.KeyPress += LettersOnly_KeyPress;
+            ListOfStudentDgv.CellClick += ListOfStudentDgv_CellClick;
+            ListOfStudentDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            ListOfStudentDgv.MultiSelect = false;
         }
         private async void MainForm_Load(object sender, EventArgs e)
         {
@@ -515,6 +519,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             ListOfStudentDgv.AutoGenerateColumns = true;
             ListOfStudentDgv.DataSource = result.Value.Items;
+
+            if (ListOfStudentDgv.Columns.Contains("Id"))
+                ListOfStudentDgv.Columns["Id"].Visible = false;
         }
         private async Task LoadAdminsAsync(string query = null, int pageNumber = 1, int pageSize = 10)
         {
@@ -752,21 +759,27 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
         private void InitYearLevelComboBox()
         {
-            var years = new List<YearItem>
+            // Registration form - uses your own format
+            StudentYearLevelCb.DataSource = new List<YearItem>
             {
-                new YearItem { Value = 0, Text = "1st year" },
-                new YearItem { Value = 1, Text = "2nd year" },
-                new YearItem { Value = 2, Text = "3rd year" },
-                new YearItem { Value = 3, Text = "4th year" }
+                new YearItem { Value = 0, Text = "First Year" },
+                new YearItem { Value = 1, Text = "Second Year" },
+                new YearItem { Value = 2, Text = "Third Year" },
+                new YearItem { Value = 3, Text = "Fourth Year" }
             };
+                    StudentYearLevelCb.DisplayMember = "Text";
+                    StudentYearLevelCb.ValueMember = "Value";
 
-            StudentYearLevelCb.DataSource = years;
-            StudentYearLevelCb.DisplayMember = "Text";   // what user sees
-            StudentYearLevelCb.ValueMember = "Value";    // actual stored value
-
-            ListOfStudentYearLevelCb.DataSource = years;
-            ListOfStudentYearLevelCb.DisplayMember = "Text";   // what user sees
-            ListOfStudentYearLevelCb.ValueMember = "Value";    // actual stored value
+                    // List of students form - must match API response exactly
+            ListOfStudentYearLevelCb.DataSource = new List<YearItem>
+            {
+                new YearItem { Value = 0, Text = "First Year" },
+                new YearItem { Value = 1, Text = "Second Year" },
+                new YearItem { Value = 2, Text = "Third Year" },
+                new YearItem { Value = 3, Text = "Fourth Year" }
+            };
+            ListOfStudentYearLevelCb.DisplayMember = "Text";
+            ListOfStudentYearLevelCb.ValueMember = "Value";
         }
 
         private void SidebarBtn_Click(object sender, EventArgs e)
@@ -851,6 +864,75 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             var RfidForm = new RFIDForm();
             RfidForm.Show();
             this.Close();
+        }
+
+        private async void UpdateStudentBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(_selectedStudentId))
+            {
+                MessageBox.Show("Please select a student row first.");
+                return;
+            }
+
+            var studentUpdate = new StudentUpdateDAO
+            {
+                Id = _selectedStudentId,
+                FirstName = ListOfStudentFirstNameTb.Text?.Trim(),
+                MiddleName = ListOfStudentMiddleNameTb.Text?.Trim(),
+                LastName = ListOfStudentLastNameTb.Text?.Trim(),
+                StudentId = ListOfStudentStudentIdTb.Text?.Trim(),
+                Course = ListOfStudentCourseCb.SelectedItem?.ToString(),
+                YearLevel = ListOfStudentYearLevelCb.SelectedValue?.ToString()
+            };
+
+            try
+            {
+                UpdateStudentBtn.Enabled = false;
+
+                await _adminService.UpdateStudent(studentUpdate); // NOT _adminService
+
+                await LoadStudentsAsync();
+                _selectedStudentId = null;
+                MessageBox.Show("Student updated successfully.", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Update failed: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                UpdateStudentBtn.Enabled = true;
+            }
+        }
+
+        private void ListOfStudentDgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = ListOfStudentDgv.Rows[e.RowIndex];
+            var student = row.DataBoundItem as UserDto;
+
+            if (student == null) return;
+
+            _selectedStudentId = student.Id.ToString();
+
+            ListOfStudentFirstNameTb.Text = row.Cells["FirstName"].Value?.ToString();
+            ListOfStudentMiddleNameTb.Text = row.Cells["MiddleName"].Value?.ToString();
+            ListOfStudentLastNameTb.Text = row.Cells["LastName"].Value?.ToString();
+            ListOfStudentStudentIdTb.Text = row.Cells["StudentId"].Value?.ToString();
+            ListOfStudentCourseCb.SelectedItem = row.Cells["Course"].Value?.ToString();
+
+            var yearLevelText = row.Cells["YearLevel"].Value?.ToString();
+            foreach (YearItem item in ListOfStudentYearLevelCb.Items)
+            {
+                if (item.Text == yearLevelText)
+                {
+                    ListOfStudentYearLevelCb.SelectedItem = item;
+                    break;
+                }
+            }
         }
     }
 }

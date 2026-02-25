@@ -91,7 +91,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.Studen
                 Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
 
                 var body = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("Body:");
+                Console.WriteLine("Body ni kristo:"+ body);
 
                     var obj = JObject.Parse(body);
                     var role = (string)obj["value"]?["role"]; // adjust path to your actual JSON
