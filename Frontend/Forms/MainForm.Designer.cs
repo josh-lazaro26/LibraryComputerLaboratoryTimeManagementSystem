@@ -60,6 +60,7 @@
             this.StudentMiddleNameTb = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.AdminReportsPanel = new System.Windows.Forms.Panel();
+            this.ReportDgvPanel = new System.Windows.Forms.Panel();
             this.PrintReportBtn = new System.Windows.Forms.Button();
             this.ReportsDataGridView = new System.Windows.Forms.DataGridView();
             this.AdminCreationPanel = new System.Windows.Forms.Panel();
@@ -195,6 +196,7 @@
             this.SidebarBtn = new System.Windows.Forms.Button();
             this.HeaderPanelLabel = new System.Windows.Forms.Label();
             this.SidebarPanel = new System.Windows.Forms.Panel();
+            this.ReportBtn = new System.Windows.Forms.Button();
             this.LogoutBtn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.SidebarBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
@@ -207,6 +209,7 @@
             this.LastNameTbPanelR.SuspendLayout();
             this.MiddleNameTbPanelR.SuspendLayout();
             this.AdminReportsPanel.SuspendLayout();
+            this.ReportDgvPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).BeginInit();
             this.AdminCreationPanel.SuspendLayout();
             this.AdminTablePanel.SuspendLayout();
@@ -314,6 +317,7 @@
             this.AdminCreation.Text = "        Admin Creation";
             this.AdminCreation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.AdminCreation.UseVisualStyleBackColor = false;
+            this.AdminCreation.Visible = false;
             this.AdminCreation.Click += new System.EventHandler(this.AdminCreation_Click);
             // 
             // TimeManagementSidebarBtn
@@ -641,16 +645,26 @@
             // AdminReportsPanel
             // 
             this.AdminReportsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.AdminReportsPanel.Controls.Add(this.PrintReportBtn);
-            this.AdminReportsPanel.Controls.Add(this.ReportsDataGridView);
+            this.AdminReportsPanel.Controls.Add(this.ReportDgvPanel);
             this.AdminReportsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AdminReportsPanel.Location = new System.Drawing.Point(0, 0);
             this.AdminReportsPanel.Name = "AdminReportsPanel";
             this.AdminReportsPanel.Size = new System.Drawing.Size(1280, 780);
             this.AdminReportsPanel.TabIndex = 11;
             // 
+            // ReportDgvPanel
+            // 
+            this.ReportDgvPanel.BackColor = System.Drawing.Color.Transparent;
+            this.ReportDgvPanel.Controls.Add(this.PrintReportBtn);
+            this.ReportDgvPanel.Controls.Add(this.ReportsDataGridView);
+            this.ReportDgvPanel.Location = new System.Drawing.Point(311, 83);
+            this.ReportDgvPanel.Name = "ReportDgvPanel";
+            this.ReportDgvPanel.Size = new System.Drawing.Size(955, 675);
+            this.ReportDgvPanel.TabIndex = 4;
+            // 
             // PrintReportBtn
             // 
+            this.PrintReportBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PrintReportBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
             this.PrintReportBtn.FlatAppearance.BorderSize = 0;
             this.PrintReportBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -658,7 +672,7 @@
             this.PrintReportBtn.ForeColor = System.Drawing.Color.White;
             this.PrintReportBtn.Image = ((System.Drawing.Image)(resources.GetObject("PrintReportBtn.Image")));
             this.PrintReportBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.PrintReportBtn.Location = new System.Drawing.Point(651, 679);
+            this.PrintReportBtn.Location = new System.Drawing.Point(338, 604);
             this.PrintReportBtn.Name = "PrintReportBtn";
             this.PrintReportBtn.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.PrintReportBtn.Size = new System.Drawing.Size(268, 56);
@@ -669,8 +683,10 @@
             // 
             // ReportsDataGridView
             // 
+            this.ReportsDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ReportsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ReportsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ReportsDataGridView.Location = new System.Drawing.Point(334, 112);
+            this.ReportsDataGridView.Location = new System.Drawing.Point(21, 37);
             this.ReportsDataGridView.Name = "ReportsDataGridView";
             this.ReportsDataGridView.Size = new System.Drawing.Size(911, 540);
             this.ReportsDataGridView.TabIndex = 0;
@@ -2081,9 +2097,9 @@
             // 
             this.HeaderPanelLabel.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HeaderPanelLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.HeaderPanelLabel.Location = new System.Drawing.Point(371, 22);
+            this.HeaderPanelLabel.Location = new System.Drawing.Point(0, 22);
             this.HeaderPanelLabel.Name = "HeaderPanelLabel";
-            this.HeaderPanelLabel.Size = new System.Drawing.Size(640, 33);
+            this.HeaderPanelLabel.Size = new System.Drawing.Size(1280, 33);
             this.HeaderPanelLabel.TabIndex = 27;
             this.HeaderPanelLabel.Text = "Libary Computer Laboratory Time Management System";
             this.HeaderPanelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2091,6 +2107,7 @@
             // SidebarPanel
             // 
             this.SidebarPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
+            this.SidebarPanel.Controls.Add(this.ReportBtn);
             this.SidebarPanel.Controls.Add(this.LogoutBtn);
             this.SidebarPanel.Controls.Add(this.pictureBox1);
             this.SidebarPanel.Controls.Add(this.DashboardSidebarBtn);
@@ -2103,6 +2120,28 @@
             this.SidebarPanel.Name = "SidebarPanel";
             this.SidebarPanel.Size = new System.Drawing.Size(300, 709);
             this.SidebarPanel.TabIndex = 15;
+            // 
+            // ReportBtn
+            // 
+            this.ReportBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReportBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ReportBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ReportBtn.FlatAppearance.BorderSize = 0;
+            this.ReportBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReportBtn.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
+            this.ReportBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ReportBtn.Image = ((System.Drawing.Image)(resources.GetObject("ReportBtn.Image")));
+            this.ReportBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ReportBtn.Location = new System.Drawing.Point(0, 501);
+            this.ReportBtn.Name = "ReportBtn";
+            this.ReportBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.ReportBtn.Size = new System.Drawing.Size(300, 57);
+            this.ReportBtn.TabIndex = 31;
+            this.ReportBtn.Text = "        Report";
+            this.ReportBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ReportBtn.UseVisualStyleBackColor = false;
+            this.ReportBtn.Visible = false;
+            this.ReportBtn.Click += new System.EventHandler(this.ReportBtn_Click);
             // 
             // LogoutBtn
             // 
@@ -2146,12 +2185,12 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
-            this.Controls.Add(this.StudentPanel);
-            this.Controls.Add(this.AdminCreationPanel);
-            this.Controls.Add(this.TimeManagementPanel);
             this.Controls.Add(this.AdminReportsPanel);
             this.Controls.Add(this.ListOfStudentsPanel);
             this.Controls.Add(this.DashboardPanel);
+            this.Controls.Add(this.StudentPanel);
+            this.Controls.Add(this.AdminCreationPanel);
+            this.Controls.Add(this.TimeManagementPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -2175,6 +2214,7 @@
             this.MiddleNameTbPanelR.ResumeLayout(false);
             this.MiddleNameTbPanelR.PerformLayout();
             this.AdminReportsPanel.ResumeLayout(false);
+            this.ReportDgvPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).EndInit();
             this.AdminCreationPanel.ResumeLayout(false);
             this.AdminTablePanel.ResumeLayout(false);
@@ -2392,5 +2432,7 @@
         public System.Windows.Forms.Button MinimizeBtn;
         private Bunifu.Framework.UI.BunifuElipse StudentTimeBtn7Elipse;
         private Bunifu.Framework.UI.BunifuElipse SidebarBtnElipse;
+        public System.Windows.Forms.Button ReportBtn;
+        public System.Windows.Forms.Panel ReportDgvPanel;
     }
 }

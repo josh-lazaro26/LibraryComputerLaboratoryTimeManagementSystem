@@ -60,6 +60,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             ApplyAdminCreationPanel(form);
             ApplyTimeManagementPanel(form);
             UpdatePanelAnimations(form);
+            ApplyAdminReportsPanel(form); 
         }
 
         // ── Header ────────────────────────────────────────────────────────────
@@ -105,6 +106,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 ScaleSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321);
                 ScaleSidebarBtn(form.TimeManagementSidebarBtn, 0, 381);
                 ScaleSidebarBtn(form.AdminCreation, 0, 441);
+                ScaleSidebarBtn(form.ReportBtn, 0, 501);
                 ScaleSidebarBtn(form.LogoutBtn, 0, 648);
             }
             else
@@ -117,6 +119,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 ScaleCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321);
                 ScaleCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 381);
                 ScaleCollapsedSidebarBtn(form.AdminCreation, 0, 441);
+                ScaleCollapsedSidebarBtn(form.ReportBtn, 0, 501);
                 ScaleCollapsedSidebarBtn(form.LogoutBtn, 0, 648);
             }
         }
@@ -366,6 +369,15 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form._panelAnimator?.Clear();
                 form._panelAnimator?.AddPanel(form.WelcomeAdminPanel, ScaleLocation(385, 229), ScaleLocation(261, 229));
             }
+            else if (form.AdminReportsPanel.Visible)
+            {
+                form._panelAnimator?.Clear();
+                form._panelAnimator?.AddPanel(
+                    form.ReportDgvPanel,
+                    ScaleLocation(311, 83),
+                    ScaleLocation(193, 83)
+                );
+            }
         }
 
         public static void RestoreNormalLayout(MainForm form)
@@ -392,6 +404,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 RestoreNormalSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321, 8);
                 RestoreNormalSidebarBtn(form.TimeManagementSidebarBtn, 0, 381, 8);
                 RestoreNormalSidebarBtn(form.AdminCreation, 0, 441, 8);
+                RestoreNormalSidebarBtn(form.ReportBtn, 0, 501, 8);
                 RestoreNormalSidebarBtn(form.LogoutBtn, 0, 648, 8);
             }
             else
@@ -404,6 +417,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 RestoreCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321, 5);
                 RestoreCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 381, 5);
                 RestoreCollapsedSidebarBtn(form.AdminCreation, 0, 441, 5);
+                RestoreCollapsedSidebarBtn(form.ReportBtn, 0, 501, 5);
                 RestoreCollapsedSidebarBtn(form.LogoutBtn, 0, 648, 5);
             }
 
@@ -451,7 +465,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.StudentYearLevelCb.Location = new Point(655, 273);
             RestoreActionBtn(form.RegisterRfidBtn, 536, 346, 360, 56);
             RestoreActionBtn(form.RegisterStudentBtn, 306, 477, 362, 56);
-
             // ── List of Students ──────────────────────────────────────────
             form.StudentFieldsPanel.Size = new Size(355, 558);
             form.StudentFieldsPanel.Location = new Point(355, 127);
@@ -525,6 +538,16 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 new[] { form.StudentBtnLabel4, form.StudentBtnLabel8, form.StudentBtnLabel12, form.StudentBtnLabel16 }
             );
 
+            // ── Admin Reports ─────────────────────────────────────────────
+            form.ReportDgvPanel.Size = new Size(955, 675);
+            form.ReportDgvPanel.Location = new Point(311, 83);
+            form.ReportsDataGridView.Dock = DockStyle.None;
+            form.ReportsDataGridView.Size = new Size(951, 500); // reduced from 595
+            form.ReportsDataGridView.Location = new Point(2, 50); // pushed down 40px from top
+            form.ReportsDataGridView.Font = new Font("Roboto", 10f);
+            form.PrintReportBtn.Size = new Size(268, 56);
+            form.PrintReportBtn.Location = new Point((955 - 268) / 2, 675 - 56 - 10); // (343, 609)
+            form.PrintReportBtn.Font = new Font("Roboto Black", 21.75f, FontStyle.Bold);
             // ── Register animations and snap ──────────────────────────────
             form._panelAnimator?.Clear();
 
@@ -552,6 +575,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             else if (form.DashboardPanel.Visible)
             {
                 form._panelAnimator?.AddPanel(form.WelcomeAdminPanel, new Point(385, 229), new Point(261, 229));
+            }
+            else if (form.AdminReportsPanel.Visible)
+            {
+                form._panelAnimator?.AddPanel(
+                    form.ReportDgvPanel,
+                    new Point(311, 83),
+                    new Point(193, 83)
+                );
             }
 
             form._panelAnimator?.SnapToState(!isExpanded);
@@ -595,7 +626,29 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             btn.Location = new Point(x, y);
             btn.Font = new Font("Roboto Black", 21.75f, FontStyle.Bold);
         }
+        private static void ApplyAdminReportsPanel(MainForm form)
+        {
+            form.ReportDgvPanel.Size = ScaleSize(955, 675);
+            form.ReportDgvPanel.Location = ScaleLocation(311, 83);
 
+            int btnH = (int)(56 * _scaleY);
+            int padding = (int)(10 * _scaleY);
+
+            form.ReportsDataGridView.Size = new Size(
+                form.ReportDgvPanel.Width - 4,
+                form.ReportDgvPanel.Height - btnH - (padding * 3) - (int)(50 * _scaleY) // extra space at top
+            );
+            form.ReportsDataGridView.Location = new Point(2, (int)(50 * _scaleY)); // push down
+            form.ReportsDataGridView.Font = ScaleFont("Roboto", 10f);
+
+            int btnW = (int)(form.ReportDgvPanel.Width * 0.22);
+
+            int btnX = (form.ReportDgvPanel.Width - btnW) / 2;
+            int btnY = form.ReportDgvPanel.Height - btnH - padding;
+            form.PrintReportBtn.Size = new Size(btnW, btnH);
+            form.PrintReportBtn.Location = new Point(btnX, btnY);
+            form.PrintReportBtn.Font = ScaleFont("Roboto Black", 17f, FontStyle.Bold);
+        }
         private static void RestoreTimeBtnPanel(Panel panel, Point location, Button[] buttons, Label[] labels)
         {
             panel.Location = location;

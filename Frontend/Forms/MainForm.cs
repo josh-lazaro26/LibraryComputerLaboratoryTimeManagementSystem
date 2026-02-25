@@ -1,6 +1,5 @@
 ﻿using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Animation.Sidebar_Animation;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms;
-using LibraryComputerLaboratoryTimeManagementSystem.Frontend.HelperClasses;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Admin;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Session;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Student;
@@ -26,7 +25,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private bool _isSidebarExpanded = false;
         public PanelPositionAnimator _panelAnimator;
         private ButtonHoverEffect _sidebarHoverEffect;
-        private UIResponsiveness _uiResponsiveness;
         private AdminService _adminService;
         private StudentServices _studentServices;
         private UserServices _userService;
@@ -35,7 +33,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         public SidebarAnimator _sidebarAnimator;
         private List<Label> _timeLabels;
         private bool _isSidebarOpen = false;
-        private Dictionary<int, TimeSpan> _remainingBySessionId; // sessionId -> remaining
+        private Dictionary<int, TimeSpan> _remainingBySessionId; 
         private System.Windows.Forms.Timer _countdownTimer;
         private string _selectedStudentId;
 
@@ -228,10 +226,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (SuperAdminState.isSuperAdmin)
             {
                 AdminCreation.Visible = true;
-            }
-            else
-            {
-                AdminCreation.Visible = false;
+                ReportBtn.Visible = true;
             }
         }
 
@@ -290,7 +285,23 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _panelAnimator.AddPanel(RegisterStudentFieldPanel, new Point(299, 112), new Point(167, 112));
             SnapPanelsToCurrentState();
         }
+        private void SetupAdminReportsPanelAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
 
+            _panelAnimator.Clear();
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
+
+            _panelAnimator.AddPanel(ReportDgvPanel, new Point(311, 83), new Point(193, 83));
+            SnapPanelsToCurrentState();
+        }
         private void SetupStudentCreationAnimation()
         {
             if (_panelAnimator == null)
@@ -354,6 +365,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(LogoutBtn);
 
             _sidebarHoverEffect.Attach(AdminCreation);
+            _sidebarHoverEffect.Attach(ReportBtn);
 
             _panelHandler = new PanelHandler();
             _panelHandler.AddPanels(DashboardPanel, StudentPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel);
@@ -682,10 +694,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 btn.ForeColor = SystemColors.ControlLight;
             }
         }
-        private async void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            await LoadAdminsAsync();
-        }
 
         private void AdminDgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -818,6 +826,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             else if (DashboardPanel.Visible)
             {
                 SetupDashboardAnimation();
+                _panelAnimator?.Toggle();
+            }
+            else if (AdminReportsPanel.Visible)
+            {
+                SetupAdminReportsPanelAnimation();
                 _panelAnimator?.Toggle();
             }
         }
@@ -993,6 +1006,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
         {
             new NotificationModalForm(title, message, type).Show(this);
+        }
+
+        private void ReportBtn_Click(object sender, EventArgs e)
+        {
+            _panelHandler.ShowOnly(AdminReportsPanel);
+            HeaderPanelLabel.Text = "Admin Reports";
+            SetupAdminReportsPanelAnimation();
         }
     }
 }

@@ -76,7 +76,7 @@
             this.SuperadminPasswordTb.Margin = new System.Windows.Forms.Padding(6);
             this.SuperadminPasswordTb.Name = "SuperadminPasswordTb";
             this.SuperadminPasswordTb.Size = new System.Drawing.Size(448, 32);
-            this.SuperadminPasswordTb.TabIndex = 1;
+            this.SuperadminPasswordTb.TabIndex = 0;
             // 
             // SuperAdminLoginBtn
             // 
@@ -91,7 +91,7 @@
             this.SuperAdminLoginBtn.Margin = new System.Windows.Forms.Padding(6);
             this.SuperAdminLoginBtn.Name = "SuperAdminLoginBtn";
             this.SuperAdminLoginBtn.Size = new System.Drawing.Size(504, 71);
-            this.SuperAdminLoginBtn.TabIndex = 10;
+            this.SuperAdminLoginBtn.TabIndex = 4;
             this.SuperAdminLoginBtn.Text = "Login";
             this.SuperAdminLoginBtn.UseVisualStyleBackColor = false;
             this.SuperAdminLoginBtn.Click += new System.EventHandler(this.SuperAdminLoginBtn_Click);
@@ -106,7 +106,7 @@
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(339, 44);
-            this.label1.TabIndex = 3;
+            this.label1.TabIndex = 10;
             this.label1.Text = "Welcome Mga Pogi";
             // 
             // SuperAdminUsernamePanel
@@ -117,7 +117,7 @@
             this.SuperAdminUsernamePanel.Location = new System.Drawing.Point(67, 193);
             this.SuperAdminUsernamePanel.Name = "SuperAdminUsernamePanel";
             this.SuperAdminUsernamePanel.Size = new System.Drawing.Size(504, 62);
-            this.SuperAdminUsernamePanel.TabIndex = 4;
+            this.SuperAdminUsernamePanel.TabIndex = 1;
             // 
             // SuperAdminPasswordPanel
             // 
@@ -130,7 +130,7 @@
             this.SuperAdminPasswordPanel.Location = new System.Drawing.Point(67, 320);
             this.SuperAdminPasswordPanel.Name = "SuperAdminPasswordPanel";
             this.SuperAdminPasswordPanel.Size = new System.Drawing.Size(504, 62);
-            this.SuperAdminPasswordPanel.TabIndex = 5;
+            this.SuperAdminPasswordPanel.TabIndex = 3;
             // 
             // HidePasswordPb
             // 
@@ -140,7 +140,7 @@
             this.HidePasswordPb.Name = "HidePasswordPb";
             this.HidePasswordPb.Size = new System.Drawing.Size(27, 38);
             this.HidePasswordPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.HidePasswordPb.TabIndex = 3;
+            this.HidePasswordPb.TabIndex = 21;
             this.HidePasswordPb.TabStop = false;
             this.HidePasswordPb.Click += new System.EventHandler(this.HidePasswordPb_Click);
             // 
@@ -152,7 +152,7 @@
             this.ShowPasswordPb.Name = "ShowPasswordPb";
             this.ShowPasswordPb.Size = new System.Drawing.Size(27, 38);
             this.ShowPasswordPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ShowPasswordPb.TabIndex = 2;
+            this.ShowPasswordPb.TabIndex = 20;
             this.ShowPasswordPb.TabStop = false;
             this.ShowPasswordPb.Click += new System.EventHandler(this.ShowPasswordPb_Click);
             // 
@@ -166,7 +166,7 @@
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(135, 35);
-            this.label2.TabIndex = 6;
+            this.label2.TabIndex = 11;
             this.label2.Text = "Username";
             // 
             // label3
@@ -179,7 +179,7 @@
             this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 35);
-            this.label3.TabIndex = 7;
+            this.label3.TabIndex = 12;
             this.label3.Text = "Password";
             // 
             // MinimizeBtn
@@ -191,7 +191,8 @@
             this.MinimizeBtn.Location = new System.Drawing.Point(476, 4);
             this.MinimizeBtn.Name = "MinimizeBtn";
             this.MinimizeBtn.Size = new System.Drawing.Size(50, 45);
-            this.MinimizeBtn.TabIndex = 11;
+            this.MinimizeBtn.TabIndex = 5;
+            this.MinimizeBtn.TabStop = false;
             this.MinimizeBtn.UseVisualStyleBackColor = true;
             this.MinimizeBtn.Click += new System.EventHandler(this.MinimizeBtn_Click);
             // 
@@ -204,7 +205,8 @@
             this.MaximizeBtn.Location = new System.Drawing.Point(530, 4);
             this.MaximizeBtn.Name = "MaximizeBtn";
             this.MaximizeBtn.Size = new System.Drawing.Size(50, 45);
-            this.MaximizeBtn.TabIndex = 12;
+            this.MaximizeBtn.TabIndex = 6;
+            this.MaximizeBtn.TabStop = false;
             this.MaximizeBtn.UseVisualStyleBackColor = true;
             this.MaximizeBtn.Click += new System.EventHandler(this.MaximizeBtn_Click);
             // 
@@ -217,7 +219,8 @@
             this.CloseBtn.Location = new System.Drawing.Point(584, 4);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(50, 45);
-            this.CloseBtn.TabIndex = 13;
+            this.CloseBtn.TabIndex = 7;
+            this.CloseBtn.TabStop = false;
             this.CloseBtn.UseVisualStyleBackColor = true;
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -234,7 +237,7 @@
             this.LoginPanel.Location = new System.Drawing.Point(0, 0);
             this.LoginPanel.Name = "LoginPanel";
             this.LoginPanel.Size = new System.Drawing.Size(640, 600);
-            this.LoginPanel.TabIndex = 14;
+            this.LoginPanel.TabIndex = 8;
             // 
             // SuperAdminFormElipse
             // 
