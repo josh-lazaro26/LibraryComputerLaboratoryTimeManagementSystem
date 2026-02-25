@@ -503,8 +503,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             var json = await _studentServices.GetStudents(query, pageNumber, pageSize);
             if (json == null)
             {
-                MessageBox.Show("Failed to load students.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowNotification("Error", "Failed to load students.", NotificationType.Error);
                 return;
             }
 
@@ -512,8 +511,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (result == null || !result.IsSuccess || result.Value?.Items == null)
             {
-                MessageBox.Show("Invalid response from server.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowNotification("Error", "Invalid response from server.", NotificationType.Error);
                 return;
             }
 
@@ -598,13 +596,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (isSuccess)
             {
-                MessageBox.Show("Admin created successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowNotification("Success", "Admin created successfully.", NotificationType.Success);
             }
             else
             {
-                MessageBox.Show("Failed to create admin.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowNotification("Error", "Failed to create admin.", NotificationType.Error);
             }
         }
 
@@ -620,22 +616,25 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 Course = StudentCourseCb.SelectedItem?.ToString(),
                 YearLevel = StudentYearLevelCb.SelectedValue?.ToString()
             };
-
-            RegisterStudentBtn.Enabled = false;
-
-            var isSuccess = await _studentServices.CreateStudents(student); 
-
-            RegisterStudentBtn.Enabled = true;
-
-            if (isSuccess)
+            using (var dialog = new DialogForm("Register Student", "Are you sure you want to register this student?"))
             {
-                MessageBox.Show("Student registered successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Failed to register student.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    RegisterStudentBtn.Enabled = false;
+
+                    var isSuccess = await _studentServices.CreateStudents(student);
+
+                    RegisterStudentBtn.Enabled = true;
+
+                    if (isSuccess)
+                    {
+                        ShowNotification("Success", "Student registered successfully.", NotificationType.Success);
+                    }
+                    else
+                    {
+                        ShowNotification("Error", "Failed to register student.", NotificationType.Error);
+                    }
+                }
             }
         }
 
@@ -698,24 +697,25 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             if (_selectedAdminId == null)
             {
-                MessageBox.Show("Please select an admin row first.");
+                ShowNotification("Information", "Please select an admin row first.", NotificationType.Information);
                 return;
             }
 
-            var confirm = MessageBox.Show("Delete this admin?", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (confirm != DialogResult.Yes) return;
-
-            try
+            using (var dialog = new DialogForm("Delete Admin", "Are you sure you want to delete this admin?"))
             {
-                await _adminService.DeleteAdmin(new AdminDeletionDAO { Id = _selectedAdminId.Value });
-                await LoadAdminsAsync();
-                _selectedAdminId = null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Delete failed: {ex.Message}");
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    try
+                    {
+                        await _adminService.DeleteAdmin(new AdminDeletionDAO { Id = _selectedAdminId.Value });
+                        await LoadAdminsAsync();
+                        _selectedAdminId = null;
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowNotification("Error", $"Delete failed: {ex.Message}", NotificationType.Error);
+                    }
+                }
             }
         }
 
@@ -723,7 +723,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             if (_selectedAdminId == null)
             {
-                MessageBox.Show("Please select an admin row first.");
+                ShowNotification("Information", "Please select an admin row first.", NotificationType.Information);
                 return;
             }
 
@@ -745,11 +745,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
                 await LoadAdminsAsync();      // refresh grid
                 _selectedAdminId = null;      // optional: clear selection
-                MessageBox.Show("Admin updated successfully.");
+                ShowNotification("Success", "Admin updated successfully.", NotificationType.Success);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Update failed: {ex.Message}");
+                ShowNotification("Error", $"Update failed: {ex.Message}", NotificationType.Error);
             }
             finally
             {
@@ -824,7 +824,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            using (var dialog = new DialogForm("Close", "Are you sure you want to close this application?"))
+            {
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    Application.Exit();
+                }
+            }
         }
 
         private void MaximizeBtn_Click(object sender, EventArgs e)
@@ -861,16 +867,22 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            var RfidForm = new RFIDForm();
-            RfidForm.Show();
-            this.Close();
+            using (var dialog = new DialogForm("Logout", "Are you sure you want to logout?"))
+            {
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    var RfidForm = new RFIDForm();
+                    RfidForm.Show();
+                    this.Close();
+                }
+            }
         }
 
         private async void UpdateStudentBtn_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(_selectedStudentId))
             {
-                MessageBox.Show("Please select a student row first.");
+                ShowNotification("Warning", "Please select a student row first.", NotificationType.Warning);
                 return;
             }
 
@@ -885,28 +897,71 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 YearLevel = ListOfStudentYearLevelCb.SelectedValue?.ToString()
             };
 
-            try
+            using (var dialog = new DialogForm("Update Student", "Are you sure you want to update this student?"))
             {
-                UpdateStudentBtn.Enabled = false;
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    try
+                    {
+                        UpdateStudentBtn.Enabled = false;
 
-                await _adminService.UpdateStudent(studentUpdate); // NOT _adminService
+                        await _adminService.UpdateStudent(studentUpdate);
 
-                await LoadStudentsAsync();
-                _selectedStudentId = null;
-                MessageBox.Show("Student updated successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Update failed: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                UpdateStudentBtn.Enabled = true;
+                        await LoadStudentsAsync();
+                        _selectedStudentId = null;
+                        ClearStudentFields();
+                        ShowNotification("Success", "Student updated successfully.", NotificationType.Success);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowNotification("Error", $"Update failed: {ex.Message}", NotificationType.Error);
+                    }
+                    finally
+                    {
+                        UpdateStudentBtn.Enabled = true;
+                    }
+                }
             }
         }
+        private void ClearStudentFields()
+        {
+            ListOfStudentFirstNameTb.Text = string.Empty;
+            ListOfStudentMiddleNameTb.Text = string.Empty;
+            ListOfStudentLastNameTb.Text = string.Empty;
+            ListOfStudentStudentIdTb.Text = string.Empty;
+            ListOfStudentCourseCb.SelectedIndex = 0;
+            ListOfStudentYearLevelCb.SelectedIndex = 0;
+            _selectedStudentId = null;
+        }
+        private async void DeleteStudentBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(_selectedStudentId))
+            {
+                ShowNotification("Information", "Please select a student row first.", NotificationType.Information);
+                return;
+            }
 
+            using (var dialog = new DialogForm("Delete Student", "Are you sure you want to delete this student?"))
+            {
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    try
+                    {
+                        await _adminService.DeleteStudent(new StudentDeletionDAO { Id = _selectedStudentId });
+                        await LoadStudentsAsync();
+                        _selectedStudentId = null;
+
+                        ShowNotification("Success", "Student deleted successfully.", NotificationType.Success);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowNotification("Error", $"Delete failed: {ex.Message}", NotificationType.Error);
+                    }
+                }
+            }
+        }   
         private void ListOfStudentDgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -933,6 +988,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     break;
                 }
             }
+        }
+
+        private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
+        {
+            new NotificationModalForm(title, message, type).Show(this);
         }
     }
 }

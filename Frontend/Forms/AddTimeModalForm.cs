@@ -96,19 +96,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 
                 if (!TryParseDuration(input, _isHourMode, out newDuration))
                 {
-                    MessageBox.Show("Invalid input. Use a number (e.g. 2) or H:MM format (e.g. 1:30).");
+                    ShowNotification("Information", "Invalid input. Use a number (e.g. 2) or H:MM format (e.g. 1:30).", NotificationType.Information);
                     return;
                 }
 
                 if (newDuration.TotalHours > 24)
                 {
-                    MessageBox.Show("Duration cannot exceed 24 hours.");
+                    ShowNotification("Information", "Duration cannot exceed 24 hours.", NotificationType.Information);
                     return;
                 }
 
                 if (newDuration <= TimeSpan.Zero)
                 {
-                    MessageBox.Show("Duration must be greater than zero.");
+                    ShowNotification("Information", "Duration must be greater than zero.", NotificationType.Information);
                     return;
                 }
 
@@ -219,6 +219,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
                 e.Handled = true; // suppress the ding sound
                 UpdateSessionBtn_Click(sender, EventArgs.Empty);
             }
+        }
+
+        private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
+        {
+            new NotificationModalForm(title, message, type).Show(this);
         }
     }
 }

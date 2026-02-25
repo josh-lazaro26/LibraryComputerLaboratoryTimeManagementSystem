@@ -1573,6 +1573,7 @@
             this.DeleteStudentBtn.Text = " Delete";
             this.DeleteStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.DeleteStudentBtn.UseVisualStyleBackColor = false;
+            this.DeleteStudentBtn.Click += new System.EventHandler(this.DeleteStudentBtn_Click);
             // 
             // StudentFieldsPanel
             // 
@@ -2145,12 +2146,12 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
-            this.Controls.Add(this.ListOfStudentsPanel);
-            this.Controls.Add(this.DashboardPanel);
             this.Controls.Add(this.StudentPanel);
             this.Controls.Add(this.AdminCreationPanel);
             this.Controls.Add(this.TimeManagementPanel);
             this.Controls.Add(this.AdminReportsPanel);
+            this.Controls.Add(this.ListOfStudentsPanel);
+            this.Controls.Add(this.DashboardPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);

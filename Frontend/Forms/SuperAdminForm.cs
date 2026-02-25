@@ -97,8 +97,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 
             if (authResponseJson == null)
             {
-                MessageBox.Show("Invalid username or password.", "Login failed",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowNotification("Login failed", "Invalid response from server.", NotificationType.Error);
                 return;
             }
 
@@ -109,9 +108,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
             if (!string.IsNullOrEmpty(accessToken))
             {
                 ApiConfig.Token = accessToken;
-
-                MessageBox.Show("Login successful.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowNotification("Success", "Login successful.", NotificationType.Success);
 
                 this.DialogResult = DialogResult.OK; // signal success
                 MainForm main = new MainForm();
@@ -178,6 +175,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+        private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
+        {
+            new NotificationModalForm(title, message, type).Show(this);
         }
     }
 }
