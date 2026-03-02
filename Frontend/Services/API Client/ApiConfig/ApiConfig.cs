@@ -11,7 +11,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.API_Cl
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
         })
         {
-            BaseAddress = new Uri("https://library-laboratory-management-system.onrender.com")
+            BaseAddress = new Uri("https://internet-laboratory-time-management.onrender.com")
         };
     }
 }

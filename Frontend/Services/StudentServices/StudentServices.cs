@@ -20,22 +20,17 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.Studen
             {
                 string payload = $@"
                 {{
-                    ""firstName"": ""{studentCreation.FirstName}"",
-                    ""middleName"": ""{studentCreation.MiddleName}"",
-                    ""lastName"": ""{studentCreation.LastName}"",
-                    ""rfidData"": ""{studentCreation.RFID}"",
-                    ""studentId"": ""{studentCreation.StudentId}"",
-                    ""course"": ""{studentCreation.Course}"",
-                    ""yearLevel"": ""{studentCreation.YearLevel}""
+                    ""rfid"": ""{studentCreation.RFID}"",
+                    ""school_id"": ""{studentCreation.StudentId}""
                 }}";
 
-                    // add bearer like in CreateAdmin
-                    Client.DefaultRequestHeaders.Authorization =
+                // add bearer like in CreateAdmin
+                Client.DefaultRequestHeaders.Authorization =
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
 
                     var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-                    var response = await Client.PostAsync("api/v1/students", content);
+                    var response = await Client.PostAsync("api/v1/users/students", content);
 
                     var body = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
@@ -49,71 +44,67 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.Studen
                 return false;
             }
         }
-
-        public async Task<string> GetStudents(string query = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<string> GetStudents(int pageNumber = 1, int pageSize = 10)
         {
-            var urlBuilder = new StringBuilder("api/v1/students");
-
+            var urlBuilder = new StringBuilder("api/v1/accounts");
             var hasAny = false;
 
             try
             {
                 void AddParam(string name, string value)
                 {
-                    if (!hasAny)
-                    {
-                        urlBuilder.Append("?");
-                        hasAny = true;
-                    }
-                    else
-                    {
-                        urlBuilder.Append("&");
-                    }
-
+                    urlBuilder.Append(hasAny ? "&" : "?");
+                    hasAny = true;
                     urlBuilder.Append(Uri.EscapeDataString(name));
                     urlBuilder.Append("=");
                     urlBuilder.Append(Uri.EscapeDataString(value));
                 }
 
-                if (!string.IsNullOrWhiteSpace(query))
-                    AddParam("query", query);
-
                 AddParam("pageNumber", pageNumber.ToString());
                 AddParam("pageSize", pageSize.ToString());
-
-                string url = urlBuilder.ToString();
-
+        
                 Client.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
 
-                var response = await Client.GetAsync(url);
-
-                Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
-
+                var response = await Client.GetAsync(urlBuilder.ToString());
                 var body = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("Body ni kristo:"+ body);
+                
 
-                    var obj = JObject.Parse(body);
-                    var role = (string)obj["value"]?["role"]; // adjust path to your actual JSON
+                Console.WriteLine("Body ni kristo part 2: "+body);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Request failed: {(int)response.StatusCode}");
+                    return null;
+                }
 
-
-                    Console.WriteLine("Role: " + role);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        Console.WriteLine("Request failed.");
-                        return null;
-                    }
-
-                    return body;
+                return body; // ← just return the body, let the caller parse it
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to parse role: " + ex.Message);
+                Console.WriteLine("GetStudents failed: " + ex.Message);
                 return null;
             }
-
         }
+        public async Task<string> GetSchoolIdByUserId(string userId)
+        {
+            try
+            {
+                Client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
 
+                var response = await Client.GetAsync($"api/v1/accounts/{userId}");
+                if (!response.IsSuccessStatusCode) return null;
+
+                var body = await response.Content.ReadAsStringAsync();
+                var obj = Newtonsoft.Json.Linq.JObject.Parse(body);
+
+                // Adjust the JSON path to match your actual API response
+                return obj["school_id"]?.ToString();
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

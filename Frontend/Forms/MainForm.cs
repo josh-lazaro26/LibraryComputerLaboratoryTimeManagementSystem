@@ -8,6 +8,7 @@ using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.API_Client
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.StudentServices;
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.UserServices;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -33,9 +34,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         public SidebarAnimator _sidebarAnimator;
         private List<Label> _timeLabels;
         private bool _isSidebarOpen = false;
-        private Dictionary<int, TimeSpan> _remainingBySessionId; 
+        private Dictionary<string, TimeSpan> _remainingBySessionId;
         private System.Windows.Forms.Timer _countdownTimer;
         private string _selectedStudentId;
+        private string _selectedEvaluationId = null;
 
         private readonly SignalRService _signalRService;
         public MainForm()
@@ -56,46 +58,46 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             SignalRInitialize();
 
-            _signalRService.LoggedOutSession += (int sessionId) =>
+            _signalRService.NewStudentOpenedSession += (Guid userId, string schoolId, TimeSpan availableDuration) =>
             {
                 if (InvokeRequired)
                 {
-                    Invoke(new Action(() => HandleSessionTerminated(sessionId)));
-                    Console.WriteLine($"Session is terminated: {sessionId}");
+                    Invoke(new Action(() => HandleNewSession(userId, schoolId, availableDuration)));
+                    Console.WriteLine($"Student kwan {userId} Logged in his skol id is {schoolId} his doration is {availableDuration}");
+                }
+                else
+                    HandleNewSession(userId, schoolId, availableDuration);
+            };
+
+            _signalRService.LoggedOutSession += (Guid userId) =>
+            {
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => HandleSessionTerminated(userId)));
+                    Console.WriteLine($"User ID kol:{userId} gi logged out");
                 }
                 else
                 {
-                    HandleSessionTerminated(sessionId);
+                    HandleSessionTerminated(userId);
                 }
             };
 
-
-            _signalRService.NewStudentOpenedSession += (Object data) =>
+            _signalRService.UpdatedSession += (TimeSpan duration) =>
             {
-                try
-                {
-                    // Ensure UI thread
-                    if (InvokeRequired)
-                    {
-                        Invoke(new Action(() => HandleNewSession(data)));
-                    }
-                    else
-                    {
-                        HandleNewSession(data);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+                if (InvokeRequired)
+                    Invoke(new Action(() => HandleSessionUpdated(duration)));
+                else
+                    HandleSessionUpdated(duration);
             };
 
-            StudentFirstNameTb.KeyPress += LettersOnly_KeyPress;
-            StudentMiddleNameTb.KeyPress += LettersOnly_KeyPress;
-            StudentLastNameTb.KeyPress += LettersOnly_KeyPress;
-            AdminFirstNameTb.KeyPress += LettersOnly_KeyPress;
-            AdminMiddleNameTb.KeyPress += LettersOnly_KeyPress;
-            AdminLastNameTb.KeyPress += LettersOnly_KeyPress;
+            _signalRService.Terminate += () =>
+            {
+                if (InvokeRequired)
+                    Invoke(new Action(() => HandleTerminate()));
+                else
+                    HandleTerminate();
+            };
+
             ListOfStudentDgv.CellClick += ListOfStudentDgv_CellClick;
             ListOfStudentDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             ListOfStudentDgv.MultiSelect = false;
@@ -105,41 +107,24 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             InitTimeButtons();
             WireTimeButtonClicks();
 
-            InitYearLevelComboBox();
             InitTimeLabelsAndTimer();
 
-            StudentCourseCb.SelectedIndex = 0;
-            ListOfStudentCourseCb.SelectedIndex = 0;
             _panelHandler.ShowOnly(DashboardPanel);
             if (this.WindowState == FormWindowState.Maximized)
             {
                 MainFormResponsiveLayout.Apply(this);
                 _panelAnimator?.Toggle();
             }
-
+            Console.WriteLine("tro o kon fols:"+SuperAdminState.isSuperAdmin);
             await LoadAdminsAsync();
             await LoadStudentsAsync();
             await LoadActiveSessionsToButtons();
+            await LoadEvaluations();
         }
 
-        private void HandleNewSession(object data)
+        // Changed from (object data) to typed parameters
+        private void HandleNewSession(Guid userId, string schoolId, TimeSpan availableDuration)
         {
-            // If backend sends JSON string
-            SessionDto session;
-
-            if (data is string json)
-            {
-                session = JsonConvert.DeserializeObject<SessionDto>(json);
-            }
-            else
-            {
-                // If SignalR already sends object
-                session = JsonConvert.DeserializeObject<SessionDto>(data.ToString());
-            }
-
-            if (session == null) return;
-
-            // Find first vacant button
             for (int i = 0; i < _timeButtons.Count; i++)
             {
                 var btn = _timeButtons[i];
@@ -147,46 +132,60 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
                 if (btn.Tag == null) // vacant slot
                 {
-                    btn.Text = session.Name;
-                    btn.Tag = session;
+                    // No SessionDto from SignalR anymore — store what we have
+                    btn.Text = schoolId;
+                    var sessionId = userId.ToString();
+                    btn.Tag = new SessionDto {Name = schoolId };
+                    _remainingBySessionId[sessionId] = availableDuration;
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
 
-                    var remaining = ParseApiDuration(session.Duration);
-                    _remainingBySessionId[session.Id] = remaining;
-                    lbl.Text = ToMmSs(remaining);
-
+                    _remainingBySessionId[userId.ToString()] = availableDuration;
+                    lbl.Text = ToMmSs(availableDuration);
                     break;
                 }
             }
         }
 
-        private void HandleSessionTerminated(int sessionId)
+        private void HandleSessionTerminated(Guid userId)
         {
+            var userIdStr = userId.ToString();
+
             for (int i = 0; i < _timeButtons.Count; i++)
             {
                 var btn = _timeButtons[i];
                 var lbl = _timeLabels[i];
 
-                if (btn.Tag is SessionDto s && s.Id == sessionId)
+                if (btn.Tag is SessionDto s &&
+                    (s.UserId == userIdStr || s.Id == userIdStr))
                 {
-                    // Clear button (make it vacant again)
+                    if (s.Id != null)
+                        _remainingBySessionId.Remove(s.Id);
+
                     btn.Text = "Vacant";
                     btn.Tag = null;
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
-
                     lbl.Text = "00:00:00";
 
-                    // Remove from countdown dictionary
-                    if (_remainingBySessionId.ContainsKey(sessionId))
-                    {
-                        _remainingBySessionId.Remove(sessionId);
-                    }
-
+                    Console.WriteLine($"Cleared slot {i + 1} for user {userIdStr}");
                     break;
                 }
             }
+            _ = LoadActiveSessionsToButtons();
+        }
+
+        private void HandleSessionUpdated(TimeSpan duration)
+        {
+            // Update the first active session found — or match by context if you track current userId
+            Console.WriteLine($"Session updated with new duration: {duration}");
+            _ = LoadActiveSessionsToButtons(); // safest: reload all
+        }
+
+        private void HandleTerminate()
+        {
+            Console.WriteLine("Session terminated by server.");
+            _ = LoadActiveSessionsToButtons();
         }
 
         private void SignalRInitialize()
@@ -216,9 +215,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _selectedAdminId = admin.Id;
 
             IDPersonnelTb.Text = admin.PersonnelId;
-            AdminFirstNameTb.Text = admin.FirstName;
-            AdminMiddleNameTb.Text = admin.MiddleName;
-            AdminLastNameTb.Text = admin.LastName;
         }
 
         public void AdminCreationVisibility()
@@ -315,9 +311,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 SnapPanelsToCurrentState();
                 return;
             }
-
-            _panelAnimator.AddPanel(StudentFieldsPanel, new Point(355, 127), new Point(258, 127));
-            _panelAnimator.AddPanel(StudentsTablePanel, new Point(732, 127), new Point(644, 127));
+            _panelAnimator.AddPanel(StudentsTablePanel, new Point(314, 111), new Point(177, 111));
             SnapPanelsToCurrentState();
         }
 
@@ -362,13 +356,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(TimeManagementSidebarBtn);
             _sidebarHoverEffect.Attach(StudentManagementSidebarBtn);
             _sidebarHoverEffect.Attach(SidebarBtn);
+            _sidebarHoverEffect.Attach(EvaluationSidebarBtn);
             _sidebarHoverEffect.Attach(LogoutBtn);
 
             _sidebarHoverEffect.Attach(AdminCreation);
             _sidebarHoverEffect.Attach(ReportBtn);
 
             _panelHandler = new PanelHandler();
-            _panelHandler.AddPanels(DashboardPanel, StudentPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel);
+            _panelHandler.AddPanels(DashboardPanel, StudentPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel,EvaluationPanel);
         }
 
         private void WireTimeButtonClicks()
@@ -384,11 +379,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (sender is Button btn && btn.Tag is SessionDto session)
             {
                 if (!_remainingBySessionId.TryGetValue(session.Id, out var currentRemaining))
-                {
                     currentRemaining = TimeSpan.Zero;
-                }
 
-                using (var modal = new AddTimeModalForm(session.Id, _remainingBySessionId))
+                using (var modal = new AddTimeModalForm(session.Id, session.UserId, _remainingBySessionId))
                 {
                     if (modal.ShowDialog(this) == DialogResult.OK)
                     {
@@ -397,22 +390,23 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                             case SessionModalAction.Updated:
                                 if (modal.UpdatedRemaining.HasValue)
                                 {
-                                    _remainingBySessionId[session.Id] =
-                                        modal.UpdatedRemaining.Value;
+                                    var newDuration = modal.UpdatedRemaining.Value.ToString(@"hh\:mm\:ss");
+
+                                    // Use UserId (GUID string), not session.Id
+                                    await _adminService.UpdateSession(session.UserId, newDuration);
+
+                                    _remainingBySessionId[session.Id] = modal.UpdatedRemaining.Value;
                                 }
                                 break;
 
                             case SessionModalAction.Terminated:
-                                // Reload from backend
                                 await LoadActiveSessionsToButtons();
                                 break;
                         }
                     }
                 }
-
             }
         }
-
         private void InitTimeLabelsAndTimer()
         {
             _timeLabels = new List<Label>
@@ -423,7 +417,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 StudentBtnLabel13, StudentBtnLabel14, StudentBtnLabel15, StudentBtnLabel16
             };
 
-            _remainingBySessionId = new Dictionary<int, TimeSpan>();
+            _remainingBySessionId = new Dictionary<string, TimeSpan>();
 
             _countdownTimer = new System.Windows.Forms.Timer();
             _countdownTimer.Interval = 1000; // 1 second
@@ -441,7 +435,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 var btn = _timeButtons[i];
                 var lbl = _timeLabels[i];
 
-                if (btn.Tag is SessionDto s && _remainingBySessionId.TryGetValue(s.Id, out var remaining))
+                if (btn.Tag is SessionDto s && s.Id != null && _remainingBySessionId.TryGetValue(s.Id, out var remaining))
                 {
                     remaining = remaining - TimeSpan.FromSeconds(1);
                     if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
@@ -495,6 +489,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private void ReportsSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(AdminReportsPanel);
+            HeaderPanelLabel.Text = "Reports";
+
+        }
+        private void EvaluationSidebarBtn_Click(object sender, EventArgs e)
+        {
+            _panelHandler.ShowOnly(EvaluationPanel);
+            HeaderPanelLabel.Text = "Evaluation";
         }
         private void ListOfStudentsSidebarBtn_Click(object sender, EventArgs e)
         {
@@ -510,9 +511,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             await LoadActiveSessionsToButtons();
         }
 
-        private async Task LoadStudentsAsync(string query = null, int pageNumber = 1, int pageSize = 10)
+        private async Task LoadStudentsAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var json = await _studentServices.GetStudents(query, pageNumber, pageSize);
+            var json = await _studentServices.GetStudents(pageNumber, pageSize);
             if (json == null)
             {
                 ShowNotification("Error", "Failed to load students.", NotificationType.Error);
@@ -552,11 +553,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             SetAllLabelsZero();
 
             var resp = await _adminService.GetActiveSessions(pageNumber: 1, pageSize: 16);
-            if (resp == null || !resp.IsSuccess || resp.Value?.Items == null) return;
+            if (resp == null || !resp.IsSuccess || resp.Items == null) return;
 
-
-            var sessions = resp.Value.Items.Take(_timeButtons.Count).ToList();
-
+            var sessions = resp.Items.Take(_timeButtons.Count).ToList();
             _remainingBySessionId.Clear();
 
             for (int i = 0; i < _timeButtons.Count; i++)
@@ -567,14 +566,16 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 if (i < sessions.Count)
                 {
                     var s = sessions[i];
-
-                    btn.Text = s.Name;   // name on button
                     btn.Tag = s;
                     btn.Enabled = true;
+                    btn.ForeColor = Color.White;
 
                     var remaining = ParseApiDuration(s.Duration);
                     _remainingBySessionId[s.Id] = remaining;
                     lbl.Text = ToMmSs(remaining);
+
+                    // school_id is already in the session response — no extra API call needed
+                    btn.Text = !string.IsNullOrEmpty(s.SchoolId) ? s.SchoolId : "Unknown";
                 }
                 else
                 {
@@ -582,8 +583,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     btn.Tag = null;
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
-
-                    lbl.Text = "00:00:00:00";
+                    lbl.Text = "00:00:00";
                 }
             }
         }
@@ -599,9 +599,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             AdminCreationDAO adminCreationDao = new AdminCreationDAO();
             adminCreationDao.PersonnelId = IDPersonnelTb.Text;
-            adminCreationDao.FirstName = AdminFirstNameTb.Text;
-            adminCreationDao.MiddleName = AdminMiddleNameTb.Text;
-            adminCreationDao.LastName = AdminLastNameTb.Text;
             adminCreationDao.RFID = AdminRfidTb.Text;
 
             var isSuccess = await _adminService.CreateAdmin(adminCreationDao);
@@ -620,13 +617,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             var student = new StudentCreationDAO
             {
-                FirstName = StudentFirstNameTb.Text,
-                MiddleName = StudentMiddleNameTb.Text,
-                LastName = StudentLastNameTb.Text,
                 RFID = _currentStudentRfid,
                 StudentId = StudentIDTb.Text,
-                Course = StudentCourseCb.SelectedItem?.ToString(),
-                YearLevel = StudentYearLevelCb.SelectedValue?.ToString()
             };
             using (var dialog = new DialogForm("Register Student", "Are you sure you want to register this student?"))
             {
@@ -739,9 +731,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             {
                 Id = _selectedAdminId.Value,
                 PersonnelId = IDPersonnelTb.Text?.Trim(),
-                FirstName = AdminFirstNameTb.Text?.Trim(),
-                MiddleName = AdminMiddleNameTb.Text?.Trim(),
-                LastName = AdminLastNameTb.Text?.Trim(),
                 RFID = AdminRfidTb.Text?.Trim(), // include only if your API expects it
             };
 
@@ -763,31 +752,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             {
                 UpdateAdmin_Btn.Enabled = true;
             }
-        }
-
-        private void InitYearLevelComboBox()
-        {
-            // Registration form - uses your own format
-            StudentYearLevelCb.DataSource = new List<YearItem>
-            {
-                new YearItem { Value = 0, Text = "First Year" },
-                new YearItem { Value = 1, Text = "Second Year" },
-                new YearItem { Value = 2, Text = "Third Year" },
-                new YearItem { Value = 3, Text = "Fourth Year" }
-            };
-                    StudentYearLevelCb.DisplayMember = "Text";
-                    StudentYearLevelCb.ValueMember = "Value";
-
-                    // List of students form - must match API response exactly
-            ListOfStudentYearLevelCb.DataSource = new List<YearItem>
-            {
-                new YearItem { Value = 0, Text = "First Year" },
-                new YearItem { Value = 1, Text = "Second Year" },
-                new YearItem { Value = 2, Text = "Third Year" },
-                new YearItem { Value = 3, Text = "Fourth Year" }
-            };
-            ListOfStudentYearLevelCb.DisplayMember = "Text";
-            ListOfStudentYearLevelCb.ValueMember = "Value";
         }
 
         private void SidebarBtn_Click(object sender, EventArgs e)
@@ -878,15 +842,26 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             }
         }
 
-        private void LogoutBtn_Click(object sender, EventArgs e)
+        private async void LogoutBtn_Click(object sender, EventArgs e)
         {
             using (var dialog = new DialogForm("Logout", "Are you sure you want to logout?"))
             {
                 if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
                 {
-                    var RfidForm = new RFIDForm();
-                    RfidForm.Show();
-                    this.Close();
+                    var adminService = new AdminService();
+                    bool success = await adminService.Logout();
+
+                    if (success)
+                    {
+                        var RfidForm = new RFIDForm();
+                        RfidForm.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Logout failed. Please try again.", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -902,12 +877,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             var studentUpdate = new StudentUpdateDAO
             {
                 Id = _selectedStudentId,
-                FirstName = ListOfStudentFirstNameTb.Text?.Trim(),
-                MiddleName = ListOfStudentMiddleNameTb.Text?.Trim(),
-                LastName = ListOfStudentLastNameTb.Text?.Trim(),
                 StudentId = ListOfStudentStudentIdTb.Text?.Trim(),
-                Course = ListOfStudentCourseCb.SelectedItem?.ToString(),
-                YearLevel = ListOfStudentYearLevelCb.SelectedValue?.ToString()
             };
 
             using (var dialog = new DialogForm("Update Student", "Are you sure you want to update this student?"))
@@ -939,12 +909,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         }
         private void ClearStudentFields()
         {
-            ListOfStudentFirstNameTb.Text = string.Empty;
-            ListOfStudentMiddleNameTb.Text = string.Empty;
-            ListOfStudentLastNameTb.Text = string.Empty;
             ListOfStudentStudentIdTb.Text = string.Empty;
-            ListOfStudentCourseCb.SelectedIndex = 0;
-            ListOfStudentYearLevelCb.SelectedIndex = 0;
             _selectedStudentId = null;
         }
         private async void DeleteStudentBtn_Click(object sender, EventArgs e)
@@ -986,21 +951,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             _selectedStudentId = student.Id.ToString();
 
-            ListOfStudentFirstNameTb.Text = row.Cells["FirstName"].Value?.ToString();
-            ListOfStudentMiddleNameTb.Text = row.Cells["MiddleName"].Value?.ToString();
-            ListOfStudentLastNameTb.Text = row.Cells["LastName"].Value?.ToString();
             ListOfStudentStudentIdTb.Text = row.Cells["StudentId"].Value?.ToString();
-            ListOfStudentCourseCb.SelectedItem = row.Cells["Course"].Value?.ToString();
-
-            var yearLevelText = row.Cells["YearLevel"].Value?.ToString();
-            foreach (YearItem item in ListOfStudentYearLevelCb.Items)
-            {
-                if (item.Text == yearLevelText)
-                {
-                    ListOfStudentYearLevelCb.SelectedItem = item;
-                    break;
-                }
-            }
         }
 
         private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
@@ -1013,6 +964,82 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _panelHandler.ShowOnly(AdminReportsPanel);
             HeaderPanelLabel.Text = "Admin Reports";
             SetupAdminReportsPanelAnimation();
+        }
+
+        private async void AddEvaluationBtn_Click(object sender, EventArgs e)
+        {
+            // Replace "EvaluationQuestionTextBox" with your actual TextBox name
+            string question = EvaluationTb.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(question))
+            {
+                MessageBox.Show("Please enter a question.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool success = await _adminService.CreateEvaluation(question);
+
+            if (success)
+            {
+                MessageBox.Show("Evaluation created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await LoadEvaluations(); // refresh DGV
+            }
+            else
+            {
+                MessageBox.Show("Failed to create evaluation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private async Task LoadEvaluations()
+        {
+            var body = await _adminService.GetLatestEvaluation();
+
+            if (string.IsNullOrWhiteSpace(body))
+            {
+                EvaluationDgv.DataSource = null;
+                return;
+            }
+
+            var item = JsonConvert.DeserializeObject<EvaluationModel>(body);
+
+            EvaluationDgv.DataSource = item != null
+                ? new List<EvaluationModel> { item }
+                : new List<EvaluationModel>();
+
+            if (EvaluationDgv.Columns["Id"] != null)
+                EvaluationDgv.Columns["Id"].Visible = false;
+        }
+        private async void UpdateEvaluationBtn_Click(object sender, EventArgs e)
+        {
+            string id = _selectedEvaluationId;
+            string question = EvaluationTb.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(question))
+            {
+                MessageBox.Show("Please select an evaluation from the list and enter a question.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool success = await _adminService.UpdateEvaluation(id, question);
+
+            if (success)
+            {
+                MessageBox.Show("Evaluation updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _selectedEvaluationId = null;
+                await LoadEvaluations(); // refresh DGV
+            }
+            else
+            {
+                MessageBox.Show("Failed to update evaluation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void EvaluationDgv_SelectionChanged(object sender, EventArgs e)
+        {
+            if (EvaluationDgv.SelectedRows.Count > 0)
+            {
+                _selectedEvaluationId = EvaluationDgv.SelectedRows[0].Cells["Id"].Value?.ToString();
+                EvaluationTb.Text = EvaluationDgv.SelectedRows[0].Cells["Question"].Value?.ToString();
+            }
         }
     }
 }

@@ -105,8 +105,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 ScaleSidebarBtn(form.StudentManagementSidebarBtn, 0, 261);
                 ScaleSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321);
                 ScaleSidebarBtn(form.TimeManagementSidebarBtn, 0, 381);
-                ScaleSidebarBtn(form.AdminCreation, 0, 441);
-                ScaleSidebarBtn(form.ReportBtn, 0, 501);
+                ScaleSidebarBtn(form.EvaluationSidebarBtn, 0, 439);
+                ScaleSidebarBtn(form.AdminCreation, 0, 498);
+                ScaleSidebarBtn(form.ReportBtn, 0, 558);
                 ScaleSidebarBtn(form.LogoutBtn, 0, 648);
             }
             else
@@ -118,8 +119,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 ScaleCollapsedSidebarBtn(form.StudentManagementSidebarBtn, 0, 261);
                 ScaleCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321);
                 ScaleCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 381);
-                ScaleCollapsedSidebarBtn(form.AdminCreation, 0, 441);
-                ScaleCollapsedSidebarBtn(form.ReportBtn, 0, 501);
+                ScaleCollapsedSidebarBtn(form.EvaluationSidebarBtn, 0, 439);
+                ScaleCollapsedSidebarBtn(form.AdminCreation, 0, 498);
+                ScaleCollapsedSidebarBtn(form.ReportBtn, 0, 558);
                 ScaleCollapsedSidebarBtn(form.LogoutBtn, 0, 648);
             }
         }
@@ -160,65 +162,35 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.RegisterStudentFieldPanel.Size = ScaleSize(966, 590);
             form.RegisterStudentFieldPanel.Location = ScaleLocation(299, 112);
 
-            ScaleLabel(form.StudentNameLabel, "Roboto Condensed", 18f, FontStyle.Bold, 95, 70);
-            ScaleLabel(form.StudentIDLabel, "Roboto Condensed", 18f, FontStyle.Bold, 528, 70);
-            ScaleLabel(form.label12, "Roboto Condensed", 18f, FontStyle.Bold, 95, 189);
-            ScaleLabel(form.CourseLabel, "Roboto Condensed", 18f, FontStyle.Bold, 528, 191);
-            ScaleLabel(form.label13, "Roboto Condensed", 18f, FontStyle.Bold, 95, 314);
-            ScaleLabel(form.label10, "Roboto Condensed", 18f, FontStyle.Bold, 528, 278);
 
-            ScaleInputPanel(form.FullNameTbPanelR, form.StudentFirstNameTb, 97, 104, 362, 60);
-            ScaleInputPanel(form.StudentIDTbPanelR, form.StudentIDTb, 533, 104, 362, 60);
-            ScaleInputPanel(form.MiddleNameTbPanelR, form.StudentMiddleNameTb, 97, 226, 362, 60);
-            ScaleInputPanel(form.LastNameTbPanelR, form.StudentLastNameTb, 97, 346, 362, 60);
+            ScaleLabel(form.StudentIDLabel, "Roboto Condensed", 18f, FontStyle.Bold, 96, 121);
 
-            form.StudentCourseCb.Font = ScaleFont("Roboto", 18f);
-            form.StudentCourseCb.Size = ScaleSize(241, 37);
-            form.StudentCourseCb.Location = ScaleLocation(654, 188);
+            ScaleInputPanel(form.StudentIDTbPanelR, form.StudentIDTb, 101, 155, 362, 60);
 
-            form.StudentYearLevelCb.Font = ScaleFont("Roboto", 18f);
-            form.StudentYearLevelCb.Size = ScaleSize(241, 37);
-            form.StudentYearLevelCb.Location = ScaleLocation(655, 273);
-
-            ScaleActionBtn(form.RegisterRfidBtn, 536, 346, 360, 56);
+            ScaleActionBtn(form.RegisterRfidBtn, 519, 155, 360, 56);
             ScaleActionBtn(form.RegisterStudentBtn, 306, 477, 362, 56);
         }
 
         // ── List of Students Panel ────────────────────────────────────────────
         private static void ApplyListOfStudentsPanel(MainForm form)
         {
-            form.StudentsTablePanel.Size = ScaleSize(513, 608);
-            form.StudentsTablePanel.Location = ScaleLocation(732, 127);
+            form.StudentsTablePanel.Size = ScaleSize(952, 641);
+            form.StudentsTablePanel.Location = ScaleLocation(314, 111);
 
-            form.ListOfStudentDgv.Size = ScaleSize(475, 489);
-            form.ListOfStudentDgv.Location = ScaleLocation(17, 16);
+            form.ListOfStudentDgv.Size = ScaleSize(766, 377);
+            form.ListOfStudentDgv.Location = ScaleLocation(96, 128);
             form.ListOfStudentDgv.Font = ScaleFont("Roboto", 10f);
 
-            ScaleActionBtn(form.UpdateStudentBtn, 17, 531, 199, 56);
-            ScaleActionBtn(form.DeleteStudentBtn, 293, 531, 199, 56);
+            ScaleActionBtn(form.UpdateStudentBtn, 96, 526, 199, 56);
+            ScaleActionBtn(form.DeleteStudentBtn, 663, 523, 199, 56);
 
-            form.StudentFieldsPanel.Size = ScaleSize(355, 558);
-            form.StudentFieldsPanel.Location = ScaleLocation(355, 127);
 
-            ScaleLabel(form.label14, "Roboto Condensed", 18f, FontStyle.Bold, 21, 5);
-            ScaleLabel(form.label15, "Roboto Condensed", 18f, FontStyle.Bold, 21, 108);
-            ScaleLabel(form.label16, "Roboto Condensed", 18f, FontStyle.Bold, 21, 209);
-            ScaleLabel(form.label17, "Roboto Condensed", 18f, FontStyle.Bold, 21, 319);
-            ScaleLabel(form.label18, "Roboto Condensed", 18f, FontStyle.Bold, 20, 517);
-            ScaleLabel(form.label19, "Roboto Condensed", 18f, FontStyle.Bold, 21, 439);
+            ScaleLabel(form.StudentIdListLabel, "Roboto Condensed", 18f, FontStyle.Bold, 95, 10);
+            ScaleLabel(form.StudentListRfidLabel, "Roboto Condensed", 18f, FontStyle.Bold, 431, 9);
 
-            ScaleInputPanel(form.FirstNameTbPanelL, form.ListOfStudentFirstNameTb, 26, 37, 306, 60);
-            ScaleInputPanel(form.MiddleNameTbPanelL, form.ListOfStudentMiddleNameTb, 26, 140, 306, 60);
-            ScaleInputPanel(form.LastNameTbPanelL, form.ListOfStudentLastNameTb, 25, 244, 306, 60);
-            ScaleInputPanel(form.StudentIdTbPanelL, form.ListOfStudentStudentIdTb, 26, 351, 306, 60);
 
-            form.ListOfStudentCourseCb.Font = ScaleFont("Roboto", 18f);
-            form.ListOfStudentCourseCb.Size = ScaleSize(228, 37);
-            form.ListOfStudentCourseCb.Location = ScaleLocation(103, 436);
-
-            form.ListOfStudentYearLevelCb.Font = ScaleFont("Roboto", 18f);
-            form.ListOfStudentYearLevelCb.Size = ScaleSize(194, 37);
-            form.ListOfStudentYearLevelCb.Location = ScaleLocation(137, 512);
+            ScaleInputPanel(form.StudentIdTbPanelL, form.ListOfStudentStudentIdTb, 431, 46, 306, 60);
+            ScaleInputPanel(form.StudentRfidTbPanelL, form.ListOfStudentStudentIdTb, 96, 46, 306, 60);
         }
 
         // ── Admin Creation Panel ──────────────────────────────────────────────
@@ -228,15 +200,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.AdminFields.Location = ScaleLocation(358, 124);
 
             ScaleLabel(form.label9, "Roboto Condensed", 18f, FontStyle.Bold, 14, 12);
-            ScaleLabel(form.label8, "Roboto Condensed", 18f, FontStyle.Bold, 14, 111);
-            ScaleLabel(form.label5, "Roboto Condensed", 18f, FontStyle.Bold, 14, 210);
-            ScaleLabel(form.label4, "Roboto Condensed", 18f, FontStyle.Bold, 14, 309);
+
             ScaleLabel(form.label2, "Roboto Condensed", 18f, FontStyle.Bold, 14, 408);
 
             ScaleInputPanel(form.PersonnelIdTbPanelAc, form.IDPersonnelTb, 19, 46, 362, 60);
-            ScaleInputPanel(form.FirstNameTbPanelAc, form.AdminFirstNameTb, 19, 145, 362, 60);
-            ScaleInputPanel(form.MiddleNameTbPanelAc, form.AdminMiddleNameTb, 19, 244, 362, 60);
-            ScaleInputPanel(form.LastNameTbPanelAc, form.AdminLastNameTb, 19, 343, 362, 60);
+
             ScaleInputPanel(form.RfidTbPanelAc, form.AdminRfidTb, 19, 442, 362, 60);
 
             ScaleActionBtn(form.RegisterAdminBtn, 19, 528, 362, 56);
@@ -356,8 +324,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             else if (form.ListOfStudentsPanel.Visible)
             {
                 form._panelAnimator?.Clear();
-                form._panelAnimator?.AddPanel(form.StudentFieldsPanel, ScaleLocation(355, 127), ScaleLocation(258, 127));
-                form._panelAnimator?.AddPanel(form.StudentsTablePanel, ScaleLocation(732, 127), ScaleLocation(644, 127));
+                form._panelAnimator?.AddPanel(form.StudentsTablePanel, ScaleLocation(314, 111), ScaleLocation(177, 111));
             }
             else if (form.StudentPanel.Visible)
             {
@@ -447,63 +414,39 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             // ── Student Registration ──────────────────────────────────────
             form.RegisterStudentFieldPanel.Size = new Size(966, 590);
             form.RegisterStudentFieldPanel.Location = new Point(299, 112);
-            RestoreLabel(form.StudentNameLabel, "Roboto Condensed", 18f, FontStyle.Bold, 95, 70);
-            RestoreLabel(form.StudentIDLabel, "Roboto Condensed", 18f, FontStyle.Bold, 528, 70);
-            RestoreLabel(form.label12, "Roboto Condensed", 18f, FontStyle.Bold, 95, 189);
-            RestoreLabel(form.CourseLabel, "Roboto Condensed", 18f, FontStyle.Bold, 528, 191);
-            RestoreLabel(form.label13, "Roboto Condensed", 18f, FontStyle.Bold, 95, 314);
-            RestoreLabel(form.label10, "Roboto Condensed", 18f, FontStyle.Bold, 528, 278);
-            RestoreInputPanel(form.FullNameTbPanelR, form.StudentFirstNameTb, 97, 104, 362, 60);
-            RestoreInputPanel(form.StudentIDTbPanelR, form.StudentIDTb, 533, 104, 362, 60);
-            RestoreInputPanel(form.MiddleNameTbPanelR, form.StudentMiddleNameTb, 97, 226, 362, 60);
-            RestoreInputPanel(form.LastNameTbPanelR, form.StudentLastNameTb, 97, 346, 362, 60);
-            form.StudentCourseCb.Font = new Font("Roboto", 18f);
-            form.StudentCourseCb.Size = new Size(241, 37);
-            form.StudentCourseCb.Location = new Point(654, 188);
-            form.StudentYearLevelCb.Font = new Font("Roboto", 18f);
-            form.StudentYearLevelCb.Size = new Size(241, 37);
-            form.StudentYearLevelCb.Location = new Point(655, 273);
-            RestoreActionBtn(form.RegisterRfidBtn, 536, 346, 360, 56);
+
+            RestoreLabel(form.StudentIDLabel, "Roboto Condensed", 18f, FontStyle.Bold, 96, 121);
+
+
+            RestoreInputPanel(form.StudentIDTbPanelR, form.StudentIDTb, 101, 155, 362, 60);
+
+
+            RestoreActionBtn(form.RegisterRfidBtn, 519, 155, 360, 56);
             RestoreActionBtn(form.RegisterStudentBtn, 306, 477, 362, 56);
             // ── List of Students ──────────────────────────────────────────
-            form.StudentFieldsPanel.Size = new Size(355, 558);
-            form.StudentFieldsPanel.Location = new Point(355, 127);
-            form.StudentsTablePanel.Size = new Size(513, 608);
-            form.StudentsTablePanel.Location = new Point(732, 127);
-            form.ListOfStudentDgv.Size = new Size(475, 489);
-            form.ListOfStudentDgv.Location = new Point(17, 16);
+            form.StudentsTablePanel.Size = new Size(952, 641);
+            form.StudentsTablePanel.Location = new Point(314, 111);
+            form.ListOfStudentDgv.Size = new Size(766, 377);
+            form.ListOfStudentDgv.Location = new Point(96, 128);
             form.ListOfStudentDgv.Font = new Font("Roboto", 10f);
-            RestoreActionBtn(form.UpdateStudentBtn, 17, 531, 199, 56);
-            RestoreActionBtn(form.DeleteStudentBtn, 293, 531, 199, 56);
-            RestoreLabel(form.label14, "Roboto Condensed", 18f, FontStyle.Bold, 21, 5);
-            RestoreLabel(form.label15, "Roboto Condensed", 18f, FontStyle.Bold, 21, 108);
-            RestoreLabel(form.label16, "Roboto Condensed", 18f, FontStyle.Bold, 21, 209);
-            RestoreLabel(form.label17, "Roboto Condensed", 18f, FontStyle.Bold, 21, 319);
-            RestoreLabel(form.label18, "Roboto Condensed", 18f, FontStyle.Bold, 20, 517);
-            RestoreLabel(form.label19, "Roboto Condensed", 18f, FontStyle.Bold, 21, 439);
-            RestoreInputPanel(form.FirstNameTbPanelL, form.ListOfStudentFirstNameTb, 26, 37, 306, 60);
-            RestoreInputPanel(form.MiddleNameTbPanelL, form.ListOfStudentMiddleNameTb, 26, 140, 306, 60);
-            RestoreInputPanel(form.LastNameTbPanelL, form.ListOfStudentLastNameTb, 25, 244, 306, 60);
-            RestoreInputPanel(form.StudentIdTbPanelL, form.ListOfStudentStudentIdTb, 26, 351, 306, 60);
-            form.ListOfStudentCourseCb.Font = new Font("Roboto", 18f);
-            form.ListOfStudentCourseCb.Size = new Size(228, 37);
-            form.ListOfStudentCourseCb.Location = new Point(103, 436);
-            form.ListOfStudentYearLevelCb.Font = new Font("Roboto", 18f);
-            form.ListOfStudentYearLevelCb.Size = new Size(194, 37);
-            form.ListOfStudentYearLevelCb.Location = new Point(137, 512);
+            RestoreActionBtn(form.UpdateStudentBtn, 96, 526, 199, 56);
+            RestoreActionBtn(form.DeleteStudentBtn, 663, 523, 199, 56);
+
+            RestoreLabel(form.StudentIdListLabel, "Roboto Condensed", 18f, FontStyle.Bold, 95, 10);
+            RestoreLabel(form.StudentListRfidLabel, "Roboto Condensed", 18f, FontStyle.Bold, 431, 9);
+
+            RestoreInputPanel(form.StudentIdTbPanelL, form.ListOfStudentStudentIdTb, 431, 46, 306, 60);
+            RestoreInputPanel(form.StudentRfidTbPanelL, form.StudentListRfidTb, 96, 46, 306, 60);
+
 
             // ── Admin Creation ────────────────────────────────────────────
             form.AdminFields.Size = new Size(400, 600);
             form.AdminFields.Location = new Point(358, 124);
             RestoreLabel(form.label9, "Roboto Condensed", 18f, FontStyle.Bold, 14, 12);
-            RestoreLabel(form.label8, "Roboto Condensed", 18f, FontStyle.Bold, 14, 111);
-            RestoreLabel(form.label5, "Roboto Condensed", 18f, FontStyle.Bold, 14, 210);
-            RestoreLabel(form.label4, "Roboto Condensed", 18f, FontStyle.Bold, 14, 309);
+
             RestoreLabel(form.label2, "Roboto Condensed", 18f, FontStyle.Bold, 14, 408);
             RestoreInputPanel(form.PersonnelIdTbPanelAc, form.IDPersonnelTb, 19, 46, 362, 60);
-            RestoreInputPanel(form.FirstNameTbPanelAc, form.AdminFirstNameTb, 19, 145, 362, 60);
-            RestoreInputPanel(form.MiddleNameTbPanelAc, form.AdminMiddleNameTb, 19, 244, 362, 60);
-            RestoreInputPanel(form.LastNameTbPanelAc, form.AdminLastNameTb, 19, 343, 362, 60);
+
             RestoreInputPanel(form.RfidTbPanelAc, form.AdminRfidTb, 19, 442, 362, 60);
             RestoreActionBtn(form.RegisterAdminBtn, 19, 528, 362, 56);
             form.AdminTablePanel.Size = new Size(460, 600);
@@ -565,8 +508,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             }
             else if (form.ListOfStudentsPanel.Visible)
             {
-                form._panelAnimator?.AddPanel(form.StudentFieldsPanel, new Point(355, 127), new Point(258, 127));
-                form._panelAnimator?.AddPanel(form.StudentsTablePanel, new Point(732, 127), new Point(644, 127));
+                form._panelAnimator?.AddPanel(form.StudentsTablePanel, new Point(314, 111), new Point(177, 111));
             }
             else if (form.StudentPanel.Visible)
             {

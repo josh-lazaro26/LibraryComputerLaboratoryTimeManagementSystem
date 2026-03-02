@@ -17,36 +17,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
     public class AdminService
     {
         private static HttpClient Client => ApiConfig.Client;
-        public async Task<string> AuthenticateAsync(string username, string password)
-        {
-            try
-            {
-                string payload = $@"
-                {{
-                    ""username"": ""{username}"",
-                    ""password"": ""{password}""
-                }}";
-
-                var content = new StringContent(payload, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync("/api/v1/auth/authenticate", content);
-
-
-                var body = await response.Content.ReadAsStringAsync();
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-
-                return body;
-            }
-            catch (Exception ex) 
-            {
-                Console.WriteLine($"Error here:{ex}");
-                return null;
-            }
-            
-        }
 
         public async Task<bool> AuthenticateRfid(string rfid)
         {
@@ -57,7 +27,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
 
                 var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync("api/v1/auth/authenticate/admin/rfid", content);
+                var response = await Client.PostAsync("api/v1/accounts/authenticate", content);
 
                 var body = await response.Content.ReadAsStringAsync();
 
@@ -67,7 +37,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 var json = JObject.Parse(body);
 
                 // token
-                var newToken = (string)json["value"]?["accessToken"];
+                var newToken = (string)json["access_token"];
                 if (!string.IsNullOrWhiteSpace(newToken))
                     ApiConfig.Token = newToken;
 
@@ -85,45 +55,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
 
         }
-      
-        public async Task<string> UpdateRfid(int userId, string rfidData)
-        {
-            string payload = $@"
-            {{
-                ""userId"": {userId},
-                ""rfidData"": ""{rfidData}""
-            }}";
-
-            var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
-            var response = await Client.PutAsync("/rfids", content);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine($"Failed: {response.StatusCode}");
-                return null;
-            }
-
-            return await response.Content.ReadAsStringAsync();
-        }
 
         public async Task<bool> CreateAdmin(AdminCreationDAO adminCreation)
         {
             string payload = $@"
             {{
-                ""firstName"": ""{adminCreation.FirstName}"",
-                ""middleName"": ""{adminCreation.MiddleName}"",
-                ""lastName"": ""{adminCreation.LastName}"",
-                ""rfidData"": ""{adminCreation.RFID}"",
-                ""personnelId"": ""{adminCreation.PersonnelId}""
+                ""rfid"": ""{adminCreation.RFID}"",
+                ""school_id"": ""{adminCreation.PersonnelId}""
             }}";
             Client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
-            var response = await Client.PostAsync("/api/v1/admins", content);
+            var response = await Client.PostAsync("/api/v1/users/admins", content);
 
             var body = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
-            Console.WriteLine($"Body: {body}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -138,9 +82,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             string payload = $@"
             {{
                 ""id"": {adminUpdate.Id},
-                ""firstName"": ""{adminUpdate.FirstName}"",
-                ""middleName"": ""{adminUpdate.MiddleName}"",
-                ""lastName"": ""{adminUpdate.LastName}"",
                 ""personnelId"": ""{adminUpdate.PersonnelId}""
             }}";
 
@@ -181,46 +122,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
         }
 
-        public async Task CreateStudents(StudentCreationDAO studentCreation)
-        {
-            
-            string payload = $@"
-            {{
-                ""firstName"": ""{studentCreation.FirstName}"",
-                ""middleName"": ""{studentCreation.MiddleName}"",
-                ""lastName"": ""{studentCreation.LastName}"",
-                ""rfidData"": ""{studentCreation.RFID}""
-                ""studentId"": ""{studentCreation.StudentId}"",
-                ""course"": ""{studentCreation.Course}"",
-                ""yearLevel"": ""{studentCreation.YearLevel}"",
-            }}";
-
-            var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
-            var response = await Client.PostAsync("api/v1/students", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                response.Content.ReadAsStringAsync().Wait();
-            }
-            else
-            {
-                Console.WriteLine($"Failed: {response.StatusCode}");
-            }
-        }
-
         public async Task UpdateStudent(StudentUpdateDAO studentUpdate)
         {
             string payload = $@"
             {{
                 ""id"": {studentUpdate.Id},
-                ""firstName"": ""{studentUpdate.FirstName}"",
-                ""middleName"": ""{studentUpdate.MiddleName}"",
-                ""lastName"": ""{studentUpdate.LastName}"",
                 ""rfidData"": ""{studentUpdate.RFID}"",
                 ""studentId"": ""{studentUpdate.StudentId}"",
-                ""course"": ""{studentUpdate.Course}"",
-                ""yearLevel"": ""{studentUpdate.YearLevel}""
             }}";
 
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
@@ -252,9 +160,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
         }
 
-        public async Task<PagedSessionResponse> GetActiveSessions(string query = null, int pageNumber = 1, int pageSize = 16)
+        public async Task<PagedSessionResponse> GetActiveSessions( int pageNumber = 1, int pageSize = 16)
         {
-            var urlBuilder = new StringBuilder("api/v1/sessions");
+            var urlBuilder = new StringBuilder("api/v1/accounts");
             bool hasAny = false;
 
             void AddParam(string name, string value)
@@ -266,13 +174,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 urlBuilder.Append("=");
                 urlBuilder.Append(Uri.EscapeDataString(value));
             }
-
-            if (!string.IsNullOrWhiteSpace(query))
-                AddParam("query", query);
-
-            AddParam("isActive", "true");
-            AddParam("pageNumber", pageNumber.ToString());
-            AddParam("pageSize", pageSize.ToString());
+                AddParam("page_number", pageNumber.ToString());
+                AddParam("page_size", pageSize.ToString());
+                AddParam("active", "true");
 
             // Attach bearer token (if available)
             if (!string.IsNullOrWhiteSpace(ApiConfig.Token))
@@ -284,8 +188,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             var response = await Client.GetAsync(urlBuilder.ToString());
             var body = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
-            Console.WriteLine($"Body Session: {body}");
 
             if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
                 return null;
@@ -297,24 +199,21 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             if (result?.Value?.Items != null)
             {
                 foreach (var s in result.Value.Items)
-                    s.IsActive = true;
+                    s.Active = true;
             }
 
             return result;
         }
 
-        public async Task UpdateSession(int id, string duration)
+        public async Task UpdateSession(string userId, string duration)
         {
             string payload = $@"
             {{
-                ""id"": {id},
-                ""duration"": ""{duration}""
+                ""user_id"": ""{userId}"",
+                ""new_duration"": ""{duration}""
             }}";
-
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
-            var response = await Client.PutAsync("api/v1/sessions", content);
-
+            var response = await Client.PutAsync("api/v1/accounts/time", content);
             if (response.IsSuccessStatusCode)
             {
                 await response.Content.ReadAsStringAsync();
@@ -324,17 +223,16 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 Console.WriteLine($"Failed: {response.StatusCode}");
             }
         }
-        public async Task UpdateSessionDuration(int id, string duration)
+        public async Task UpdateSessionDuration(string userId, string duration)
         {
             string payload = $@"
             {{
-                ""id"": {id},
-                ""duration"": ""{duration}""
+                ""user_id"": ""{userId}"",
+                ""new_duration"": ""{duration}""
             }}";
 
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
-            var response = await Client.PutAsync("/api/v1/sessions", content);
+            var response = await Client.PutAsync("api/v1/accounts/time", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -342,7 +240,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
             else
             {
-                Console.WriteLine($"Failed: {response.StatusCode}");
+                var body = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Failed: {response.StatusCode} | {body}");
             }
         }
 
@@ -411,6 +310,98 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 return null;
             }
         }
+        public async Task<bool> CreateEvaluation(string question)
+        {
+            try
+            {
+                var payload = JsonConvert.SerializeObject(new { question = question });
+                var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.PostAsync("api/v1/evaluations", content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateEvaluation(string id, string question)
+        {
+            try
+            {
+                var payload = JsonConvert.SerializeObject(new { question = question });
+                var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.PutAsync($"api/v1/evaluations/{id}", content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<string> GetLatestEvaluation()
+        {
+            try
+            {
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.GetAsync("api/v1/evaluations/new");
+                var body = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine("Body ni kristo 3: "+body);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Failed: {response.StatusCode}");
+                    return null;
+                }
+
+                return body;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
+        public async Task<bool> Logout()
+        {
+            try
+            {
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.PostAsync("api/v1/accounts/logout", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Logout failed: {response.StatusCode}");
+                    return false;
+                }
+
+                // Clear token after successful logout
+                ApiConfig.Token = null;
+                AdminDao.AdminId = 0;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception during logout: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

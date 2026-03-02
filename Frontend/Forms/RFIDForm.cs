@@ -31,21 +31,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
                 string rfidValue = RFIDTextBox.Text.Trim();
                 if (string.IsNullOrEmpty(rfidValue)) return;
 
-                // 1. Backdoor for "superadmin" text
-                if (string.Equals(rfidValue, "superadmin", StringComparison.OrdinalIgnoreCase))
-                {
-                    SuperAdminState.isSuperAdmin = true;
-                    var superForm = new SuperAdminForm();
-                    superForm.Show();
-                    this.Hide();
-                    return;
-                }
-
                 try
                 {
                     RFIDTextBox.Enabled = false;
 
-                    // FIX: AuthenticateRfid returns bool, not string
                     bool isSuccess = await _adminService.AuthenticateRfid(rfidValue);
 
                     RFIDTextBox.Enabled = true;
@@ -59,8 +48,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
                         return;
                     }
 
-                    // FIX: The service already saved the token to ApiConfig.Token. Use that.
                     string accessToken = ApiConfig.Token;
+
 
                     if (string.IsNullOrEmpty(accessToken))
                     {
@@ -69,14 +58,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
                         return;
                     }
 
-                    // 2. Decode Role from the saved token
+                    // Decode Role from the saved token
                     string role = GetRoleFromJwt(accessToken);
 
                     if (string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) ||
                         string.Equals(role, "SUPERADMIN", StringComparison.OrdinalIgnoreCase))
                     {
                         SuperAdminState.isSuperAdmin = true;
-                        var superForm = new SuperAdminForm();
+                        var superForm = new MainForm();
                         superForm.Show();
                         this.Hide();
                     }
@@ -105,9 +94,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
                 var parts = token.Split('.');
                 if (parts.Length != 3) return null;
 
-                var payload = parts[1];
+                string payload = parts[1];
 
-                // Fix Base64 padding
+                // Convert Base64Url to Base64
+                payload = payload.Replace('-', '+').Replace('_', '/');
+
+                // Fix padding
                 switch (payload.Length % 4)
                 {
                     case 2: payload += "=="; break;
@@ -116,18 +108,20 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
 
                 var jsonBytes = Convert.FromBase64String(payload);
                 var jsonString = Encoding.UTF8.GetString(jsonBytes);
-                var jwtJson = JObject.Parse(jsonString);
 
-                var role = jwtJson["role"]?.ToString();
-                if (string.IsNullOrEmpty(role))
-                {
-                    role = jwtJson["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]?.ToString();
-                }
+                JObject jwtJson = JObject.Parse(jsonString);
+
+                // Try common role claim names
+                string role =
+                    jwtJson["roles"]?.ToString() ??
+                    jwtJson["Roles"]?.ToString() ??
+                    jwtJson["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]?.ToString();
 
                 return role;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show("Invalid token format: " + ex.Message);
                 return null;
             }
         }

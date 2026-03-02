@@ -9,20 +9,25 @@ internal class SignalRService
     private HubConnection _connection;
     private readonly Func<Task<string>> _tokenProvider;
 
-    public event Action DisconnectUser;
+    // Admin listeners
+    public event Action<Guid, string, TimeSpan> NewStudentOpenedSession;
+    public event Action<Guid> LoggedOutSession;
 
-    public event Action<Object> NewStudentOpenedSession;
-    public event Action<int> LoggedOutSession; 
+    // Student listeners
+    public event Action<TimeSpan> UpdatedSession;
+    public event Action Terminate;
+
     public SignalRService(Func<Task<string>> tokenProvider)
     {
         _tokenProvider = tokenProvider;
     }
 
     protected SignalRService() { }
+
     public async Task InitializeAsync()
     {
         _connection = new HubConnectionBuilder()
-            .WithUrl("https://library-laboratory-management-system.onrender.com/api/v1/hubs/session", options =>
+            .WithUrl("https://internet-laboratory-time-management.onrender.com/api/v1/hubs/session", options =>
             {
                 options.AccessTokenProvider = _tokenProvider;
                 options.HttpMessageHandlerFactory = _ => new HttpClientHandler
@@ -32,22 +37,34 @@ internal class SignalRService
             })
             .WithAutomaticReconnect()
             .Build();
+
         RegisterHandlers();
         await _connection.StartAsync();
     }
-    public HubConnection GetHubConnection()
-    {
-        return _connection;
-    }
+
+    public HubConnection GetHubConnection() => _connection;
+
     public void RegisterHandlers()
     {
-        _connection.On("NewStudentOpenedSession", (Object data) =>
+        // "NewSession" is the hub method name — maps to admin listener
+        _connection.On<Guid, string, TimeSpan>("NewSession", (userId, schoolId, availableDuration) =>
         {
-            NewStudentOpenedSession.Invoke(data);
+            NewStudentOpenedSession?.Invoke(userId, schoolId, availableDuration);
         });
-        _connection.On("LoggedOutSession", (int sessionId) =>
+
+        _connection.On<Guid>("LoggedOutSession", (userId) =>
         {
-            LoggedOutSession.Invoke(sessionId);
+            LoggedOutSession?.Invoke(userId);
+        });
+
+        _connection.On<TimeSpan>("UpdatedSession", (duration) =>
+        {
+            UpdatedSession?.Invoke(duration);
+        });
+
+        _connection.On("Terminate", () =>
+        {
+            Terminate?.Invoke();
         });
     }
 }

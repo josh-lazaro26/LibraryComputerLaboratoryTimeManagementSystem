@@ -10,7 +10,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 {
     public partial class AddTimeModalForm : Form
     {
-        private readonly int _sessionId;
         private readonly string _originalDuration;
         private readonly AdminService _adminService;
         private PanelHandler _panelHandler;
@@ -22,28 +21,28 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
         public TimeSpan? UpdatedRemaining { get; private set; }
 
 
-        private readonly Dictionary<int, TimeSpan> _remainingBySessionId;
-  
+        private Dictionary<string, TimeSpan> _remainingBySessionId;
+
         private Timer _refreshTimer;
 
         private bool _isHourMode = true;
-        public AddTimeModalForm(int sessionId, Dictionary<int, TimeSpan> remainingDict)
+        private string _sessionId;
+        private string _userId; // ADD THIS
+
+        public AddTimeModalForm(string sessionId, string userId, Dictionary<string, TimeSpan> remainingBySessionId)
         {
             InitializeComponent();
             UIHandler();
 
             _adminService = new AdminService();
-
             _sessionId = sessionId;
-            _remainingBySessionId = remainingDict;
+            _userId = userId; // ADD THIS
+            _remainingBySessionId = remainingBySessionId;
 
             this.Text = $"Update Session {_sessionId}";
-
             InitializeRefreshTimer();
-
             AddTimePanel.SetDoubleBuffered(true);
             swapAnimator = new LabelSwapAnimator(HourLabel, MinutesLabel, this);
-
         }
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
@@ -112,9 +111,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
                     return;
                 }
 
+
                 string normalizedDuration = newDuration.ToString(@"hh\:mm\:ss");
 
-                await _adminService.UpdateSessionDuration(_sessionId, normalizedDuration);
+                await _adminService.UpdateSessionDuration(_userId, normalizedDuration);
 
                 UpdatedRemaining = newDuration;
                 Action = SessionModalAction.Updated;

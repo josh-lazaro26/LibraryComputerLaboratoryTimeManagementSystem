@@ -249,20 +249,13 @@
     <Compile Include="Frontend\Forms\StudentRFIDForm.Designer.cs">
       <DependentUpon>StudentRFIDForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frontend\Forms\SuperAdminForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frontend\Forms\SuperAdminForm.Designer.cs">
-      <DependentUpon>SuperAdminForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Frontend\HelperClasses\TimeHelper.cs" />
     <Compile Include="Frontend\Layouts\MainFormResponsiveLayout.cs" />
     <Compile Include="Frontend\Models\Admin\AdminDao.cs" />
     <Compile Include="Frontend\Models\Admin\AdminDto.cs" />
-    <Compile Include="Frontend\Models\Session\SessionDao.cs" />
+    <Compile Include="Frontend\Models\Evaluation\EvaluationModel.cs" />
     <Compile Include="Frontend\Models\Session\SessionDto.cs" />
     <Compile Include="Frontend\Models\Student\StudentDAO.cs" />
-    <Compile Include="Frontend\Models\Student\YearItem.cs" />
     <Compile Include="Frontend\Services\API Client\ApiConfig\ApiConfig.cs" />
     <Compile Include="Frontend\Services\AdminServices\AdminService.cs" />
     <Compile Include="Frontend\Services\SignalR Services\SignalRService.cs" />
@@ -294,10 +287,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\Forms\StudentRFIDForm.resx">
       <DependentUpon>StudentRFIDForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Frontend\Forms\SuperAdminForm.resx">
-      <DependentUpon>SuperAdminForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
