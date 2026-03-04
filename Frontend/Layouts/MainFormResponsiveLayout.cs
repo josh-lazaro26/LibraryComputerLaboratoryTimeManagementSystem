@@ -55,12 +55,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             ApplyHeader(form, w);
             ApplySidebar(form, h, scaledExpandedWidth, scaledCollapsedWidth);
             ApplyDashboardPanel(form, w, h);
-            ApplyStudentRegistrationPanel(form);
             ApplyListOfStudentsPanel(form);
             ApplyAdminCreationPanel(form);
             ApplyTimeManagementPanel(form);
             UpdatePanelAnimations(form);
-            ApplyAdminReportsPanel(form); 
+            ApplyAdminReportsPanel(form);
+            ApplyEvaluationPanel(form);
         }
 
         // ── Header ────────────────────────────────────────────────────────────
@@ -102,12 +102,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form.pictureBox1.Location = ScaleLocation(33, 19);
 
                 ScaleSidebarBtn(form.DashboardSidebarBtn, 0, 201);
-                ScaleSidebarBtn(form.StudentManagementSidebarBtn, 0, 261);
-                ScaleSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321);
-                ScaleSidebarBtn(form.TimeManagementSidebarBtn, 0, 381);
-                ScaleSidebarBtn(form.EvaluationSidebarBtn, 0, 439);
-                ScaleSidebarBtn(form.AdminCreation, 0, 498);
-                ScaleSidebarBtn(form.ReportBtn, 0, 558);
+                ScaleSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 259);
+                ScaleSidebarBtn(form.TimeManagementSidebarBtn, 0, 319);
+                ScaleSidebarBtn(form.EvaluationSidebarBtn, 0, 377);
+                ScaleSidebarBtn(form.AdminCreation, 0, 436);
+                ScaleSidebarBtn(form.ReportBtn, 0, 496);
                 ScaleSidebarBtn(form.LogoutBtn, 0, 648);
             }
             else
@@ -116,12 +115,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form.pictureBox1.Size = ScaleSize(235, 160);
                 form.pictureBox1.Location = ScaleLocation(33, 19);
                 ScaleCollapsedSidebarBtn(form.DashboardSidebarBtn, 0, 201);
-                ScaleCollapsedSidebarBtn(form.StudentManagementSidebarBtn, 0, 261);
-                ScaleCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321);
-                ScaleCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 381);
-                ScaleCollapsedSidebarBtn(form.EvaluationSidebarBtn, 0, 439);
-                ScaleCollapsedSidebarBtn(form.AdminCreation, 0, 498);
-                ScaleCollapsedSidebarBtn(form.ReportBtn, 0, 558);
+                ScaleCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 259);
+                ScaleCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 319);
+                ScaleCollapsedSidebarBtn(form.EvaluationSidebarBtn, 0, 377);
+                ScaleCollapsedSidebarBtn(form.AdminCreation, 0, 436);
+                ScaleCollapsedSidebarBtn(form.ReportBtn, 0, 496);
                 ScaleCollapsedSidebarBtn(form.LogoutBtn, 0, 648);
             }
         }
@@ -156,21 +154,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.label6.Location = new Point(w - (int)(210 * _scaleX), (int)(95 * _scaleY));
         }
 
-        // ── Student Registration Panel ────────────────────────────────────────
-        private static void ApplyStudentRegistrationPanel(MainForm form)
-        {
-            form.RegisterStudentFieldPanel.Size = ScaleSize(966, 590);
-            form.RegisterStudentFieldPanel.Location = ScaleLocation(299, 112);
-
-
-            ScaleLabel(form.StudentIDLabel, "Roboto Condensed", 18f, FontStyle.Bold, 96, 121);
-
-            ScaleInputPanel(form.StudentIDTbPanelR, form.StudentIDTb, 101, 155, 362, 60);
-
-            ScaleActionBtn(form.RegisterRfidBtn, 519, 155, 360, 56);
-            ScaleActionBtn(form.RegisterStudentBtn, 306, 477, 362, 56);
-        }
-
         // ── List of Students Panel ────────────────────────────────────────────
         private static void ApplyListOfStudentsPanel(MainForm form)
         {
@@ -184,10 +167,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             ScaleActionBtn(form.UpdateStudentBtn, 96, 526, 199, 56);
             ScaleActionBtn(form.DeleteStudentBtn, 663, 523, 199, 56);
 
-
             ScaleLabel(form.StudentIdListLabel, "Roboto Condensed", 18f, FontStyle.Bold, 95, 10);
             ScaleLabel(form.StudentListRfidLabel, "Roboto Condensed", 18f, FontStyle.Bold, 431, 9);
-
 
             ScaleInputPanel(form.StudentIdTbPanelL, form.ListOfStudentStudentIdTb, 431, 46, 306, 60);
             ScaleInputPanel(form.StudentRfidTbPanelL, form.ListOfStudentStudentIdTb, 96, 46, 306, 60);
@@ -200,11 +181,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.AdminFields.Location = ScaleLocation(358, 124);
 
             ScaleLabel(form.label9, "Roboto Condensed", 18f, FontStyle.Bold, 14, 12);
-
             ScaleLabel(form.label2, "Roboto Condensed", 18f, FontStyle.Bold, 14, 408);
 
             ScaleInputPanel(form.PersonnelIdTbPanelAc, form.IDPersonnelTb, 19, 46, 362, 60);
-
             ScaleInputPanel(form.RfidTbPanelAc, form.AdminRfidTb, 19, 442, 362, 60);
 
             ScaleActionBtn(form.RegisterAdminBtn, 19, 528, 362, 56);
@@ -251,6 +230,33 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             );
         }
 
+        // ── Evaluation Panel ──────────────────────────────────────────────────
+        private static void ApplyEvaluationPanel(MainForm form)
+        {
+            // Input side panel
+            form.EvaluationTbPanel.Size = ScaleSize(470, 620);
+            form.EvaluationTbPanel.Location = ScaleLocation(317, 138);
+
+            // Multiline textbox positioned below the label
+            form.EvaluationTb.Multiline = true;
+            form.EvaluationTb.Size = ScaleSize(433, 437);
+            form.EvaluationTb.Location = ScaleLocation(19, 71);
+
+            form.EvaluationQLabel.Font = ScaleFont("Roboto Condensed", 18f, FontStyle.Bold);
+
+            // Table side panel
+            form.EvaluationListPanel.Size = ScaleSize(447, 620);
+            form.EvaluationListPanel.Location = ScaleLocation(818, 138);
+
+            form.EvaluationDgv.Size = ScaleSize(421, 505);
+            form.EvaluationDgv.Location = ScaleLocation(14, 17);
+            form.EvaluationDgv.Font = ScaleFont("Roboto", 10f);
+
+            // Buttons — children of EvaluationPanel
+            ScaleActionBtn(form.AddEvaluationBtn, 104, 546, 263, 56);
+            ScaleActionBtn(form.UpdateEvaluationBtn, 143, 546, 175, 56);
+        }
+
         // ── Shared Helpers ────────────────────────────────────────────────────
         private static void ScaleLabel(Label lbl, string font, float size, FontStyle style, int baseX, int baseY)
         {
@@ -289,7 +295,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 buttons[i].Font = ScaleFont("Roboto Condensed", 12f);
 
                 labels[i].Font = ScaleFont("Roboto Condensed", 20f);
-                labels[i].Location = ScaleLocation(65, labelY[i]); // was 86
+                labels[i].Location = ScaleLocation(65, labelY[i]);
             }
         }
 
@@ -326,11 +332,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form._panelAnimator?.Clear();
                 form._panelAnimator?.AddPanel(form.StudentsTablePanel, ScaleLocation(314, 111), ScaleLocation(177, 111));
             }
-            else if (form.StudentPanel.Visible)
-            {
-                form._panelAnimator?.Clear();
-                form._panelAnimator?.AddPanel(form.RegisterStudentFieldPanel, ScaleLocation(299, 112), ScaleLocation(167, 112));
-            }
             else if (form.DashboardPanel.Visible)
             {
                 form._panelAnimator?.Clear();
@@ -343,6 +344,20 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     form.ReportDgvPanel,
                     ScaleLocation(311, 83),
                     ScaleLocation(193, 83)
+                );
+            }
+            else if (form.EvaluationPanel.Visible)
+            {
+                form._panelAnimator?.Clear();
+                form._panelAnimator?.AddPanel(
+                    form.EvaluationTbPanel,
+                    ScaleLocation(317, 138),
+                    ScaleLocation(193, 138)
+                );
+                form._panelAnimator?.AddPanel(
+                    form.EvaluationListPanel,
+                    ScaleLocation(818, 138),
+                    ScaleLocation(673, 138)
                 );
             }
         }
@@ -367,9 +382,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form.pictureBox1.Size = new Size(235, 160);
                 form.pictureBox1.Location = new Point(33, 19);
                 RestoreNormalSidebarBtn(form.DashboardSidebarBtn, 0, 201, 8);
-                RestoreNormalSidebarBtn(form.StudentManagementSidebarBtn, 0, 261, 8);
-                RestoreNormalSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321, 8);
-                RestoreNormalSidebarBtn(form.TimeManagementSidebarBtn, 0, 381, 8);
+                RestoreNormalSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 259, 8);
+                RestoreNormalSidebarBtn(form.TimeManagementSidebarBtn, 0, 319, 8);
+                RestoreNormalSidebarBtn(form.EvaluationSidebarBtn, 0, 377, 8);
                 RestoreNormalSidebarBtn(form.AdminCreation, 0, 441, 8);
                 RestoreNormalSidebarBtn(form.ReportBtn, 0, 501, 8);
                 RestoreNormalSidebarBtn(form.LogoutBtn, 0, 648, 8);
@@ -380,9 +395,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form.pictureBox1.Size = new Size(235, 160);
                 form.pictureBox1.Location = new Point(33, 19);
                 RestoreCollapsedSidebarBtn(form.DashboardSidebarBtn, 0, 201, 5);
-                RestoreCollapsedSidebarBtn(form.StudentManagementSidebarBtn, 0, 261,5);
-                RestoreCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 321, 5);
-                RestoreCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 381, 5);
+                RestoreCollapsedSidebarBtn(form.ListOfStudentsSidebarBtn, 0, 259, 5);
+                RestoreCollapsedSidebarBtn(form.TimeManagementSidebarBtn, 0, 319, 5);
+                RestoreCollapsedSidebarBtn(form.EvaluationSidebarBtn, 0, 377, 5);
                 RestoreCollapsedSidebarBtn(form.AdminCreation, 0, 441, 5);
                 RestoreCollapsedSidebarBtn(form.ReportBtn, 0, 501, 5);
                 RestoreCollapsedSidebarBtn(form.LogoutBtn, 0, 648, 5);
@@ -411,18 +426,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.label6.Font = new Font("Roboto Black", 15.75f, FontStyle.Bold);
             form.label6.Location = new Point(1070, 95);
 
-            // ── Student Registration ──────────────────────────────────────
-            form.RegisterStudentFieldPanel.Size = new Size(966, 590);
-            form.RegisterStudentFieldPanel.Location = new Point(299, 112);
-
-            RestoreLabel(form.StudentIDLabel, "Roboto Condensed", 18f, FontStyle.Bold, 96, 121);
-
-
-            RestoreInputPanel(form.StudentIDTbPanelR, form.StudentIDTb, 101, 155, 362, 60);
-
-
-            RestoreActionBtn(form.RegisterRfidBtn, 519, 155, 360, 56);
-            RestoreActionBtn(form.RegisterStudentBtn, 306, 477, 362, 56);
             // ── List of Students ──────────────────────────────────────────
             form.StudentsTablePanel.Size = new Size(952, 641);
             form.StudentsTablePanel.Location = new Point(314, 111);
@@ -438,15 +441,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             RestoreInputPanel(form.StudentIdTbPanelL, form.ListOfStudentStudentIdTb, 431, 46, 306, 60);
             RestoreInputPanel(form.StudentRfidTbPanelL, form.StudentListRfidTb, 96, 46, 306, 60);
 
-
             // ── Admin Creation ────────────────────────────────────────────
             form.AdminFields.Size = new Size(400, 600);
             form.AdminFields.Location = new Point(358, 124);
             RestoreLabel(form.label9, "Roboto Condensed", 18f, FontStyle.Bold, 14, 12);
-
             RestoreLabel(form.label2, "Roboto Condensed", 18f, FontStyle.Bold, 14, 408);
             RestoreInputPanel(form.PersonnelIdTbPanelAc, form.IDPersonnelTb, 19, 46, 362, 60);
-
             RestoreInputPanel(form.RfidTbPanelAc, form.AdminRfidTb, 19, 442, 362, 60);
             RestoreActionBtn(form.RegisterAdminBtn, 19, 528, 362, 56);
             form.AdminTablePanel.Size = new Size(460, 600);
@@ -485,12 +485,28 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.ReportDgvPanel.Size = new Size(955, 675);
             form.ReportDgvPanel.Location = new Point(311, 83);
             form.ReportsDataGridView.Dock = DockStyle.None;
-            form.ReportsDataGridView.Size = new Size(951, 500); // reduced from 595
-            form.ReportsDataGridView.Location = new Point(2, 50); // pushed down 40px from top
+            form.ReportsDataGridView.Size = new Size(951, 500);
+            form.ReportsDataGridView.Location = new Point(2, 50);
             form.ReportsDataGridView.Font = new Font("Roboto", 10f);
             form.PrintReportBtn.Size = new Size(268, 56);
-            form.PrintReportBtn.Location = new Point((955 - 268) / 2, 675 - 56 - 10); // (343, 609)
+            form.PrintReportBtn.Location = new Point((955 - 268) / 2, 675 - 56 - 10);
             form.PrintReportBtn.Font = new Font("Roboto Black", 21.75f, FontStyle.Bold);
+
+            // ── Evaluation ────────────────────────────────────────────────
+            form.EvaluationTbPanel.Size = new Size(470, 620);
+            form.EvaluationTbPanel.Location = new Point(317, 138);
+            form.EvaluationTb.Multiline = true;
+            form.EvaluationTb.Size = new Size(433, 437);
+            form.EvaluationTb.Location = new Point(19, 71);
+            form.EvaluationQLabel.Font = new Font("Roboto Condensed", 18f, FontStyle.Bold);
+            form.EvaluationListPanel.Size = new Size(447, 620);
+            form.EvaluationListPanel.Location = new Point(818, 138);
+            form.EvaluationDgv.Size = new Size(421, 505);
+            form.EvaluationDgv.Location = new Point(14, 17);
+            form.EvaluationDgv.Font = new Font("Roboto", 10f);
+            RestoreActionBtn(form.AddEvaluationBtn, 104, 546, 263, 56);
+            RestoreActionBtn(form.UpdateEvaluationBtn, 143, 546, 175, 56);
+
             // ── Register animations and snap ──────────────────────────────
             form._panelAnimator?.Clear();
 
@@ -510,10 +526,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             {
                 form._panelAnimator?.AddPanel(form.StudentsTablePanel, new Point(314, 111), new Point(177, 111));
             }
-            else if (form.StudentPanel.Visible)
-            {
-                form._panelAnimator?.AddPanel(form.RegisterStudentFieldPanel, new Point(299, 112), new Point(167, 112));
-            }
             else if (form.DashboardPanel.Visible)
             {
                 form._panelAnimator?.AddPanel(form.WelcomeAdminPanel, new Point(385, 229), new Point(261, 229));
@@ -524,6 +536,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     form.ReportDgvPanel,
                     new Point(311, 83),
                     new Point(193, 83)
+                );
+            }
+            else if (form.EvaluationPanel.Visible)
+            {
+                form._panelAnimator?.AddPanel(
+                    form.EvaluationTbPanel,
+                    new Point(317, 138),
+                    new Point(193, 138)
+                );
+                form._panelAnimator?.AddPanel(
+                    form.EvaluationListPanel,
+                    new Point(818, 138),
+                    new Point(673, 138)
                 );
             }
 
@@ -568,6 +593,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             btn.Location = new Point(x, y);
             btn.Font = new Font("Roboto Black", 21.75f, FontStyle.Bold);
         }
+
         private static void ApplyAdminReportsPanel(MainForm form)
         {
             form.ReportDgvPanel.Size = ScaleSize(955, 675);
@@ -578,19 +604,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             form.ReportsDataGridView.Size = new Size(
                 form.ReportDgvPanel.Width - 4,
-                form.ReportDgvPanel.Height - btnH - (padding * 3) - (int)(50 * _scaleY) // extra space at top
+                form.ReportDgvPanel.Height - btnH - (padding * 3) - (int)(50 * _scaleY)
             );
-            form.ReportsDataGridView.Location = new Point(2, (int)(50 * _scaleY)); // push down
+            form.ReportsDataGridView.Location = new Point(2, (int)(50 * _scaleY));
             form.ReportsDataGridView.Font = ScaleFont("Roboto", 10f);
 
             int btnW = (int)(form.ReportDgvPanel.Width * 0.22);
-
             int btnX = (form.ReportDgvPanel.Width - btnW) / 2;
             int btnY = form.ReportDgvPanel.Height - btnH - padding;
             form.PrintReportBtn.Size = new Size(btnW, btnH);
             form.PrintReportBtn.Location = new Point(btnX, btnY);
             form.PrintReportBtn.Font = ScaleFont("Roboto Black", 17f, FontStyle.Bold);
         }
+
         private static void RestoreTimeBtnPanel(Panel panel, Point location, Button[] buttons, Label[] labels)
         {
             panel.Location = location;
@@ -606,7 +632,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 buttons[i].Font = new Font("Roboto Condensed", 12f);
 
                 labels[i].Font = new Font("Roboto Condensed", 20.25f);
-                labels[i].Location = new Point(65, labelY[i]); // was 86
+                labels[i].Location = new Point(65, labelY[i]);
             }
         }
     }

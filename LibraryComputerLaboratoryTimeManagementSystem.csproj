@@ -243,11 +243,17 @@
     <Compile Include="Frontend\Forms\StartServer.Designer.cs">
       <DependentUpon>StartServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frontend\Forms\StudentRFIDForm.cs">
+    <Compile Include="Frontend\Forms\UpdateSettingProgressBarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frontend\Forms\StudentRFIDForm.Designer.cs">
-      <DependentUpon>StudentRFIDForm.cs</DependentUpon>
+    <Compile Include="Frontend\Forms\UpdateSettingProgressBarForm.Designer.cs">
+      <DependentUpon>UpdateSettingProgressBarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frontend\Forms\UpdateSettingRfidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frontend\Forms\UpdateSettingRfidForm.Designer.cs">
+      <DependentUpon>UpdateSettingRfidForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Frontend\HelperClasses\TimeHelper.cs" />
     <Compile Include="Frontend\Layouts\MainFormResponsiveLayout.cs" />
@@ -285,8 +291,11 @@
     <EmbeddedResource Include="Frontend\Forms\StartServer.resx">
       <DependentUpon>StartServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frontend\Forms\StudentRFIDForm.resx">
-      <DependentUpon>StudentRFIDForm.cs</DependentUpon>
+    <EmbeddedResource Include="Frontend\Forms\UpdateSettingProgressBarForm.resx">
+      <DependentUpon>UpdateSettingProgressBarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frontend\Forms\UpdateSettingRfidForm.resx">
+      <DependentUpon>UpdateSettingRfidForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,6 +1,6 @@
 ﻿namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 {
-    partial class StudentRFIDForm
+    partial class UpdateSettingRfidForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentRFIDForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdateSettingRfidForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.StudentRfidCloseBtn = new System.Windows.Forms.Button();
             this.AdminRFIDScan = new System.Windows.Forms.Label();
@@ -65,18 +65,17 @@
             this.StudentRfidCloseBtn.Size = new System.Drawing.Size(56, 52);
             this.StudentRfidCloseBtn.TabIndex = 4;
             this.StudentRfidCloseBtn.UseVisualStyleBackColor = true;
-            this.StudentRfidCloseBtn.Click += new System.EventHandler(this.StudentRfidCloseBtn_Click);
             // 
             // AdminRFIDScan
             // 
             this.AdminRFIDScan.AutoSize = true;
             this.AdminRFIDScan.Font = new System.Drawing.Font("Roboto SemiBold", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdminRFIDScan.ForeColor = System.Drawing.Color.White;
-            this.AdminRFIDScan.Location = new System.Drawing.Point(181, 331);
+            this.AdminRFIDScan.Location = new System.Drawing.Point(99, 395);
             this.AdminRFIDScan.Name = "AdminRFIDScan";
-            this.AdminRFIDScan.Size = new System.Drawing.Size(652, 58);
+            this.AdminRFIDScan.Size = new System.Drawing.Size(780, 58);
             this.AdminRFIDScan.TabIndex = 2;
-            this.AdminRFIDScan.Text = "Tap Student RFID to continue";
+            this.AdminRFIDScan.Text = "Tap Admin RFID to Update Databse";
             // 
             // l
             // 
@@ -85,9 +84,9 @@
             this.l.ForeColor = System.Drawing.Color.White;
             this.l.Location = new System.Drawing.Point(269, 91);
             this.l.Name = "l";
-            this.l.Size = new System.Drawing.Size(564, 136);
+            this.l.Size = new System.Drawing.Size(594, 136);
             this.l.TabIndex = 1;
-            this.l.Text = "Library Laboratory Time\r\n Management  System";
+            this.l.Text = "Internet Laboratory Time \r\nManagement System";
             // 
             // pictureBox1
             // 
@@ -105,20 +104,21 @@
             this.RFIDTextBox.Name = "RFIDTextBox";
             this.RFIDTextBox.Size = new System.Drawing.Size(424, 20);
             this.RFIDTextBox.TabIndex = 3;
+            this.RFIDTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RFIDTextBox_KeyDown);
             // 
             // StudentRFIDFormElipse
             // 
             this.StudentRFIDFormElipse.ElipseRadius = 20;
             this.StudentRFIDFormElipse.TargetControl = this;
             // 
-            // StudentRFIDForm
+            // UpdateSettingRfidForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(930, 625);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "StudentRFIDForm";
+            this.Name = "UpdateSettingRfidForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "StudentRFIDForm";
             this.panel1.ResumeLayout(false);

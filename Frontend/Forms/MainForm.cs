@@ -263,24 +263,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _panelAnimator.AddPanel(WelcomeAdminPanel, new Point(385, 229), new Point(261, 229));
             SnapPanelsToCurrentState();
         }
-
-        private void SetupStudentRegistrationAnimation()
-        {
-            if (_panelAnimator == null)
-                _panelAnimator = new PanelPositionAnimator(5, 8);
-
-            _panelAnimator.Clear();
-
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                MainFormResponsiveLayout.UpdatePanelAnimations(this);
-                SnapPanelsToCurrentState();
-                return;
-            }
-
-            _panelAnimator.AddPanel(RegisterStudentFieldPanel, new Point(299, 112), new Point(167, 112));
-            SnapPanelsToCurrentState();
-        }
         private void SetupAdminReportsPanelAnimation()
         {
             if (_panelAnimator == null)
@@ -312,6 +294,23 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 return;
             }
             _panelAnimator.AddPanel(StudentsTablePanel, new Point(314, 111), new Point(177, 111));
+            SnapPanelsToCurrentState();
+        }
+        private void SetupEvaluationAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            _panelAnimator.Clear();
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
+            _panelAnimator.AddPanel(EvaluationTbPanel, new Point(317, 138), new Point(178, 138));
+            _panelAnimator.AddPanel(EvaluationListPanel, new Point(818, 138), new Point(679, 138));
             SnapPanelsToCurrentState();
         }
 
@@ -354,7 +353,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(DashboardSidebarBtn);
             _sidebarHoverEffect.Attach(ListOfStudentsSidebarBtn);
             _sidebarHoverEffect.Attach(TimeManagementSidebarBtn);
-            _sidebarHoverEffect.Attach(StudentManagementSidebarBtn);
             _sidebarHoverEffect.Attach(SidebarBtn);
             _sidebarHoverEffect.Attach(EvaluationSidebarBtn);
             _sidebarHoverEffect.Attach(LogoutBtn);
@@ -363,7 +361,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(ReportBtn);
 
             _panelHandler = new PanelHandler();
-            _panelHandler.AddPanels(DashboardPanel, StudentPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel,EvaluationPanel);
+            _panelHandler.AddPanels(DashboardPanel, DatabaseSyncPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel,EvaluationPanel);
         }
 
         private void WireTimeButtonClicks()
@@ -428,8 +426,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             if (_timeLabels == null || _remainingBySessionId == null) return;
 
-
-            // Decrement and update labels by button order (1..16)
             for (int i = 0; i < _timeButtons.Count; i++)
             {
                 var btn = _timeButtons[i];
@@ -437,6 +433,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
                 if (btn.Tag is SessionDto s && s.Id != null && _remainingBySessionId.TryGetValue(s.Id, out var remaining))
                 {
+                    // Freeze the timer if inactive — keep button text as-is
+                    if (!s.Active)
+                    {
+                        lbl.Text = ToMmSs(remaining); // just display, don't decrement
+                        continue;
+                    }
+
                     remaining = remaining - TimeSpan.FromSeconds(1);
                     if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
 
@@ -473,12 +476,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             HeaderPanelLabel.Text = "Dashboard";
             SetupDashboardAnimation();
         }
-        private void StudentManagementSidebarBtn_Click(object sender, EventArgs e)
-        {
-            _panelHandler.ShowOnly(StudentPanel);
-            HeaderPanelLabel.Text = "Student Registration";
-            SetupStudentRegistrationAnimation();
-        }
         private async void AdminCreation_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(AdminCreationPanel);
@@ -490,12 +487,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         {
             _panelHandler.ShowOnly(AdminReportsPanel);
             HeaderPanelLabel.Text = "Reports";
-
         }
         private void EvaluationSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(EvaluationPanel);
             HeaderPanelLabel.Text = "Evaluation";
+            SetupEvaluationAnimation();
         }
         private void ListOfStudentsSidebarBtn_Click(object sender, EventArgs e)
         {
@@ -569,13 +566,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     btn.Tag = s;
                     btn.Enabled = true;
                     btn.ForeColor = Color.White;
+                    btn.Text = !string.IsNullOrEmpty(s.SchoolId) ? s.SchoolId : "Unknown";
 
                     var remaining = ParseApiDuration(s.Duration);
                     _remainingBySessionId[s.Id] = remaining;
-                    lbl.Text = ToMmSs(remaining);
 
-                    // school_id is already in the session response — no extra API call needed
-                    btn.Text = !string.IsNullOrEmpty(s.SchoolId) ? s.SchoolId : "Unknown";
+                    // If inactive, show frozen time but don't let it tick
+                    lbl.Text = ToMmSs(remaining);
                 }
                 else
                 {
@@ -610,46 +607,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             else
             {
                 ShowNotification("Error", "Failed to create admin.", NotificationType.Error);
-            }
-        }
-
-        private async void RegisterStudentBtn_Click(object sender, EventArgs e)
-        {
-            var student = new StudentCreationDAO
-            {
-                RFID = _currentStudentRfid,
-                StudentId = StudentIDTb.Text,
-            };
-            using (var dialog = new DialogForm("Register Student", "Are you sure you want to register this student?"))
-            {
-                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
-                {
-                    RegisterStudentBtn.Enabled = false;
-
-                    var isSuccess = await _studentServices.CreateStudents(student);
-
-                    RegisterStudentBtn.Enabled = true;
-
-                    if (isSuccess)
-                    {
-                        ShowNotification("Success", "Student registered successfully.", NotificationType.Success);
-                    }
-                    else
-                    {
-                        ShowNotification("Error", "Failed to register student.", NotificationType.Error);
-                    }
-                }
-            }
-        }
-
-        private void RegisterRfidBtn_Click(object sender, EventArgs e)
-        {
-            using (var rfidForm = new StudentRFIDForm())
-            {
-                if (rfidForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    _currentStudentRfid = rfidForm.ScannedRfid;
-                }
             }
         }
 
@@ -777,14 +734,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 SetupTimeManagementAnimation();
                 _panelAnimator?.Toggle();
             }
+            else if (EvaluationPanel.Visible)
+            {
+                SetupEvaluationAnimation();
+                _panelAnimator?.Toggle();
+            }
             else if (ListOfStudentsPanel.Visible)
             {
                 SetupStudentCreationAnimation();
-                _panelAnimator?.Toggle();
-            }
-            else if (StudentPanel.Visible)
-            {
-                SetupStudentRegistrationAnimation();
                 _panelAnimator?.Toggle();
             }
             else if (DashboardPanel.Visible)
@@ -1040,6 +997,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 _selectedEvaluationId = EvaluationDgv.SelectedRows[0].Cells["Id"].Value?.ToString();
                 EvaluationTb.Text = EvaluationDgv.SelectedRows[0].Cells["Question"].Value?.ToString();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var updateSettingForm = new UpdateSettingRfidForm();
+            updateSettingForm.Show();
+            this.Close();
         }
     }
 }

@@ -31,28 +31,30 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddTimeModalForm));
             this.AddTimePanel = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.HeaderLabel = new System.Windows.Forms.Label();
-            this.UpdateStudentTimeCloseBtn = new System.Windows.Forms.Button();
+            this.HourLabel = new System.Windows.Forms.Label();
+            this.HrAndMinPanel = new System.Windows.Forms.Panel();
             this.DurationLabel = new System.Windows.Forms.Label();
             this.UpdateSessionBtn = new System.Windows.Forms.Button();
             this.DurationPanel = new System.Windows.Forms.Panel();
-            this.HrAndMinPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.HrAndMinPanel = new System.Windows.Forms.Panel();
             this.DurationTb = new System.Windows.Forms.TextBox();
-            this.HourLabel = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.HeaderLabel = new System.Windows.Forms.Label();
+            this.UpdateStudentTimeCloseBtn = new System.Windows.Forms.Button();
+            this.HrAndMinPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.MinutesLabel = new System.Windows.Forms.Label();
             this.UpdateStudentTimeCloseBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.DurationPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.UpdateSessionBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.AddTimeModalFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.RestartBtn = new System.Windows.Forms.Button();
             this.AddTimePanel.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.DurationPanel.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // AddTimePanel
             // 
+            this.AddTimePanel.Controls.Add(this.RestartBtn);
             this.AddTimePanel.Controls.Add(this.HourLabel);
             this.AddTimePanel.Controls.Add(this.HrAndMinPanel);
             this.AddTimePanel.Controls.Add(this.DurationLabel);
@@ -63,6 +65,69 @@
             this.AddTimePanel.Name = "AddTimePanel";
             this.AddTimePanel.Size = new System.Drawing.Size(532, 336);
             this.AddTimePanel.TabIndex = 6;
+            // 
+            // HourLabel
+            // 
+            this.HourLabel.AutoSize = true;
+            this.HourLabel.BackColor = System.Drawing.SystemColors.Window;
+            this.HourLabel.Font = new System.Drawing.Font("Roboto Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HourLabel.Location = new System.Drawing.Point(290, 139);
+            this.HourLabel.Name = "HourLabel";
+            this.HourLabel.Size = new System.Drawing.Size(57, 38);
+            this.HourLabel.TabIndex = 10;
+            this.HourLabel.Text = "hrs";
+            this.HourLabel.Click += new System.EventHandler(this.HourLabel_Click);
+            // 
+            // HrAndMinPanel
+            // 
+            this.HrAndMinPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.HrAndMinPanel.Location = new System.Drawing.Point(276, 123);
+            this.HrAndMinPanel.Name = "HrAndMinPanel";
+            this.HrAndMinPanel.Size = new System.Drawing.Size(108, 69);
+            this.HrAndMinPanel.TabIndex = 7;
+            // 
+            // DurationLabel
+            // 
+            this.DurationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.DurationLabel.Font = new System.Drawing.Font("Roboto Condensed Medium", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DurationLabel.Location = new System.Drawing.Point(0, 67);
+            this.DurationLabel.Name = "DurationLabel";
+            this.DurationLabel.Size = new System.Drawing.Size(532, 49);
+            this.DurationLabel.TabIndex = 9;
+            this.DurationLabel.Text = "Duration";
+            this.DurationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // UpdateSessionBtn
+            // 
+            this.UpdateSessionBtn.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpdateSessionBtn.Location = new System.Drawing.Point(140, 238);
+            this.UpdateSessionBtn.Name = "UpdateSessionBtn";
+            this.UpdateSessionBtn.Size = new System.Drawing.Size(117, 72);
+            this.UpdateSessionBtn.TabIndex = 7;
+            this.UpdateSessionBtn.Text = "Update";
+            this.UpdateSessionBtn.UseVisualStyleBackColor = true;
+            this.UpdateSessionBtn.Click += new System.EventHandler(this.UpdateSessionBtn_Click);
+            // 
+            // DurationPanel
+            // 
+            this.DurationPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.DurationPanel.Controls.Add(this.DurationTb);
+            this.DurationPanel.Location = new System.Drawing.Point(149, 123);
+            this.DurationPanel.Name = "DurationPanel";
+            this.DurationPanel.Size = new System.Drawing.Size(108, 69);
+            this.DurationPanel.TabIndex = 6;
+            // 
+            // DurationTb
+            // 
+            this.DurationTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DurationTb.Font = new System.Drawing.Font("Roboto Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DurationTb.Location = new System.Drawing.Point(7, 15);
+            this.DurationTb.Margin = new System.Windows.Forms.Padding(6);
+            this.DurationTb.Name = "DurationTb";
+            this.DurationTb.Size = new System.Drawing.Size(95, 39);
+            this.DurationTb.TabIndex = 0;
+            this.DurationTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DurationTb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DurationTb_KeyPress);
             // 
             // panel2
             // 
@@ -98,73 +163,10 @@
             this.UpdateStudentTimeCloseBtn.UseVisualStyleBackColor = true;
             this.UpdateStudentTimeCloseBtn.Click += new System.EventHandler(this.UpdateStudentTimeCloseBtn_Click);
             // 
-            // DurationLabel
-            // 
-            this.DurationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.DurationLabel.Font = new System.Drawing.Font("Roboto Condensed Medium", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DurationLabel.Location = new System.Drawing.Point(0, 67);
-            this.DurationLabel.Name = "DurationLabel";
-            this.DurationLabel.Size = new System.Drawing.Size(532, 49);
-            this.DurationLabel.TabIndex = 9;
-            this.DurationLabel.Text = "Duration";
-            this.DurationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // UpdateSessionBtn
-            // 
-            this.UpdateSessionBtn.Font = new System.Drawing.Font("Roboto", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpdateSessionBtn.Location = new System.Drawing.Point(140, 238);
-            this.UpdateSessionBtn.Name = "UpdateSessionBtn";
-            this.UpdateSessionBtn.Size = new System.Drawing.Size(244, 72);
-            this.UpdateSessionBtn.TabIndex = 7;
-            this.UpdateSessionBtn.Text = "Update";
-            this.UpdateSessionBtn.UseVisualStyleBackColor = true;
-            this.UpdateSessionBtn.Click += new System.EventHandler(this.UpdateSessionBtn_Click);
-            // 
-            // DurationPanel
-            // 
-            this.DurationPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.DurationPanel.Controls.Add(this.DurationTb);
-            this.DurationPanel.Location = new System.Drawing.Point(149, 123);
-            this.DurationPanel.Name = "DurationPanel";
-            this.DurationPanel.Size = new System.Drawing.Size(108, 69);
-            this.DurationPanel.TabIndex = 6;
-            // 
             // HrAndMinPanelElipse
             // 
             this.HrAndMinPanelElipse.ElipseRadius = 10;
             this.HrAndMinPanelElipse.TargetControl = this.HrAndMinPanel;
-            // 
-            // HrAndMinPanel
-            // 
-            this.HrAndMinPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.HrAndMinPanel.Location = new System.Drawing.Point(276, 123);
-            this.HrAndMinPanel.Name = "HrAndMinPanel";
-            this.HrAndMinPanel.Size = new System.Drawing.Size(108, 69);
-            this.HrAndMinPanel.TabIndex = 7;
-            // 
-            // DurationTb
-            // 
-            this.DurationTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DurationTb.Font = new System.Drawing.Font("Roboto Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DurationTb.Location = new System.Drawing.Point(7, 15);
-            this.DurationTb.Margin = new System.Windows.Forms.Padding(6);
-            this.DurationTb.Name = "DurationTb";
-            this.DurationTb.Size = new System.Drawing.Size(95, 39);
-            this.DurationTb.TabIndex = 0;
-            this.DurationTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.DurationTb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DurationTb_KeyPress);
-            // 
-            // HourLabel
-            // 
-            this.HourLabel.AutoSize = true;
-            this.HourLabel.BackColor = System.Drawing.SystemColors.Window;
-            this.HourLabel.Font = new System.Drawing.Font("Roboto Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HourLabel.Location = new System.Drawing.Point(290, 139);
-            this.HourLabel.Name = "HourLabel";
-            this.HourLabel.Size = new System.Drawing.Size(57, 38);
-            this.HourLabel.TabIndex = 10;
-            this.HourLabel.Text = "hrs";
-            this.HourLabel.Click += new System.EventHandler(this.HourLabel_Click);
             // 
             // MinutesLabel
             // 
@@ -198,6 +200,17 @@
             this.AddTimeModalFormElipse.ElipseRadius = 20;
             this.AddTimeModalFormElipse.TargetControl = this;
             // 
+            // RestartBtn
+            // 
+            this.RestartBtn.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RestartBtn.Location = new System.Drawing.Point(267, 238);
+            this.RestartBtn.Name = "RestartBtn";
+            this.RestartBtn.Size = new System.Drawing.Size(117, 72);
+            this.RestartBtn.TabIndex = 11;
+            this.RestartBtn.Text = "Restart";
+            this.RestartBtn.UseVisualStyleBackColor = true;
+            this.RestartBtn.Click += new System.EventHandler(this.RestartBtn_Click);
+            // 
             // AddTimeModalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -214,10 +227,10 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AddTimeModalForm_FormClosed);
             this.AddTimePanel.ResumeLayout(false);
             this.AddTimePanel.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.DurationPanel.ResumeLayout(false);
             this.DurationPanel.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,5 +253,6 @@
         private Bunifu.Framework.UI.BunifuElipse DurationPanelElipse;
         private Bunifu.Framework.UI.BunifuElipse UpdateSessionBtnElipse;
         private Bunifu.Framework.UI.BunifuElipse AddTimeModalFormElipse;
+        private System.Windows.Forms.Button RestartBtn;
     }
 }

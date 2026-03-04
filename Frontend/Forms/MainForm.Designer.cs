@@ -31,21 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.DashboardPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.WelcomeAdminPanel = new System.Windows.Forms.Panel();
             this.WelcomeAdminLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.StudentManagementSidebarBtn = new System.Windows.Forms.Button();
             this.AdminCreation = new System.Windows.Forms.Button();
             this.TimeManagementSidebarBtn = new System.Windows.Forms.Button();
             this.ListOfStudentsSidebarBtn = new System.Windows.Forms.Button();
             this.DashboardSidebarBtn = new System.Windows.Forms.Button();
-            this.StudentPanel = new System.Windows.Forms.Panel();
-            this.RegisterStudentFieldPanel = new System.Windows.Forms.Panel();
-            this.RegisterRfidBtn = new System.Windows.Forms.Button();
-            this.RegisterStudentBtn = new System.Windows.Forms.Button();
-            this.StudentIDTbPanelR = new System.Windows.Forms.Panel();
-            this.StudentIDTb = new System.Windows.Forms.TextBox();
-            this.StudentIDLabel = new System.Windows.Forms.Label();
+            this.DatabaseSyncPanel = new System.Windows.Forms.Panel();
             this.AdminReportsPanel = new System.Windows.Forms.Panel();
             this.ReportDgvPanel = new System.Windows.Forms.Panel();
             this.PrintReportBtn = new System.Windows.Forms.Button();
@@ -178,9 +172,6 @@
             this.EvaluationDgv = new System.Windows.Forms.DataGridView();
             this.DashboardPanel.SuspendLayout();
             this.WelcomeAdminPanel.SuspendLayout();
-            this.StudentPanel.SuspendLayout();
-            this.RegisterStudentFieldPanel.SuspendLayout();
-            this.StudentIDTbPanelR.SuspendLayout();
             this.AdminReportsPanel.SuspendLayout();
             this.ReportDgvPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).BeginInit();
@@ -212,6 +203,7 @@
             // DashboardPanel
             // 
             this.DashboardPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.DashboardPanel.Controls.Add(this.button1);
             this.DashboardPanel.Controls.Add(this.WelcomeAdminPanel);
             this.DashboardPanel.Controls.Add(this.label6);
             this.DashboardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -219,6 +211,26 @@
             this.DashboardPanel.Name = "DashboardPanel";
             this.DashboardPanel.Size = new System.Drawing.Size(1280, 780);
             this.DashboardPanel.TabIndex = 10;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(989, 708);
+            this.button1.Name = "button1";
+            this.button1.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.button1.Size = new System.Drawing.Size(274, 56);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Sync Database";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // WelcomeAdminPanel
             // 
@@ -248,27 +260,6 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "November 30, 2025";
             // 
-            // StudentManagementSidebarBtn
-            // 
-            this.StudentManagementSidebarBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.StudentManagementSidebarBtn.BackColor = System.Drawing.Color.Transparent;
-            this.StudentManagementSidebarBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.StudentManagementSidebarBtn.FlatAppearance.BorderSize = 0;
-            this.StudentManagementSidebarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StudentManagementSidebarBtn.Font = new System.Drawing.Font("Inter SemiBold", 18F, System.Drawing.FontStyle.Bold);
-            this.StudentManagementSidebarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.StudentManagementSidebarBtn.Image = ((System.Drawing.Image)(resources.GetObject("StudentManagementSidebarBtn.Image")));
-            this.StudentManagementSidebarBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.StudentManagementSidebarBtn.Location = new System.Drawing.Point(0, 261);
-            this.StudentManagementSidebarBtn.Name = "StudentManagementSidebarBtn";
-            this.StudentManagementSidebarBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.StudentManagementSidebarBtn.Size = new System.Drawing.Size(300, 57);
-            this.StudentManagementSidebarBtn.TabIndex = 3;
-            this.StudentManagementSidebarBtn.Text = "        Registration";
-            this.StudentManagementSidebarBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.StudentManagementSidebarBtn.UseVisualStyleBackColor = false;
-            this.StudentManagementSidebarBtn.Click += new System.EventHandler(this.StudentManagementSidebarBtn_Click);
-            // 
             // AdminCreation
             // 
             this.AdminCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -280,7 +271,7 @@
             this.AdminCreation.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.AdminCreation.Image = ((System.Drawing.Image)(resources.GetObject("AdminCreation.Image")));
             this.AdminCreation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AdminCreation.Location = new System.Drawing.Point(0, 498);
+            this.AdminCreation.Location = new System.Drawing.Point(0, 436);
             this.AdminCreation.Name = "AdminCreation";
             this.AdminCreation.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.AdminCreation.Size = new System.Drawing.Size(300, 57);
@@ -302,7 +293,7 @@
             this.TimeManagementSidebarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.TimeManagementSidebarBtn.Image = ((System.Drawing.Image)(resources.GetObject("TimeManagementSidebarBtn.Image")));
             this.TimeManagementSidebarBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.TimeManagementSidebarBtn.Location = new System.Drawing.Point(0, 381);
+            this.TimeManagementSidebarBtn.Location = new System.Drawing.Point(0, 319);
             this.TimeManagementSidebarBtn.Name = "TimeManagementSidebarBtn";
             this.TimeManagementSidebarBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.TimeManagementSidebarBtn.Size = new System.Drawing.Size(300, 57);
@@ -323,7 +314,7 @@
             this.ListOfStudentsSidebarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ListOfStudentsSidebarBtn.Image = ((System.Drawing.Image)(resources.GetObject("ListOfStudentsSidebarBtn.Image")));
             this.ListOfStudentsSidebarBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ListOfStudentsSidebarBtn.Location = new System.Drawing.Point(0, 321);
+            this.ListOfStudentsSidebarBtn.Location = new System.Drawing.Point(0, 259);
             this.ListOfStudentsSidebarBtn.Name = "ListOfStudentsSidebarBtn";
             this.ListOfStudentsSidebarBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.ListOfStudentsSidebarBtn.Size = new System.Drawing.Size(300, 57);
@@ -354,98 +345,14 @@
             this.DashboardSidebarBtn.UseVisualStyleBackColor = false;
             this.DashboardSidebarBtn.Click += new System.EventHandler(this.DashboardSidebarBtn_Click);
             // 
-            // StudentPanel
+            // DatabaseSyncPanel
             // 
-            this.StudentPanel.Controls.Add(this.RegisterStudentFieldPanel);
-            this.StudentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StudentPanel.Font = new System.Drawing.Font("Roboto Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StudentPanel.Location = new System.Drawing.Point(0, 0);
-            this.StudentPanel.Name = "StudentPanel";
-            this.StudentPanel.Size = new System.Drawing.Size(1280, 780);
-            this.StudentPanel.TabIndex = 11;
-            // 
-            // RegisterStudentFieldPanel
-            // 
-            this.RegisterStudentFieldPanel.Controls.Add(this.RegisterRfidBtn);
-            this.RegisterStudentFieldPanel.Controls.Add(this.RegisterStudentBtn);
-            this.RegisterStudentFieldPanel.Controls.Add(this.StudentIDTbPanelR);
-            this.RegisterStudentFieldPanel.Controls.Add(this.StudentIDLabel);
-            this.RegisterStudentFieldPanel.Location = new System.Drawing.Point(299, 112);
-            this.RegisterStudentFieldPanel.Name = "RegisterStudentFieldPanel";
-            this.RegisterStudentFieldPanel.Size = new System.Drawing.Size(966, 590);
-            this.RegisterStudentFieldPanel.TabIndex = 20;
-            // 
-            // RegisterRfidBtn
-            // 
-            this.RegisterRfidBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.RegisterRfidBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.RegisterRfidBtn.FlatAppearance.BorderSize = 0;
-            this.RegisterRfidBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RegisterRfidBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.RegisterRfidBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.RegisterRfidBtn.Image = ((System.Drawing.Image)(resources.GetObject("RegisterRfidBtn.Image")));
-            this.RegisterRfidBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RegisterRfidBtn.Location = new System.Drawing.Point(519, 155);
-            this.RegisterRfidBtn.Name = "RegisterRfidBtn";
-            this.RegisterRfidBtn.Padding = new System.Windows.Forms.Padding(60, 0, 0, 0);
-            this.RegisterRfidBtn.Size = new System.Drawing.Size(360, 56);
-            this.RegisterRfidBtn.TabIndex = 9;
-            this.RegisterRfidBtn.Text = "  Register RFID";
-            this.RegisterRfidBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.RegisterRfidBtn.UseVisualStyleBackColor = false;
-            this.RegisterRfidBtn.Click += new System.EventHandler(this.RegisterRfidBtn_Click);
-            // 
-            // RegisterStudentBtn
-            // 
-            this.RegisterStudentBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.RegisterStudentBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.RegisterStudentBtn.FlatAppearance.BorderSize = 0;
-            this.RegisterStudentBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RegisterStudentBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.RegisterStudentBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.RegisterStudentBtn.Image = ((System.Drawing.Image)(resources.GetObject("RegisterStudentBtn.Image")));
-            this.RegisterStudentBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RegisterStudentBtn.Location = new System.Drawing.Point(306, 477);
-            this.RegisterStudentBtn.Name = "RegisterStudentBtn";
-            this.RegisterStudentBtn.Padding = new System.Windows.Forms.Padding(85, 0, 0, 0);
-            this.RegisterStudentBtn.Size = new System.Drawing.Size(362, 56);
-            this.RegisterStudentBtn.TabIndex = 10;
-            this.RegisterStudentBtn.Text = " REGISTER";
-            this.RegisterStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.RegisterStudentBtn.UseVisualStyleBackColor = false;
-            this.RegisterStudentBtn.Click += new System.EventHandler(this.RegisterStudentBtn_Click);
-            // 
-            // StudentIDTbPanelR
-            // 
-            this.StudentIDTbPanelR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.StudentIDTbPanelR.Controls.Add(this.StudentIDTb);
-            this.StudentIDTbPanelR.Location = new System.Drawing.Point(101, 155);
-            this.StudentIDTbPanelR.Name = "StudentIDTbPanelR";
-            this.StudentIDTbPanelR.Size = new System.Drawing.Size(362, 60);
-            this.StudentIDTbPanelR.TabIndex = 6;
-            // 
-            // StudentIDTb
-            // 
-            this.StudentIDTb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.StudentIDTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.StudentIDTb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.StudentIDTb.Font = new System.Drawing.Font("Roboto", 18F);
-            this.StudentIDTb.Location = new System.Drawing.Point(12, 16);
-            this.StudentIDTb.Margin = new System.Windows.Forms.Padding(0);
-            this.StudentIDTb.Name = "StudentIDTb";
-            this.StudentIDTb.Size = new System.Drawing.Size(339, 29);
-            this.StudentIDTb.TabIndex = 2;
-            this.StudentIDTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // StudentIDLabel
-            // 
-            this.StudentIDLabel.AutoSize = true;
-            this.StudentIDLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F, System.Drawing.FontStyle.Bold);
-            this.StudentIDLabel.Location = new System.Drawing.Point(96, 121);
-            this.StudentIDLabel.Name = "StudentIDLabel";
-            this.StudentIDLabel.Size = new System.Drawing.Size(113, 29);
-            this.StudentIDLabel.TabIndex = 5;
-            this.StudentIDLabel.Text = "Student ID";
+            this.DatabaseSyncPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DatabaseSyncPanel.Font = new System.Drawing.Font("Roboto Condensed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DatabaseSyncPanel.Location = new System.Drawing.Point(0, 0);
+            this.DatabaseSyncPanel.Name = "DatabaseSyncPanel";
+            this.DatabaseSyncPanel.Size = new System.Drawing.Size(1280, 780);
+            this.DatabaseSyncPanel.TabIndex = 11;
             // 
             // AdminReportsPanel
             // 
@@ -1518,17 +1425,17 @@
             // StudentIDTbPanelRElipse
             // 
             this.StudentIDTbPanelRElipse.ElipseRadius = 10;
-            this.StudentIDTbPanelRElipse.TargetControl = this.StudentIDTbPanelR;
+            this.StudentIDTbPanelRElipse.TargetControl = this;
             // 
             // RegisterRfidBtnElipse
             // 
             this.RegisterRfidBtnElipse.ElipseRadius = 5;
-            this.RegisterRfidBtnElipse.TargetControl = this.RegisterRfidBtn;
+            this.RegisterRfidBtnElipse.TargetControl = this;
             // 
             // RegisterStudentBtnElipse
             // 
             this.RegisterStudentBtnElipse.ElipseRadius = 5;
-            this.RegisterStudentBtnElipse.TargetControl = this.RegisterStudentBtn;
+            this.RegisterStudentBtnElipse.TargetControl = this;
             // 
             // PersonnelIdTbPanelAcElipse
             // 
@@ -1667,7 +1574,6 @@
             this.SidebarPanel.Controls.Add(this.LogoutBtn);
             this.SidebarPanel.Controls.Add(this.pictureBox1);
             this.SidebarPanel.Controls.Add(this.DashboardSidebarBtn);
-            this.SidebarPanel.Controls.Add(this.StudentManagementSidebarBtn);
             this.SidebarPanel.Controls.Add(this.AdminCreation);
             this.SidebarPanel.Controls.Add(this.ListOfStudentsSidebarBtn);
             this.SidebarPanel.Controls.Add(this.TimeManagementSidebarBtn);
@@ -1688,7 +1594,7 @@
             this.EvaluationSidebarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.EvaluationSidebarBtn.Image = ((System.Drawing.Image)(resources.GetObject("EvaluationSidebarBtn.Image")));
             this.EvaluationSidebarBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.EvaluationSidebarBtn.Location = new System.Drawing.Point(0, 439);
+            this.EvaluationSidebarBtn.Location = new System.Drawing.Point(0, 377);
             this.EvaluationSidebarBtn.Name = "EvaluationSidebarBtn";
             this.EvaluationSidebarBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.EvaluationSidebarBtn.Size = new System.Drawing.Size(300, 57);
@@ -1709,7 +1615,7 @@
             this.ReportBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ReportBtn.Image = ((System.Drawing.Image)(resources.GetObject("ReportBtn.Image")));
             this.ReportBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ReportBtn.Location = new System.Drawing.Point(0, 558);
+            this.ReportBtn.Location = new System.Drawing.Point(0, 496);
             this.ReportBtn.Name = "ReportBtn";
             this.ReportBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.ReportBtn.Size = new System.Drawing.Size(300, 57);
@@ -1757,8 +1663,6 @@
             // 
             // EvaluationPanel
             // 
-            this.EvaluationPanel.Controls.Add(this.AddEvaluationBtn);
-            this.EvaluationPanel.Controls.Add(this.UpdateEvaluationBtn);
             this.EvaluationPanel.Controls.Add(this.EvaluationTbPanel);
             this.EvaluationPanel.Controls.Add(this.EvaluationListPanel);
             this.EvaluationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1776,7 +1680,7 @@
             this.AddEvaluationBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.AddEvaluationBtn.Image = ((System.Drawing.Image)(resources.GetObject("AddEvaluationBtn.Image")));
             this.AddEvaluationBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AddEvaluationBtn.Location = new System.Drawing.Point(414, 696);
+            this.AddEvaluationBtn.Location = new System.Drawing.Point(104, 546);
             this.AddEvaluationBtn.Name = "AddEvaluationBtn";
             this.AddEvaluationBtn.Size = new System.Drawing.Size(263, 56);
             this.AddEvaluationBtn.TabIndex = 4;
@@ -1793,7 +1697,7 @@
             this.UpdateEvaluationBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.UpdateEvaluationBtn.Image = ((System.Drawing.Image)(resources.GetObject("UpdateEvaluationBtn.Image")));
             this.UpdateEvaluationBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UpdateEvaluationBtn.Location = new System.Drawing.Point(956, 696);
+            this.UpdateEvaluationBtn.Location = new System.Drawing.Point(143, 546);
             this.UpdateEvaluationBtn.Name = "UpdateEvaluationBtn";
             this.UpdateEvaluationBtn.Size = new System.Drawing.Size(175, 56);
             this.UpdateEvaluationBtn.TabIndex = 2;
@@ -1803,11 +1707,12 @@
             // 
             // EvaluationTbPanel
             // 
+            this.EvaluationTbPanel.Controls.Add(this.AddEvaluationBtn);
             this.EvaluationTbPanel.Controls.Add(this.EvaluationQLabel);
             this.EvaluationTbPanel.Controls.Add(this.EvaluationTb);
             this.EvaluationTbPanel.Location = new System.Drawing.Point(317, 138);
             this.EvaluationTbPanel.Name = "EvaluationTbPanel";
-            this.EvaluationTbPanel.Size = new System.Drawing.Size(470, 534);
+            this.EvaluationTbPanel.Size = new System.Drawing.Size(470, 620);
             this.EvaluationTbPanel.TabIndex = 1;
             // 
             // EvaluationQLabel
@@ -1831,10 +1736,11 @@
             // 
             // EvaluationListPanel
             // 
+            this.EvaluationListPanel.Controls.Add(this.UpdateEvaluationBtn);
             this.EvaluationListPanel.Controls.Add(this.EvaluationDgv);
             this.EvaluationListPanel.Location = new System.Drawing.Point(818, 138);
             this.EvaluationListPanel.Name = "EvaluationListPanel";
-            this.EvaluationListPanel.Size = new System.Drawing.Size(447, 534);
+            this.EvaluationListPanel.Size = new System.Drawing.Size(447, 620);
             this.EvaluationListPanel.TabIndex = 0;
             // 
             // EvaluationDgv
@@ -1853,13 +1759,13 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
+            this.Controls.Add(this.TimeManagementPanel);
+            this.Controls.Add(this.AdminReportsPanel);
             this.Controls.Add(this.EvaluationPanel);
             this.Controls.Add(this.ListOfStudentsPanel);
             this.Controls.Add(this.DashboardPanel);
-            this.Controls.Add(this.StudentPanel);
+            this.Controls.Add(this.DatabaseSyncPanel);
             this.Controls.Add(this.AdminCreationPanel);
-            this.Controls.Add(this.TimeManagementPanel);
-            this.Controls.Add(this.AdminReportsPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -1871,11 +1777,6 @@
             this.DashboardPanel.PerformLayout();
             this.WelcomeAdminPanel.ResumeLayout(false);
             this.WelcomeAdminPanel.PerformLayout();
-            this.StudentPanel.ResumeLayout(false);
-            this.RegisterStudentFieldPanel.ResumeLayout(false);
-            this.RegisterStudentFieldPanel.PerformLayout();
-            this.StudentIDTbPanelR.ResumeLayout(false);
-            this.StudentIDTbPanelR.PerformLayout();
             this.AdminReportsPanel.ResumeLayout(false);
             this.ReportDgvPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).EndInit();
@@ -1925,11 +1826,7 @@
         public System.Windows.Forms.Label WelcomeAdminLabel;
         public System.Windows.Forms.Button TimeManagementSidebarBtn;
         public System.Windows.Forms.Button DashboardSidebarBtn;
-        public System.Windows.Forms.Panel StudentPanel;
-        public System.Windows.Forms.Label StudentIDLabel;
-        public System.Windows.Forms.Panel StudentIDTbPanelR;
-        public System.Windows.Forms.TextBox StudentIDTb;
-        public System.Windows.Forms.Button RegisterStudentBtn;
+        public System.Windows.Forms.Panel DatabaseSyncPanel;
         public System.Windows.Forms.Label label6;
         public System.Windows.Forms.Button AdminCreation;
         public System.Windows.Forms.Panel AdminReportsPanel;
@@ -1961,12 +1858,10 @@
         public System.Windows.Forms.Panel PersonnelIdTbPanelAc;
         public System.Windows.Forms.TextBox IDPersonnelTb;
         public System.Windows.Forms.Label label9;
-        public System.Windows.Forms.Button StudentManagementSidebarBtn;
         public System.Windows.Forms.Panel ListOfStudentsPanel;
         public System.Windows.Forms.DataGridView AdminDgv;
         public System.Windows.Forms.Button DeleteAdmin_Btn;
         public System.Windows.Forms.Button UpdateAdmin_Btn;
-        public System.Windows.Forms.Button RegisterRfidBtn;
         public System.Windows.Forms.DataGridView ListOfStudentDgv;
         public System.Windows.Forms.Button DeleteStudentBtn;
         public System.Windows.Forms.Button UpdateStudentBtn;
@@ -2047,7 +1942,6 @@
         public System.Windows.Forms.Panel TimeManagementBtnPanel2;
         public System.Windows.Forms.Panel StudentsTablePanel;
         public System.Windows.Forms.Panel WelcomeAdminPanel;
-        public System.Windows.Forms.Panel RegisterStudentFieldPanel;
         public System.Windows.Forms.Button CloseBtn;
         public System.Windows.Forms.Button MaximizeBtn;
         public System.Windows.Forms.Button MinimizeBtn;
@@ -2058,14 +1952,15 @@
         public System.Windows.Forms.Panel StudentRfidTbPanelL;
         public System.Windows.Forms.TextBox StudentListRfidTb;
         public System.Windows.Forms.Label StudentListRfidLabel;
-        private System.Windows.Forms.Panel EvaluationPanel;
+        public System.Windows.Forms.Panel EvaluationPanel;
         public System.Windows.Forms.Button EvaluationSidebarBtn;
-        private System.Windows.Forms.Panel EvaluationListPanel;
-        private System.Windows.Forms.DataGridView EvaluationDgv;
-        private System.Windows.Forms.Panel EvaluationTbPanel;
-        private System.Windows.Forms.Label EvaluationQLabel;
-        private System.Windows.Forms.TextBox EvaluationTb;
-        private System.Windows.Forms.Button UpdateEvaluationBtn;
-        private System.Windows.Forms.Button AddEvaluationBtn;
+        public System.Windows.Forms.Panel EvaluationListPanel;
+        public System.Windows.Forms.DataGridView EvaluationDgv;
+        public System.Windows.Forms.Panel EvaluationTbPanel;
+        public System.Windows.Forms.Label EvaluationQLabel;
+        public System.Windows.Forms.TextBox EvaluationTb;
+        public System.Windows.Forms.Button UpdateEvaluationBtn;
+        public System.Windows.Forms.Button AddEvaluationBtn;
+        public System.Windows.Forms.Button button1;
     }
 }

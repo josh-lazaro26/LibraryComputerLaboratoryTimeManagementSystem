@@ -35,6 +35,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Admin
     {
         public static int AdminId { get; set; }
     }
+    public class IsSessionActive
+    {
+        public static bool IsActive { get; set; }
+    }
     public class PagedAdminResponse
     {
         [JsonProperty("isSuccess")]

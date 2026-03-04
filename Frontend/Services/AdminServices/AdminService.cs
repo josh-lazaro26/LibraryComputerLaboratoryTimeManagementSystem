@@ -160,7 +160,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
         }
 
-        public async Task<PagedSessionResponse> GetActiveSessions( int pageNumber = 1, int pageSize = 16)
+        public async Task<PagedSessionResponse> GetActiveSessions(int pageNumber = 1, int pageSize = 16)
         {
             var urlBuilder = new StringBuilder("api/v1/accounts");
             bool hasAny = false;
@@ -169,16 +169,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             {
                 urlBuilder.Append(hasAny ? "&" : "?");
                 hasAny = true;
-
                 urlBuilder.Append(Uri.EscapeDataString(name));
                 urlBuilder.Append("=");
                 urlBuilder.Append(Uri.EscapeDataString(value));
             }
-                AddParam("page_number", pageNumber.ToString());
-                AddParam("page_size", pageSize.ToString());
-                AddParam("active", "true");
 
-            // Attach bearer token (if available)
+            AddParam("page_number", pageNumber.ToString());
+            AddParam("page_size", pageSize.ToString());
+
             if (!string.IsNullOrWhiteSpace(ApiConfig.Token))
             {
                 Client.DefaultRequestHeaders.Authorization =
@@ -188,18 +186,21 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             var response = await Client.GetAsync(urlBuilder.ToString());
             var body = await response.Content.ReadAsStringAsync();
 
-
             if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
                 return null;
 
-            // This matches: { "isSuccess": true, "value": { "items": [...] ... }, "error": null }
             var result = JsonConvert.DeserializeObject<PagedSessionResponse>(body);
 
-            // Optional: if backend does not send isActive per item, infer it since endpoint requested active anyway
-            if (result?.Value?.Items != null)
+            // Ensure Active field is mapped from JSON into each SessionDto
+            if (result?.Items != null)
             {
-                foreach (var s in result.Value.Items)
-                    s.Active = true;
+                var json = JObject.Parse(body);
+                var items = json["items"];
+
+                for (int i = 0; i < result.Items.Count && i < items.Count(); i++)
+                {
+                    result.Items[i].Active = items[i]["active"]?.Value<bool>() ?? false;
+                }
             }
 
             return result;
@@ -400,6 +401,64 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception during logout: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<bool> UpdateSetting(bool isSyncing)
+        {
+            try
+            {
+                var payload = JsonConvert.SerializeObject(new { is_syncing = isSyncing });
+                var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                // Try with leading slash if base address doesn't end with /
+                var response = await Client.PutAsync(
+                    "https://internet-laboratory-time-management.onrender.com/api/v1/settings",
+                    content
+                );
+
+                Console.WriteLine($"UpdateSetting Status: {(int)response.StatusCode} {response.StatusCode}");
+                Console.WriteLine($"UpdateSetting URL hit: {Client.BaseAddress}api/v1/settings");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"UpdateSetting failed: {response.StatusCode} | {body}");
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception during UpdateSetting: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<bool> RestartPc(string userId)
+        {
+            try
+            {
+                var payload = JsonConvert.SerializeObject(new { user_id = userId });
+                var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.PostAsync("api/v1/pc/restart", content);
+                var body = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine($"RestartPc Status: {(int)response.StatusCode} {response.StatusCode}");
+                Console.WriteLine($"RestartPc Body: {body}");
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception during RestartPc: {ex.Message}");
                 return false;
             }
         }
