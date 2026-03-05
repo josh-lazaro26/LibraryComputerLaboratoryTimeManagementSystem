@@ -71,7 +71,7 @@
             this.AdminRFIDScan.AutoSize = true;
             this.AdminRFIDScan.Font = new System.Drawing.Font("Roboto SemiBold", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdminRFIDScan.ForeColor = System.Drawing.Color.White;
-            this.AdminRFIDScan.Location = new System.Drawing.Point(99, 395);
+            this.AdminRFIDScan.Location = new System.Drawing.Point(99, 326);
             this.AdminRFIDScan.Name = "AdminRFIDScan";
             this.AdminRFIDScan.Size = new System.Drawing.Size(780, 58);
             this.AdminRFIDScan.TabIndex = 2;

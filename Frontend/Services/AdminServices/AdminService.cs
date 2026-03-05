@@ -397,24 +397,18 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
         {
             try
             {
-                var payload = JsonConvert.SerializeObject(new { is_syncing = isSyncing });
-                var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
-                Client.DefaultRequestHeaders.Authorization =
+                ApiConfig.Client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
 
-                var response = await Client.PutAsync(
-                    "https://internet-laboratory-time-management.onrender.com/api/v1/settings",
-                    content
+                var response = await ApiConfig.Client.PostAsync(
+                    "api/v1/sync-requests/enrolled-students",
+                    null
                 );
-
-                //Console.WriteLine($"UpdateSetting Status: {(int)response.StatusCode} {response.StatusCode}");
-                //Console.WriteLine($"UpdateSetting URL hit: {Client.BaseAddress}api/v1/settings");
 
                 if (!response.IsSuccessStatusCode)
                 {
                     var body = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"UpdateSetting failed: {response.StatusCode} | {body}");
+                    Console.WriteLine($"SyncEnrolledStudents failed: {response.StatusCode} | {body}");
                     return false;
                 }
 
@@ -422,7 +416,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception during UpdateSetting: {ex.Message}");
+                Console.WriteLine($"Exception during SyncEnrolledStudents: {ex.Message}");
                 return false;
             }
         }

@@ -170,6 +170,11 @@
             this.EvaluationListPanel = new System.Windows.Forms.Panel();
             this.UpdateEvaluationBtn = new System.Windows.Forms.Button();
             this.EvaluationDgv = new System.Windows.Forms.DataGridView();
+            this.EvaluationTbElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.AddEvaluationBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.UpdateEvaluationBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.EvaluationDgvElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.SyncDatabaseBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.DashboardPanel.SuspendLayout();
             this.WelcomeAdminPanel.SuspendLayout();
             this.AdminReportsPanel.SuspendLayout();
@@ -1750,6 +1755,31 @@
             this.EvaluationDgv.TabIndex = 1;
             this.EvaluationDgv.SelectionChanged += new System.EventHandler(this.EvaluationDgv_SelectionChanged);
             // 
+            // EvaluationTbElipse
+            // 
+            this.EvaluationTbElipse.ElipseRadius = 10;
+            this.EvaluationTbElipse.TargetControl = this.EvaluationTb;
+            // 
+            // AddEvaluationBtnElipse
+            // 
+            this.AddEvaluationBtnElipse.ElipseRadius = 5;
+            this.AddEvaluationBtnElipse.TargetControl = this.AddEvaluationBtn;
+            // 
+            // UpdateEvaluationBtnElipse
+            // 
+            this.UpdateEvaluationBtnElipse.ElipseRadius = 5;
+            this.UpdateEvaluationBtnElipse.TargetControl = this.UpdateEvaluationBtn;
+            // 
+            // EvaluationDgvElipse
+            // 
+            this.EvaluationDgvElipse.ElipseRadius = 10;
+            this.EvaluationDgvElipse.TargetControl = this.EvaluationDgv;
+            // 
+            // SyncDatabaseBtnElipse
+            // 
+            this.SyncDatabaseBtnElipse.ElipseRadius = 5;
+            this.SyncDatabaseBtnElipse.TargetControl = this.SyncDatabaseBtn;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 13F);
@@ -1757,15 +1787,16 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
+            this.Controls.Add(this.AdminCreationPanel);
             this.Controls.Add(this.TimeManagementPanel);
             this.Controls.Add(this.AdminReportsPanel);
             this.Controls.Add(this.EvaluationPanel);
             this.Controls.Add(this.ListOfStudentsPanel);
             this.Controls.Add(this.DashboardPanel);
             this.Controls.Add(this.DatabaseSyncPanel);
-            this.Controls.Add(this.AdminCreationPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1960,5 +1991,10 @@
         public System.Windows.Forms.Button UpdateEvaluationBtn;
         public System.Windows.Forms.Button AddEvaluationBtn;
         public System.Windows.Forms.Button SyncDatabaseBtn;
+        private Bunifu.Framework.UI.BunifuElipse EvaluationTbElipse;
+        private Bunifu.Framework.UI.BunifuElipse AddEvaluationBtnElipse;
+        private Bunifu.Framework.UI.BunifuElipse UpdateEvaluationBtnElipse;
+        private Bunifu.Framework.UI.BunifuElipse EvaluationDgvElipse;
+        private Bunifu.Framework.UI.BunifuElipse SyncDatabaseBtnElipse;
     }
 }
