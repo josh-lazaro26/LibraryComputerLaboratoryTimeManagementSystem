@@ -71,9 +71,9 @@
             this.l.ForeColor = System.Drawing.Color.White;
             this.l.Location = new System.Drawing.Point(269, 91);
             this.l.Name = "l";
-            this.l.Size = new System.Drawing.Size(564, 136);
+            this.l.Size = new System.Drawing.Size(594, 136);
             this.l.TabIndex = 1;
-            this.l.Text = "Library Laboratory Time\r\n Management  System";
+            this.l.Text = "Internet Laboratory Time \r\nManagement System\r\n";
             // 
             // pictureBox1
             // 
@@ -106,6 +106,7 @@
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RFIDForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RFIDForm";

@@ -201,6 +201,9 @@
   <ItemGroup>
     <Compile Include="Frontend\Animation\LabelAnimation\ControlExtensions.cs" />
     <Compile Include="Frontend\Animation\LabelAnimation\LabelSwapAnimation.cs" />
+    <Compile Include="Frontend\Animation\ModernProgressBar\ModernProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frontend\Animation\PanelHandler\PanelHandler.cs" />
     <Compile Include="Frontend\Animation\PanelHandler\PanelPositionAnimator.cs" />
     <Compile Include="Frontend\Animation\Sidebar Animation\ButtonHoverEffect.cs" />

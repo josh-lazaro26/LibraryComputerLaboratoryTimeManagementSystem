@@ -14,36 +14,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.Studen
     public  class StudentServices
     {
         private static HttpClient Client => ApiConfig.Client;
-        public async Task<bool> CreateStudents(StudentCreationDAO studentCreation)
-        {
-            try
-            {
-                string payload = $@"
-                {{
-                    ""rfid"": ""{studentCreation.RFID}"",
-                    ""school_id"": ""{studentCreation.StudentId}""
-                }}";
-
-                // add bearer like in CreateAdmin
-                Client.DefaultRequestHeaders.Authorization =
-                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
-
-                    var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
-                    var response = await Client.PostAsync("api/v1/users/students", content);
-
-                    var body = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
-                    Console.WriteLine($"Body: {body}");
-
-                    return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex) 
-            {
-                Console.WriteLine($"Create Student error {ex.Message}");
-                return false;
-            }
-        }
+       
         public async Task<string> GetStudents(int pageNumber = 1, int pageSize = 10)
         {
             var urlBuilder = new StringBuilder("api/v1/accounts");

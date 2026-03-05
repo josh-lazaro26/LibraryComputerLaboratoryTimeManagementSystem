@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddTimeModalForm));
             this.AddTimePanel = new System.Windows.Forms.Panel();
+            this.RestartBtn = new System.Windows.Forms.Button();
             this.HourLabel = new System.Windows.Forms.Label();
             this.HrAndMinPanel = new System.Windows.Forms.Panel();
             this.DurationLabel = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@
             this.DurationPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.UpdateSessionBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.AddTimeModalFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.RestartBtn = new System.Windows.Forms.Button();
             this.AddTimePanel.SuspendLayout();
             this.DurationPanel.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -65,6 +65,17 @@
             this.AddTimePanel.Name = "AddTimePanel";
             this.AddTimePanel.Size = new System.Drawing.Size(532, 336);
             this.AddTimePanel.TabIndex = 6;
+            // 
+            // RestartBtn
+            // 
+            this.RestartBtn.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RestartBtn.Location = new System.Drawing.Point(267, 238);
+            this.RestartBtn.Name = "RestartBtn";
+            this.RestartBtn.Size = new System.Drawing.Size(117, 72);
+            this.RestartBtn.TabIndex = 11;
+            this.RestartBtn.Text = "Restart";
+            this.RestartBtn.UseVisualStyleBackColor = true;
+            this.RestartBtn.Click += new System.EventHandler(this.RestartBtn_Click);
             // 
             // HourLabel
             // 
@@ -200,17 +211,6 @@
             this.AddTimeModalFormElipse.ElipseRadius = 20;
             this.AddTimeModalFormElipse.TargetControl = this;
             // 
-            // RestartBtn
-            // 
-            this.RestartBtn.Font = new System.Drawing.Font("Roboto Condensed", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RestartBtn.Location = new System.Drawing.Point(267, 238);
-            this.RestartBtn.Name = "RestartBtn";
-            this.RestartBtn.Size = new System.Drawing.Size(117, 72);
-            this.RestartBtn.TabIndex = 11;
-            this.RestartBtn.Text = "Restart";
-            this.RestartBtn.UseVisualStyleBackColor = true;
-            this.RestartBtn.Click += new System.EventHandler(this.RestartBtn_Click);
-            // 
             // AddTimeModalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -221,6 +221,7 @@
             this.Controls.Add(this.AddTimePanel);
             this.Font = new System.Drawing.Font("Roboto", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "AddTimeModalForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

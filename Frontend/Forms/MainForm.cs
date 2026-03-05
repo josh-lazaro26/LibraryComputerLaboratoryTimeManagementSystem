@@ -63,7 +63,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 if (InvokeRequired)
                 {
                     Invoke(new Action(() => HandleNewSession(userId, schoolId, availableDuration)));
-                    Console.WriteLine($"Student kwan {userId} Logged in his skol id is {schoolId} his doration is {availableDuration}");
+                    //Console.WriteLine($"Student kwan {userId} Logged in his skol id is {schoolId} his doration is {availableDuration}");
                 }
                 else
                     HandleNewSession(userId, schoolId, availableDuration);
@@ -74,7 +74,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 if (InvokeRequired)
                 {
                     Invoke(new Action(() => HandleSessionTerminated(userId)));
-                    Console.WriteLine($"User ID kol:{userId} gi logged out");
+                    //Console.WriteLine($"User ID kol:{userId} gi logged out");
                 }
                 else
                 {
@@ -117,12 +117,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             }
             Console.WriteLine("tro o kon fols:"+SuperAdminState.isSuperAdmin);
             await LoadAdminsAsync();
-            await LoadStudentsAsync();
             await LoadActiveSessionsToButtons();
             await LoadEvaluations();
         }
 
-        // Changed from (object data) to typed parameters
         private void HandleNewSession(Guid userId, string schoolId, TimeSpan availableDuration)
         {
             for (int i = 0; i < _timeButtons.Count; i++)
@@ -508,29 +506,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             await LoadActiveSessionsToButtons();
         }
 
-        private async Task LoadStudentsAsync(int pageNumber = 1, int pageSize = 10)
-        {
-            var json = await _studentServices.GetStudents(pageNumber, pageSize);
-            if (json == null)
-            {
-                ShowNotification("Error", "Failed to load students.", NotificationType.Error);
-                return;
-            }
-
-            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<PagedUserResponse>(json);
-
-            if (result == null || !result.IsSuccess || result.Value?.Items == null)
-            {
-                ShowNotification("Error", "Invalid response from server.", NotificationType.Error);
-                return;
-            }
-
-            ListOfStudentDgv.AutoGenerateColumns = true;
-            ListOfStudentDgv.DataSource = result.Value.Items;
-
-            if (ListOfStudentDgv.Columns.Contains("Id"))
-                ListOfStudentDgv.Columns["Id"].Visible = false;
-        }
         private async Task LoadAdminsAsync(string query = null, int pageNumber = 1, int pageSize = 10)
         {
             var json = await _adminService.GetAdmins(query, pageNumber, pageSize);
@@ -786,19 +761,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void LettersOnly_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Allow control keys (Backspace, Delete, etc.)
-            if (char.IsControl(e.KeyChar))
-                return;
-
-            // Allow letters and space only
-            if (!char.IsLetter(e.KeyChar) && e.KeyChar != ' ')
-            {
-                e.Handled = true;
-            }
-        }
-
         private async void LogoutBtn_Click(object sender, EventArgs e)
         {
             using (var dialog = new DialogForm("Logout", "Are you sure you want to logout?"))
@@ -823,80 +785,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             }
         }
 
-        private async void UpdateStudentBtn_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(_selectedStudentId))
-            {
-                ShowNotification("Warning", "Please select a student row first.", NotificationType.Warning);
-                return;
-            }
-
-            var studentUpdate = new StudentUpdateDAO
-            {
-                Id = _selectedStudentId,
-                StudentId = ListOfStudentStudentIdTb.Text?.Trim(),
-            };
-
-            using (var dialog = new DialogForm("Update Student", "Are you sure you want to update this student?"))
-            {
-                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
-                {
-                    try
-                    {
-                        UpdateStudentBtn.Enabled = false;
-
-                        await _adminService.UpdateStudent(studentUpdate);
-
-                        await LoadStudentsAsync();
-                        _selectedStudentId = null;
-                        ClearStudentFields();
-                        ShowNotification("Success", "Student updated successfully.", NotificationType.Success);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowNotification("Error", $"Update failed: {ex.Message}", NotificationType.Error);
-                    }
-                    finally
-                    {
-                        UpdateStudentBtn.Enabled = true;
-                    }
-                }
-            }
-        }
-        private void ClearStudentFields()
-        {
-            ListOfStudentStudentIdTb.Text = string.Empty;
-            _selectedStudentId = null;
-        }
-        private async void DeleteStudentBtn_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(_selectedStudentId))
-            {
-                ShowNotification("Information", "Please select a student row first.", NotificationType.Information);
-                return;
-            }
-
-            using (var dialog = new DialogForm("Delete Student", "Are you sure you want to delete this student?"))
-            {
-                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
-                {
-                    try
-                    {
-                        await _adminService.DeleteStudent(new StudentDeletionDAO { Id = _selectedStudentId });
-                        await LoadStudentsAsync();
-                        _selectedStudentId = null;
-
-                        ShowNotification("Success", "Student deleted successfully.", NotificationType.Success);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowNotification("Error", $"Delete failed: {ex.Message}", NotificationType.Error);
-                    }
-                }
-            }
-        }   
         private void ListOfStudentDgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -999,11 +887,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SyncDatabaseBtn_Click(object sender, EventArgs e)
         {
-            var updateSettingForm = new UpdateSettingRfidForm();
-            updateSettingForm.Show();
-            this.Close();
+            var updateSettingRfidForm = new UpdateSettingRfidForm(this);
+            this.Hide();
+            updateSettingRfidForm.Show();
         }
     }
 }

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.DashboardPanel = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SyncDatabaseBtn = new System.Windows.Forms.Button();
             this.WelcomeAdminPanel = new System.Windows.Forms.Panel();
             this.WelcomeAdminLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -163,12 +163,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.SidebarBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.EvaluationPanel = new System.Windows.Forms.Panel();
-            this.AddEvaluationBtn = new System.Windows.Forms.Button();
-            this.UpdateEvaluationBtn = new System.Windows.Forms.Button();
             this.EvaluationTbPanel = new System.Windows.Forms.Panel();
+            this.AddEvaluationBtn = new System.Windows.Forms.Button();
             this.EvaluationQLabel = new System.Windows.Forms.Label();
             this.EvaluationTb = new System.Windows.Forms.TextBox();
             this.EvaluationListPanel = new System.Windows.Forms.Panel();
+            this.UpdateEvaluationBtn = new System.Windows.Forms.Button();
             this.EvaluationDgv = new System.Windows.Forms.DataGridView();
             this.DashboardPanel.SuspendLayout();
             this.WelcomeAdminPanel.SuspendLayout();
@@ -203,7 +203,7 @@
             // DashboardPanel
             // 
             this.DashboardPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.DashboardPanel.Controls.Add(this.button1);
+            this.DashboardPanel.Controls.Add(this.SyncDatabaseBtn);
             this.DashboardPanel.Controls.Add(this.WelcomeAdminPanel);
             this.DashboardPanel.Controls.Add(this.label6);
             this.DashboardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -212,25 +212,25 @@
             this.DashboardPanel.Size = new System.Drawing.Size(1280, 780);
             this.DashboardPanel.TabIndex = 10;
             // 
-            // button1
+            // SyncDatabaseBtn
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(989, 708);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.button1.Size = new System.Drawing.Size(274, 56);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Sync Database";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SyncDatabaseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SyncDatabaseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.SyncDatabaseBtn.FlatAppearance.BorderSize = 0;
+            this.SyncDatabaseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SyncDatabaseBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.SyncDatabaseBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.SyncDatabaseBtn.Image = ((System.Drawing.Image)(resources.GetObject("SyncDatabaseBtn.Image")));
+            this.SyncDatabaseBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SyncDatabaseBtn.Location = new System.Drawing.Point(989, 708);
+            this.SyncDatabaseBtn.Name = "SyncDatabaseBtn";
+            this.SyncDatabaseBtn.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.SyncDatabaseBtn.Size = new System.Drawing.Size(274, 56);
+            this.SyncDatabaseBtn.TabIndex = 11;
+            this.SyncDatabaseBtn.Text = "Sync Database";
+            this.SyncDatabaseBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SyncDatabaseBtn.UseVisualStyleBackColor = false;
+            this.SyncDatabaseBtn.Click += new System.EventHandler(this.SyncDatabaseBtn_Click);
             // 
             // WelcomeAdminPanel
             // 
@@ -1249,7 +1249,6 @@
             this.UpdateStudentBtn.Text = " Update";
             this.UpdateStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.UpdateStudentBtn.UseVisualStyleBackColor = false;
-            this.UpdateStudentBtn.Click += new System.EventHandler(this.UpdateStudentBtn_Click);
             // 
             // DeleteStudentBtn
             // 
@@ -1269,7 +1268,6 @@
             this.DeleteStudentBtn.Text = " Delete";
             this.DeleteStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.DeleteStudentBtn.UseVisualStyleBackColor = false;
-            this.DeleteStudentBtn.Click += new System.EventHandler(this.DeleteStudentBtn_Click);
             // 
             // MainFormElipse
             // 
@@ -1671,6 +1669,16 @@
             this.EvaluationPanel.Size = new System.Drawing.Size(1280, 780);
             this.EvaluationPanel.TabIndex = 16;
             // 
+            // EvaluationTbPanel
+            // 
+            this.EvaluationTbPanel.Controls.Add(this.AddEvaluationBtn);
+            this.EvaluationTbPanel.Controls.Add(this.EvaluationQLabel);
+            this.EvaluationTbPanel.Controls.Add(this.EvaluationTb);
+            this.EvaluationTbPanel.Location = new System.Drawing.Point(317, 138);
+            this.EvaluationTbPanel.Name = "EvaluationTbPanel";
+            this.EvaluationTbPanel.Size = new System.Drawing.Size(470, 620);
+            this.EvaluationTbPanel.TabIndex = 1;
+            // 
             // AddEvaluationBtn
             // 
             this.AddEvaluationBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
@@ -1687,33 +1695,6 @@
             this.AddEvaluationBtn.Text = "      Add Evaluation";
             this.AddEvaluationBtn.UseVisualStyleBackColor = false;
             this.AddEvaluationBtn.Click += new System.EventHandler(this.AddEvaluationBtn_Click);
-            // 
-            // UpdateEvaluationBtn
-            // 
-            this.UpdateEvaluationBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.UpdateEvaluationBtn.FlatAppearance.BorderSize = 0;
-            this.UpdateEvaluationBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateEvaluationBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.UpdateEvaluationBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.UpdateEvaluationBtn.Image = ((System.Drawing.Image)(resources.GetObject("UpdateEvaluationBtn.Image")));
-            this.UpdateEvaluationBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UpdateEvaluationBtn.Location = new System.Drawing.Point(143, 546);
-            this.UpdateEvaluationBtn.Name = "UpdateEvaluationBtn";
-            this.UpdateEvaluationBtn.Size = new System.Drawing.Size(175, 56);
-            this.UpdateEvaluationBtn.TabIndex = 2;
-            this.UpdateEvaluationBtn.Text = "    Update";
-            this.UpdateEvaluationBtn.UseVisualStyleBackColor = false;
-            this.UpdateEvaluationBtn.Click += new System.EventHandler(this.UpdateEvaluationBtn_Click);
-            // 
-            // EvaluationTbPanel
-            // 
-            this.EvaluationTbPanel.Controls.Add(this.AddEvaluationBtn);
-            this.EvaluationTbPanel.Controls.Add(this.EvaluationQLabel);
-            this.EvaluationTbPanel.Controls.Add(this.EvaluationTb);
-            this.EvaluationTbPanel.Location = new System.Drawing.Point(317, 138);
-            this.EvaluationTbPanel.Name = "EvaluationTbPanel";
-            this.EvaluationTbPanel.Size = new System.Drawing.Size(470, 620);
-            this.EvaluationTbPanel.TabIndex = 1;
             // 
             // EvaluationQLabel
             // 
@@ -1742,6 +1723,23 @@
             this.EvaluationListPanel.Name = "EvaluationListPanel";
             this.EvaluationListPanel.Size = new System.Drawing.Size(447, 620);
             this.EvaluationListPanel.TabIndex = 0;
+            // 
+            // UpdateEvaluationBtn
+            // 
+            this.UpdateEvaluationBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.UpdateEvaluationBtn.FlatAppearance.BorderSize = 0;
+            this.UpdateEvaluationBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateEvaluationBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.UpdateEvaluationBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.UpdateEvaluationBtn.Image = ((System.Drawing.Image)(resources.GetObject("UpdateEvaluationBtn.Image")));
+            this.UpdateEvaluationBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UpdateEvaluationBtn.Location = new System.Drawing.Point(143, 546);
+            this.UpdateEvaluationBtn.Name = "UpdateEvaluationBtn";
+            this.UpdateEvaluationBtn.Size = new System.Drawing.Size(175, 56);
+            this.UpdateEvaluationBtn.TabIndex = 2;
+            this.UpdateEvaluationBtn.Text = "    Update";
+            this.UpdateEvaluationBtn.UseVisualStyleBackColor = false;
+            this.UpdateEvaluationBtn.Click += new System.EventHandler(this.UpdateEvaluationBtn_Click);
             // 
             // EvaluationDgv
             // 
@@ -1961,6 +1959,6 @@
         public System.Windows.Forms.TextBox EvaluationTb;
         public System.Windows.Forms.Button UpdateEvaluationBtn;
         public System.Windows.Forms.Button AddEvaluationBtn;
-        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button SyncDatabaseBtn;
     }
 }

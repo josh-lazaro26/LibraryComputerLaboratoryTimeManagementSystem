@@ -11,6 +11,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Student
         public string StudentId { get; set; }
         public string RFID { get; set; }
     }
+
     public class StudentUpdateDAO
     {
         public string Id { get; set; }
@@ -22,6 +23,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Student
         public string Course { get; set; }
         public string YearLevel { get; set; }
     }
+
     public class StudentDeletionDAO
     {
         public string Id { get; set; }

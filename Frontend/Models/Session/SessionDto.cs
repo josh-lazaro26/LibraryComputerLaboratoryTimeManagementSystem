@@ -23,32 +23,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Session
         public string SchoolId { get; set; }
     }
 
-    // Matches the ACTUAL flat API response
-    public class PagedSessionValue
-    {
-        [JsonProperty("items")]
-        public List<SessionDto> Items { get; set; }
-
-        [JsonProperty("total_count")]      // ← was "totalCount"
-        public int TotalCount { get; set; }
-
-        [JsonProperty("page_number")]      // ← was "pageNumber"
-        public int PageNumber { get; set; }
-
-        [JsonProperty("page_size")]        // ← was "pageSize"
-        public int PageSize { get; set; }
-
-        [JsonProperty("total_pages")]      // ← was "totalPages"
-        public int TotalPages { get; set; }
-
-        [JsonProperty("has_previous_page")] // ← was "hasPreviousPage"
-        public bool HasPreviousPage { get; set; }
-
-        [JsonProperty("has_next_page")]    // ← was "hasNextPage"
-        public bool HasNextPage { get; set; }
-    }
-
-    // API returns flat structure, no "isSuccess"/"value" envelope
     public class PagedSessionResponse
     {
         [JsonProperty("items")]
@@ -63,10 +37,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Models.Session
         [JsonProperty("page_size")]
         public int PageSize { get; set; }
 
-        // Always true since 200 OK
         public bool IsSuccess => true;
 
-        // So existing code using resp.Value.Items still works
         public PagedSessionResponse Value => this;
     }
 }

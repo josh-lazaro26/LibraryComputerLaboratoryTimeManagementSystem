@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartServer));
             this.StartServerBtn = new System.Windows.Forms.Button();
             this.StartServerElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StartServerBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
@@ -70,6 +71,7 @@
             this.ClientSize = new System.Drawing.Size(595, 432);
             this.Controls.Add(this.StartServerBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartServer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);

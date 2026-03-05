@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="SyncDatabaseBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAQ
-        mAAAEJgB2TC9JgAAAA50RVh0U29mdHdhcmUARmlnbWGesZZjAAAByElEQVRYR+2X/W0CMQzFGaEjdAQ2
+        lwAAEJcBr/4TPAAAAA50RVh0U29mdHdhcmUARmlnbWGesZZjAAAByElEQVRYR+2X/W0CMQzFGaEjdAQ2
         oBvQDegG7QZ0g3YDRugIjMAIjMAIr3qS3foeycXhDqlS7yfdHxDb54s/4qxWC/8BAA8AXgAcAJwAXPDL
         GcARwFr1ZscceRcHahxVf1YAvCUdcT6C7hrAvvI8Dt+UAMCnvs3CQoMb7lyQ5csH4bIw1viKsk0KztD4
         RuXGEH3loPJVLF8GynE3soiNCAsiZ4+xFeW9ymQROw7zMecMkbhPqphgR3lS2SIAnkWxvxICYitWau5D

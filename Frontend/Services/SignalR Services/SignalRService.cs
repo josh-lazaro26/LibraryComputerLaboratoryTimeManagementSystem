@@ -46,7 +46,6 @@ internal class SignalRService
 
     public void RegisterHandlers()
     {
-        // "NewSession" is the hub method name — maps to admin listener
         _connection.On<Guid, string, TimeSpan>("NewSession", (userId, schoolId, availableDuration) =>
         {
             NewStudentOpenedSession?.Invoke(userId, schoolId, availableDuration);

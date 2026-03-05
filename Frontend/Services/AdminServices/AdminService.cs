@@ -133,7 +133,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-            // Swagger shows PUT /api/v1/students with the full object in the body (no id in route).
             var response = await Client.PutAsync("api/v1/students", content);
 
             if (response.IsSuccessStatusCode)
@@ -191,7 +190,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
             var result = JsonConvert.DeserializeObject<PagedSessionResponse>(body);
 
-            // Ensure Active field is mapped from JSON into each SessionDto
             if (result?.Items != null)
             {
                 var json = JObject.Parse(body);
@@ -250,25 +248,25 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
         {
             var urlBuilder = new StringBuilder("api/v1/admins");
             var hasAny = false;
-            // Optional debug parse (remove later)
+
             try
             {
                 void AddParam(string name, string value)
-            {
-                if (!hasAny)
                 {
-                    urlBuilder.Append("?");
-                    hasAny = true;
-                }
-                else
-                {
-                    urlBuilder.Append("&");
-                }
+                    if (!hasAny)
+                    {
+                        urlBuilder.Append("?");
+                        hasAny = true;
+                    }
+                    else
+                    {
+                        urlBuilder.Append("&");
+                    }
 
-                urlBuilder.Append(Uri.EscapeDataString(name));
-                urlBuilder.Append("=");
-                urlBuilder.Append(Uri.EscapeDataString(value));
-            }
+                    urlBuilder.Append(Uri.EscapeDataString(name));
+                    urlBuilder.Append("=");
+                    urlBuilder.Append(Uri.EscapeDataString(value));
+                }
 
             if (!string.IsNullOrWhiteSpace(query))
                 AddParam("query", query);
@@ -283,20 +281,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
             var response = await Client.GetAsync(url);
 
-            //Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
-
             var body = await response.Content.ReadAsStringAsync();
-            //Console.WriteLine("Body:");
-            //Console.WriteLine(body);
-
 
                 var obj = JObject.Parse(body);
 
-                // NOTE: adjust this depending on what /admins returns
-                // For paged results you likely want: obj["value"]?["items"]?.Count()
                 var itemsCount = obj["value"]?["items"]?.Count() ?? 0;
 
-                //Console.WriteLine("Admin items count: " + itemsCount);
                 if (!response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Request failed.");
@@ -311,6 +301,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 return null;
             }
         }
+
         public async Task<bool> CreateEvaluation(string question)
         {
             try
@@ -362,7 +353,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 var response = await Client.GetAsync("api/v1/evaluations/new");
                 var body = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine("Body ni kristo 3: "+body);
                 if (!response.IsSuccessStatusCode)
                 {
                     Console.WriteLine($"Failed: {response.StatusCode}");
@@ -392,7 +382,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                     return false;
                 }
 
-                // Clear token after successful logout
                 ApiConfig.Token = null;
                 AdminDao.AdminId = 0;
 
@@ -414,14 +403,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 Client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
 
-                // Try with leading slash if base address doesn't end with /
                 var response = await Client.PutAsync(
                     "https://internet-laboratory-time-management.onrender.com/api/v1/settings",
                     content
                 );
 
-                Console.WriteLine($"UpdateSetting Status: {(int)response.StatusCode} {response.StatusCode}");
-                Console.WriteLine($"UpdateSetting URL hit: {Client.BaseAddress}api/v1/settings");
+                //Console.WriteLine($"UpdateSetting Status: {(int)response.StatusCode} {response.StatusCode}");
+                //Console.WriteLine($"UpdateSetting URL hit: {Client.BaseAddress}api/v1/settings");
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -451,8 +439,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 var response = await Client.PostAsync("api/v1/pc/restart", content);
                 var body = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine($"RestartPc Status: {(int)response.StatusCode} {response.StatusCode}");
-                Console.WriteLine($"RestartPc Body: {body}");
+                //Console.WriteLine($"RestartPc Status: {(int)response.StatusCode} {response.StatusCode}");
+                //Console.WriteLine($"RestartPc Body: {body}");
 
                 return response.IsSuccessStatusCode;
             }
