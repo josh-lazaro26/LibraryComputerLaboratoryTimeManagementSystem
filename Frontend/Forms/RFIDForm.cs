@@ -20,7 +20,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
             _adminService = new AdminService();
             this.Shown += (s, e) => RFIDTextBox.Focus();
         }
-
+        private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
+        {
+            new NotificationModalForm(title, message, type).Show(this);
+        }
         private async void RFIDTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -41,8 +44,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
 
                     if (!isSuccess)
                     {
-                        MessageBox.Show("Authentication failed. Invalid RFID or Server Error.",
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ShowNotification("Error", "Authentication failed. Invalid RFID or Server Error.", NotificationType.Error);
+
+
                         RFIDTextBox.Clear();
                         RFIDTextBox.Focus();
                         return;
@@ -53,8 +57,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem
 
                     if (string.IsNullOrEmpty(accessToken))
                     {
-                        MessageBox.Show("Login successful but no token was saved.",
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ShowNotification("Error", "Login successful but no token was saved.", NotificationType.Error);
                         return;
                     }
 

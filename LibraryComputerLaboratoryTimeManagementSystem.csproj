@@ -204,6 +204,9 @@
     <Compile Include="Frontend\Animation\ModernProgressBar\ModernProgressBar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Frontend\Animation\Pagination\PaginationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Frontend\Animation\PanelHandler\PanelHandler.cs" />
     <Compile Include="Frontend\Animation\PanelHandler\PanelPositionAnimator.cs" />
     <Compile Include="Frontend\Animation\Sidebar Animation\ButtonHoverEffect.cs" />
@@ -215,6 +218,12 @@
     </Compile>
     <Compile Include="Frontend\Forms\AddTimeModalForm.Designer.cs">
       <DependentUpon>AddTimeModalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frontend\Forms\DemoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frontend\Forms\DemoForm.Designer.cs">
+      <DependentUpon>DemoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Frontend\Forms\DialogForm.cs">
       <SubType>Form</SubType>
@@ -276,6 +285,9 @@
     <EmbeddedResource Include="Frontend\Forms\AddTimeModalForm.resx">
       <DependentUpon>AddTimeModalForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frontend\Forms\DemoForm.resx">
+      <DependentUpon>DemoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\Forms\DialogForm.resx">
       <DependentUpon>DialogForm.cs</DependentUpon>

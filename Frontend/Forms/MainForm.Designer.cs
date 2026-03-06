@@ -96,16 +96,6 @@
             this.StudentTimeBtn13 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.ListOfStudentsPanel = new System.Windows.Forms.Panel();
-            this.StudentsTablePanel = new System.Windows.Forms.Panel();
-            this.StudentListRfidLabel = new System.Windows.Forms.Label();
-            this.StudentRfidTbPanelL = new System.Windows.Forms.Panel();
-            this.StudentListRfidTb = new System.Windows.Forms.TextBox();
-            this.StudentIdTbPanelL = new System.Windows.Forms.Panel();
-            this.ListOfStudentStudentIdTb = new System.Windows.Forms.TextBox();
-            this.ListOfStudentDgv = new System.Windows.Forms.DataGridView();
-            this.StudentIdListLabel = new System.Windows.Forms.Label();
-            this.UpdateStudentBtn = new System.Windows.Forms.Button();
-            this.DeleteStudentBtn = new System.Windows.Forms.Button();
             this.MainFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentTimeBtn1Elipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentTimeBtn2Elipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
@@ -175,6 +165,16 @@
             this.UpdateEvaluationBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.EvaluationDgvElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.SyncDatabaseBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.DeleteStudentBtn = new System.Windows.Forms.Button();
+            this.UpdateStudentBtn = new System.Windows.Forms.Button();
+            this.StudentIdListLabel = new System.Windows.Forms.Label();
+            this.ListOfStudentDgv = new System.Windows.Forms.DataGridView();
+            this.StudentIdTbPanelL = new System.Windows.Forms.Panel();
+            this.ListOfStudentStudentIdTb = new System.Windows.Forms.TextBox();
+            this.StudentRfidTbPanelL = new System.Windows.Forms.Panel();
+            this.StudentListRfidTb = new System.Windows.Forms.TextBox();
+            this.StudentListRfidLabel = new System.Windows.Forms.Label();
+            this.StudentsTablePanel = new System.Windows.Forms.Panel();
             this.DashboardPanel.SuspendLayout();
             this.WelcomeAdminPanel.SuspendLayout();
             this.AdminReportsPanel.SuspendLayout();
@@ -192,10 +192,6 @@
             this.TimeManagementBtnPanel2.SuspendLayout();
             this.TimeManagementBtnPanel1.SuspendLayout();
             this.ListOfStudentsPanel.SuspendLayout();
-            this.StudentsTablePanel.SuspendLayout();
-            this.StudentRfidTbPanelL.SuspendLayout();
-            this.StudentIdTbPanelL.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ListOfStudentDgv)).BeginInit();
             this.HeaderPanel.SuspendLayout();
             this.SidebarPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -203,6 +199,10 @@
             this.EvaluationTbPanel.SuspendLayout();
             this.EvaluationListPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ListOfStudentDgv)).BeginInit();
+            this.StudentIdTbPanelL.SuspendLayout();
+            this.StudentRfidTbPanelL.SuspendLayout();
+            this.StudentsTablePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // DashboardPanel
@@ -1144,136 +1144,6 @@
             this.ListOfStudentsPanel.Size = new System.Drawing.Size(1280, 780);
             this.ListOfStudentsPanel.TabIndex = 11;
             // 
-            // StudentsTablePanel
-            // 
-            this.StudentsTablePanel.Controls.Add(this.StudentListRfidLabel);
-            this.StudentsTablePanel.Controls.Add(this.StudentRfidTbPanelL);
-            this.StudentsTablePanel.Controls.Add(this.StudentIdTbPanelL);
-            this.StudentsTablePanel.Controls.Add(this.ListOfStudentDgv);
-            this.StudentsTablePanel.Controls.Add(this.StudentIdListLabel);
-            this.StudentsTablePanel.Controls.Add(this.UpdateStudentBtn);
-            this.StudentsTablePanel.Controls.Add(this.DeleteStudentBtn);
-            this.StudentsTablePanel.Location = new System.Drawing.Point(314, 111);
-            this.StudentsTablePanel.Name = "StudentsTablePanel";
-            this.StudentsTablePanel.Size = new System.Drawing.Size(952, 641);
-            this.StudentsTablePanel.TabIndex = 24;
-            // 
-            // StudentListRfidLabel
-            // 
-            this.StudentListRfidLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StudentListRfidLabel.AutoSize = true;
-            this.StudentListRfidLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F, System.Drawing.FontStyle.Bold);
-            this.StudentListRfidLabel.Location = new System.Drawing.Point(95, 10);
-            this.StudentListRfidLabel.Name = "StudentListRfidLabel";
-            this.StudentListRfidLabel.Size = new System.Drawing.Size(57, 29);
-            this.StudentListRfidLabel.TabIndex = 19;
-            this.StudentListRfidLabel.Text = "RFID";
-            // 
-            // StudentRfidTbPanelL
-            // 
-            this.StudentRfidTbPanelL.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StudentRfidTbPanelL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.StudentRfidTbPanelL.Controls.Add(this.StudentListRfidTb);
-            this.StudentRfidTbPanelL.Location = new System.Drawing.Point(96, 46);
-            this.StudentRfidTbPanelL.Name = "StudentRfidTbPanelL";
-            this.StudentRfidTbPanelL.Size = new System.Drawing.Size(306, 60);
-            this.StudentRfidTbPanelL.TabIndex = 18;
-            // 
-            // StudentListRfidTb
-            // 
-            this.StudentListRfidTb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.StudentListRfidTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.StudentListRfidTb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.StudentListRfidTb.Font = new System.Drawing.Font("Roboto", 18F);
-            this.StudentListRfidTb.Location = new System.Drawing.Point(11, 15);
-            this.StudentListRfidTb.Margin = new System.Windows.Forms.Padding(0);
-            this.StudentListRfidTb.Name = "StudentListRfidTb";
-            this.StudentListRfidTb.Size = new System.Drawing.Size(287, 29);
-            this.StudentListRfidTb.TabIndex = 3;
-            this.StudentListRfidTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // StudentIdTbPanelL
-            // 
-            this.StudentIdTbPanelL.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StudentIdTbPanelL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.StudentIdTbPanelL.Controls.Add(this.ListOfStudentStudentIdTb);
-            this.StudentIdTbPanelL.Location = new System.Drawing.Point(431, 46);
-            this.StudentIdTbPanelL.Name = "StudentIdTbPanelL";
-            this.StudentIdTbPanelL.Size = new System.Drawing.Size(306, 60);
-            this.StudentIdTbPanelL.TabIndex = 17;
-            // 
-            // ListOfStudentStudentIdTb
-            // 
-            this.ListOfStudentStudentIdTb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.ListOfStudentStudentIdTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ListOfStudentStudentIdTb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.ListOfStudentStudentIdTb.Font = new System.Drawing.Font("Roboto", 18F);
-            this.ListOfStudentStudentIdTb.Location = new System.Drawing.Point(9, 15);
-            this.ListOfStudentStudentIdTb.Margin = new System.Windows.Forms.Padding(0);
-            this.ListOfStudentStudentIdTb.Name = "ListOfStudentStudentIdTb";
-            this.ListOfStudentStudentIdTb.Size = new System.Drawing.Size(287, 29);
-            this.ListOfStudentStudentIdTb.TabIndex = 2;
-            this.ListOfStudentStudentIdTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // ListOfStudentDgv
-            // 
-            this.ListOfStudentDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ListOfStudentDgv.Location = new System.Drawing.Point(96, 128);
-            this.ListOfStudentDgv.Name = "ListOfStudentDgv";
-            this.ListOfStudentDgv.Size = new System.Drawing.Size(766, 377);
-            this.ListOfStudentDgv.TabIndex = 0;
-            this.ListOfStudentDgv.TabStop = false;
-            this.ListOfStudentDgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ListOfStudentDgv_CellClick);
-            // 
-            // StudentIdListLabel
-            // 
-            this.StudentIdListLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StudentIdListLabel.AutoSize = true;
-            this.StudentIdListLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F, System.Drawing.FontStyle.Bold);
-            this.StudentIdListLabel.Location = new System.Drawing.Point(431, 9);
-            this.StudentIdListLabel.Name = "StudentIdListLabel";
-            this.StudentIdListLabel.Size = new System.Drawing.Size(111, 29);
-            this.StudentIdListLabel.TabIndex = 16;
-            this.StudentIdListLabel.Text = "Student Id";
-            // 
-            // UpdateStudentBtn
-            // 
-            this.UpdateStudentBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.UpdateStudentBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.UpdateStudentBtn.FlatAppearance.BorderSize = 0;
-            this.UpdateStudentBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateStudentBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.UpdateStudentBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.UpdateStudentBtn.Image = ((System.Drawing.Image)(resources.GetObject("UpdateStudentBtn.Image")));
-            this.UpdateStudentBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UpdateStudentBtn.Location = new System.Drawing.Point(96, 526);
-            this.UpdateStudentBtn.Name = "UpdateStudentBtn";
-            this.UpdateStudentBtn.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.UpdateStudentBtn.Size = new System.Drawing.Size(199, 56);
-            this.UpdateStudentBtn.TabIndex = 8;
-            this.UpdateStudentBtn.Text = " Update";
-            this.UpdateStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.UpdateStudentBtn.UseVisualStyleBackColor = false;
-            // 
-            // DeleteStudentBtn
-            // 
-            this.DeleteStudentBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.DeleteStudentBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.DeleteStudentBtn.FlatAppearance.BorderSize = 0;
-            this.DeleteStudentBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteStudentBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.DeleteStudentBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.DeleteStudentBtn.Image = ((System.Drawing.Image)(resources.GetObject("DeleteStudentBtn.Image")));
-            this.DeleteStudentBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.DeleteStudentBtn.Location = new System.Drawing.Point(663, 523);
-            this.DeleteStudentBtn.Name = "DeleteStudentBtn";
-            this.DeleteStudentBtn.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.DeleteStudentBtn.Size = new System.Drawing.Size(199, 56);
-            this.DeleteStudentBtn.TabIndex = 9;
-            this.DeleteStudentBtn.Text = " Delete";
-            this.DeleteStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.DeleteStudentBtn.UseVisualStyleBackColor = false;
-            // 
             // MainFormElipse
             // 
             this.MainFormElipse.ElipseRadius = 20;
@@ -1780,6 +1650,136 @@
             this.SyncDatabaseBtnElipse.ElipseRadius = 5;
             this.SyncDatabaseBtnElipse.TargetControl = this.SyncDatabaseBtn;
             // 
+            // DeleteStudentBtn
+            // 
+            this.DeleteStudentBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.DeleteStudentBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.DeleteStudentBtn.FlatAppearance.BorderSize = 0;
+            this.DeleteStudentBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteStudentBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.DeleteStudentBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.DeleteStudentBtn.Image = ((System.Drawing.Image)(resources.GetObject("DeleteStudentBtn.Image")));
+            this.DeleteStudentBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DeleteStudentBtn.Location = new System.Drawing.Point(663, 523);
+            this.DeleteStudentBtn.Name = "DeleteStudentBtn";
+            this.DeleteStudentBtn.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.DeleteStudentBtn.Size = new System.Drawing.Size(199, 56);
+            this.DeleteStudentBtn.TabIndex = 9;
+            this.DeleteStudentBtn.Text = " Delete";
+            this.DeleteStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.DeleteStudentBtn.UseVisualStyleBackColor = false;
+            // 
+            // UpdateStudentBtn
+            // 
+            this.UpdateStudentBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.UpdateStudentBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.UpdateStudentBtn.FlatAppearance.BorderSize = 0;
+            this.UpdateStudentBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateStudentBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.UpdateStudentBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.UpdateStudentBtn.Image = ((System.Drawing.Image)(resources.GetObject("UpdateStudentBtn.Image")));
+            this.UpdateStudentBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UpdateStudentBtn.Location = new System.Drawing.Point(96, 526);
+            this.UpdateStudentBtn.Name = "UpdateStudentBtn";
+            this.UpdateStudentBtn.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.UpdateStudentBtn.Size = new System.Drawing.Size(199, 56);
+            this.UpdateStudentBtn.TabIndex = 8;
+            this.UpdateStudentBtn.Text = " Update";
+            this.UpdateStudentBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.UpdateStudentBtn.UseVisualStyleBackColor = false;
+            // 
+            // StudentIdListLabel
+            // 
+            this.StudentIdListLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StudentIdListLabel.AutoSize = true;
+            this.StudentIdListLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F, System.Drawing.FontStyle.Bold);
+            this.StudentIdListLabel.Location = new System.Drawing.Point(431, 9);
+            this.StudentIdListLabel.Name = "StudentIdListLabel";
+            this.StudentIdListLabel.Size = new System.Drawing.Size(111, 29);
+            this.StudentIdListLabel.TabIndex = 16;
+            this.StudentIdListLabel.Text = "Student Id";
+            // 
+            // ListOfStudentDgv
+            // 
+            this.ListOfStudentDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ListOfStudentDgv.Location = new System.Drawing.Point(96, 128);
+            this.ListOfStudentDgv.Name = "ListOfStudentDgv";
+            this.ListOfStudentDgv.Size = new System.Drawing.Size(766, 377);
+            this.ListOfStudentDgv.TabIndex = 0;
+            this.ListOfStudentDgv.TabStop = false;
+            this.ListOfStudentDgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ListOfStudentDgv_CellClick);
+            // 
+            // StudentIdTbPanelL
+            // 
+            this.StudentIdTbPanelL.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StudentIdTbPanelL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.StudentIdTbPanelL.Controls.Add(this.ListOfStudentStudentIdTb);
+            this.StudentIdTbPanelL.Location = new System.Drawing.Point(431, 46);
+            this.StudentIdTbPanelL.Name = "StudentIdTbPanelL";
+            this.StudentIdTbPanelL.Size = new System.Drawing.Size(306, 60);
+            this.StudentIdTbPanelL.TabIndex = 17;
+            // 
+            // ListOfStudentStudentIdTb
+            // 
+            this.ListOfStudentStudentIdTb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.ListOfStudentStudentIdTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ListOfStudentStudentIdTb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.ListOfStudentStudentIdTb.Font = new System.Drawing.Font("Roboto", 18F);
+            this.ListOfStudentStudentIdTb.Location = new System.Drawing.Point(9, 15);
+            this.ListOfStudentStudentIdTb.Margin = new System.Windows.Forms.Padding(0);
+            this.ListOfStudentStudentIdTb.Name = "ListOfStudentStudentIdTb";
+            this.ListOfStudentStudentIdTb.Size = new System.Drawing.Size(287, 29);
+            this.ListOfStudentStudentIdTb.TabIndex = 2;
+            this.ListOfStudentStudentIdTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // StudentRfidTbPanelL
+            // 
+            this.StudentRfidTbPanelL.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StudentRfidTbPanelL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.StudentRfidTbPanelL.Controls.Add(this.StudentListRfidTb);
+            this.StudentRfidTbPanelL.Location = new System.Drawing.Point(96, 46);
+            this.StudentRfidTbPanelL.Name = "StudentRfidTbPanelL";
+            this.StudentRfidTbPanelL.Size = new System.Drawing.Size(306, 60);
+            this.StudentRfidTbPanelL.TabIndex = 18;
+            // 
+            // StudentListRfidTb
+            // 
+            this.StudentListRfidTb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.StudentListRfidTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.StudentListRfidTb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.StudentListRfidTb.Font = new System.Drawing.Font("Roboto", 18F);
+            this.StudentListRfidTb.Location = new System.Drawing.Point(11, 15);
+            this.StudentListRfidTb.Margin = new System.Windows.Forms.Padding(0);
+            this.StudentListRfidTb.Name = "StudentListRfidTb";
+            this.StudentListRfidTb.Size = new System.Drawing.Size(287, 29);
+            this.StudentListRfidTb.TabIndex = 3;
+            this.StudentListRfidTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // StudentListRfidLabel
+            // 
+            this.StudentListRfidLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StudentListRfidLabel.AutoSize = true;
+            this.StudentListRfidLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F, System.Drawing.FontStyle.Bold);
+            this.StudentListRfidLabel.Location = new System.Drawing.Point(95, 10);
+            this.StudentListRfidLabel.Name = "StudentListRfidLabel";
+            this.StudentListRfidLabel.Size = new System.Drawing.Size(57, 29);
+            this.StudentListRfidLabel.TabIndex = 19;
+            this.StudentListRfidLabel.Text = "RFID";
+            // 
+            // StudentsTablePanel
+            // 
+            this.StudentsTablePanel.Controls.Add(this.StudentListRfidLabel);
+            this.StudentsTablePanel.Controls.Add(this.StudentRfidTbPanelL);
+            this.StudentsTablePanel.Controls.Add(this.StudentIdTbPanelL);
+            this.StudentsTablePanel.Controls.Add(this.ListOfStudentDgv);
+            this.StudentsTablePanel.Controls.Add(this.StudentIdListLabel);
+            this.StudentsTablePanel.Controls.Add(this.UpdateStudentBtn);
+            this.StudentsTablePanel.Controls.Add(this.DeleteStudentBtn);
+            this.StudentsTablePanel.Location = new System.Drawing.Point(314, 111);
+            this.StudentsTablePanel.Name = "StudentsTablePanel";
+            this.StudentsTablePanel.Size = new System.Drawing.Size(952, 641);
+            this.StudentsTablePanel.TabIndex = 24;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 13F);
@@ -1787,13 +1787,13 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
+            this.Controls.Add(this.ListOfStudentsPanel);
+            this.Controls.Add(this.DashboardPanel);
+            this.Controls.Add(this.DatabaseSyncPanel);
             this.Controls.Add(this.AdminCreationPanel);
             this.Controls.Add(this.TimeManagementPanel);
             this.Controls.Add(this.AdminReportsPanel);
             this.Controls.Add(this.EvaluationPanel);
-            this.Controls.Add(this.ListOfStudentsPanel);
-            this.Controls.Add(this.DashboardPanel);
-            this.Controls.Add(this.DatabaseSyncPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1829,13 +1829,6 @@
             this.TimeManagementBtnPanel1.ResumeLayout(false);
             this.TimeManagementBtnPanel1.PerformLayout();
             this.ListOfStudentsPanel.ResumeLayout(false);
-            this.StudentsTablePanel.ResumeLayout(false);
-            this.StudentsTablePanel.PerformLayout();
-            this.StudentRfidTbPanelL.ResumeLayout(false);
-            this.StudentRfidTbPanelL.PerformLayout();
-            this.StudentIdTbPanelL.ResumeLayout(false);
-            this.StudentIdTbPanelL.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ListOfStudentDgv)).EndInit();
             this.HeaderPanel.ResumeLayout(false);
             this.SidebarPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1844,6 +1837,13 @@
             this.EvaluationTbPanel.PerformLayout();
             this.EvaluationListPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ListOfStudentDgv)).EndInit();
+            this.StudentIdTbPanelL.ResumeLayout(false);
+            this.StudentIdTbPanelL.PerformLayout();
+            this.StudentRfidTbPanelL.ResumeLayout(false);
+            this.StudentRfidTbPanelL.PerformLayout();
+            this.StudentsTablePanel.ResumeLayout(false);
+            this.StudentsTablePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1891,12 +1891,6 @@
         public System.Windows.Forms.DataGridView AdminDgv;
         public System.Windows.Forms.Button DeleteAdmin_Btn;
         public System.Windows.Forms.Button UpdateAdmin_Btn;
-        public System.Windows.Forms.DataGridView ListOfStudentDgv;
-        public System.Windows.Forms.Button DeleteStudentBtn;
-        public System.Windows.Forms.Button UpdateStudentBtn;
-        public System.Windows.Forms.Panel StudentIdTbPanelL;
-        public System.Windows.Forms.TextBox ListOfStudentStudentIdTb;
-        public System.Windows.Forms.Label StudentIdListLabel;
         public System.Windows.Forms.Label StudentBtnLabel1;
         public System.Windows.Forms.Label StudentBtnLabel16;
         public System.Windows.Forms.Label StudentBtnLabel15;
@@ -1969,7 +1963,6 @@
         public System.Windows.Forms.Panel TimeManagementBtnPanel4;
         public System.Windows.Forms.Panel TimeManagementBtnPanel3;
         public System.Windows.Forms.Panel TimeManagementBtnPanel2;
-        public System.Windows.Forms.Panel StudentsTablePanel;
         public System.Windows.Forms.Panel WelcomeAdminPanel;
         public System.Windows.Forms.Button CloseBtn;
         public System.Windows.Forms.Button MaximizeBtn;
@@ -1978,9 +1971,6 @@
         private Bunifu.Framework.UI.BunifuElipse SidebarBtnElipse;
         public System.Windows.Forms.Button ReportBtn;
         public System.Windows.Forms.Panel ReportDgvPanel;
-        public System.Windows.Forms.Panel StudentRfidTbPanelL;
-        public System.Windows.Forms.TextBox StudentListRfidTb;
-        public System.Windows.Forms.Label StudentListRfidLabel;
         public System.Windows.Forms.Panel EvaluationPanel;
         public System.Windows.Forms.Button EvaluationSidebarBtn;
         public System.Windows.Forms.Panel EvaluationListPanel;
@@ -1996,5 +1986,15 @@
         private Bunifu.Framework.UI.BunifuElipse UpdateEvaluationBtnElipse;
         private Bunifu.Framework.UI.BunifuElipse EvaluationDgvElipse;
         private Bunifu.Framework.UI.BunifuElipse SyncDatabaseBtnElipse;
+        public System.Windows.Forms.Panel StudentsTablePanel;
+        public System.Windows.Forms.Label StudentListRfidLabel;
+        public System.Windows.Forms.Panel StudentRfidTbPanelL;
+        public System.Windows.Forms.TextBox StudentListRfidTb;
+        public System.Windows.Forms.Panel StudentIdTbPanelL;
+        public System.Windows.Forms.TextBox ListOfStudentStudentIdTb;
+        public System.Windows.Forms.DataGridView ListOfStudentDgv;
+        public System.Windows.Forms.Label StudentIdListLabel;
+        public System.Windows.Forms.Button UpdateStudentBtn;
+        public System.Windows.Forms.Button DeleteStudentBtn;
     }
 }

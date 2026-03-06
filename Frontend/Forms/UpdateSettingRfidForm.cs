@@ -57,7 +57,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
                 return null;
             }
         }
-
+        private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
+        {
+            new NotificationModalForm(title, message, type).Show(this);
+        }
         private async void RFIDTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -78,8 +81,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 
                     if (!isSuccess)
                     {
-                        MessageBox.Show("Authentication failed. Invalid RFID or Server Error.",
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ShowNotification("Error", "Authentication failed. Invalid RFID", NotificationType.Error);
+
                         RFIDTextBox.Clear();
                         RFIDTextBox.Focus();
                         return;
@@ -89,8 +92,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 
                     if (string.IsNullOrEmpty(accessToken))
                     {
-                        MessageBox.Show("Login successful but no token was saved.",
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ShowNotification("Error", "Login successful but no token was saved.", NotificationType.Error);
+
                         return;
                     }
 
@@ -103,8 +106,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 
                     if (!isAuthorized)
                     {
-                        MessageBox.Show("Access denied. Only Admin or Super Admin can access this setting.",
-                            "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        ShowNotification("Warning", "Access denied. Only Admin or Super Admin can access this setting.", NotificationType.Warning);
+
                         RFIDTextBox.Clear();
                         RFIDTextBox.Focus();
                         return;

@@ -29,7 +29,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private AdminService _adminService;
         private StudentServices _studentServices;
         private UserServices _userService;
-        private string _currentStudentRfid;
         private List<Button> _timeButtons;
         public SidebarAnimator _sidebarAnimator;
         private List<Label> _timeLabels;
@@ -778,8 +777,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     }
                     else
                     {
-                        MessageBox.Show("Logout failed. Please try again.", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ShowNotification("Error", "Logout failed. Please try again.", NotificationType.Information);
                     }
                 }
             }
@@ -818,7 +816,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (string.IsNullOrWhiteSpace(question))
             {
-                MessageBox.Show("Please enter a question.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowNotification("Warning", "Please enter a question.", NotificationType.Warning);
                 return;
             }
 
@@ -826,12 +824,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (success)
             {
-                MessageBox.Show("Evaluation created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowNotification("Success", "Evaluation created successfully.", NotificationType.Success);
+
                 await LoadEvaluations(); // refresh DGV
             }
             else
             {
-                MessageBox.Show("Failed to create evaluation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowNotification("Error", "Failed to create evaluation.", NotificationType.Error);
             }
         }
         private async Task LoadEvaluations()
@@ -860,7 +859,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(question))
             {
-                MessageBox.Show("Please select an evaluation from the list and enter a question.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowNotification("Warning", "Please select an evaluation from the list and enter a question.", NotificationType.Warning);
                 return;
             }
 
@@ -868,13 +867,15 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (success)
             {
-                MessageBox.Show("Evaluation updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowNotification("Success", "Evaluation updated successfully.", NotificationType.Success);
+
                 _selectedEvaluationId = null;
                 await LoadEvaluations(); // refresh DGV
             }
             else
             {
-                MessageBox.Show("Failed to update evaluation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowNotification("Error", "Failed to update evaluation.", NotificationType.Error);
+
             }
         }
 

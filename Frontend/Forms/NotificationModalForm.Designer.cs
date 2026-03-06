@@ -62,7 +62,7 @@
             this.CloseBtn.Location = new System.Drawing.Point(323, 2);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(37, 40);
-            this.CloseBtn.TabIndex = 29;
+            this.CloseBtn.TabIndex = 0;
             this.CloseBtn.UseVisualStyleBackColor = true;
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -74,7 +74,7 @@
             this.NotificationTitleLabel.Location = new System.Drawing.Point(3, 4);
             this.NotificationTitleLabel.Name = "NotificationTitleLabel";
             this.NotificationTitleLabel.Size = new System.Drawing.Size(359, 40);
-            this.NotificationTitleLabel.TabIndex = 1;
+            this.NotificationTitleLabel.TabIndex = 5;
             this.NotificationTitleLabel.Text = "Warning";
             this.NotificationTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
