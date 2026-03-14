@@ -271,12 +271,14 @@
     <Compile Include="Frontend\Layouts\MainFormResponsiveLayout.cs" />
     <Compile Include="Frontend\Models\Admin\AdminDao.cs" />
     <Compile Include="Frontend\Models\Admin\AdminDto.cs" />
+    <Compile Include="Frontend\Models\ClientPc\ClientDeviceDto.cs" />
     <Compile Include="Frontend\Models\Evaluation\EvaluationModel.cs" />
     <Compile Include="Frontend\Models\Session\SessionDto.cs" />
     <Compile Include="Frontend\Models\Student\StudentDAO.cs" />
     <Compile Include="Frontend\Services\API Client\ApiConfig\ApiConfig.cs" />
     <Compile Include="Frontend\Services\AdminServices\AdminService.cs" />
     <Compile Include="Frontend\Services\SignalR Services\SignalRService.cs" />
+    <Compile Include="Frontend\Services\SignalR Services\UnAuthSignalR.cs" />
     <Compile Include="Frontend\Services\StudentServices\StudentServices.cs" />
     <Compile Include="Frontend\Services\UserServices\UserDTO.cs" />
     <Compile Include="Frontend\Services\UserServices\UserServices.cs" />

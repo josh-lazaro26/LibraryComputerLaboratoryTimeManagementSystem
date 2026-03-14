@@ -4,18 +4,17 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-internal class SignalRService
+public class SignalRService
 {
     private HubConnection _connection;
+    private HubConnection _sycnConnection;
     private readonly Func<Task<string>> _tokenProvider;
 
-    // Admin listeners
-    public event Action<Guid, string, TimeSpan> NewStudentOpenedSession;
+    public event Action<Guid, string, TimeSpan> NewSession;
     public event Action<Guid> LoggedOutSession;
-
-    // Student listeners
     public event Action<TimeSpan> UpdatedSession;
     public event Action Terminate;
+    public event Action<string> StudentSyncingProgress;
 
     public SignalRService(Func<Task<string>> tokenProvider)
     {
@@ -37,33 +36,50 @@ internal class SignalRService
             })
             .WithAutomaticReconnect()
             .Build();
-
+        _sycnConnection = new HubConnectionBuilder()
+           .WithUrl("https://internet-laboratory-time-management.onrender.com/api/v1/hubs/sync", options =>
+           {
+               options.AccessTokenProvider = _tokenProvider;
+               options.HttpMessageHandlerFactory = _ => new HttpClientHandler
+               {
+                   ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+               };
+           })
+           .WithAutomaticReconnect()
+           .Build();
         RegisterHandlers();
         await _connection.StartAsync();
+        await _sycnConnection.StartAsync();
     }
 
     public HubConnection GetHubConnection() => _connection;
 
     public void RegisterHandlers()
     {
-        _connection.On<Guid, string, TimeSpan>("NewSession", (userId, schoolId, availableDuration) =>
+        _connection.On("NewSession", (Guid userId, string schoolId, TimeSpan availableDuration) =>
         {
-            NewStudentOpenedSession?.Invoke(userId, schoolId, availableDuration);
+            NewSession.Invoke(userId, schoolId, availableDuration);
         });
 
-        _connection.On<Guid>("LoggedOutSession", (userId) =>
+        _connection.On("LoggedOutSession", (Guid userId) =>
         {
-            LoggedOutSession?.Invoke(userId);
+            LoggedOutSession.Invoke(userId);
         });
 
-        _connection.On<TimeSpan>("UpdatedSession", (duration) =>
+        _connection.On("UpdatedSession", (TimeSpan duration) =>
         {
-            UpdatedSession?.Invoke(duration);
+            UpdatedSession.Invoke(duration);
         });
 
         _connection.On("Terminate", () =>
         {
-            Terminate?.Invoke();
+            Terminate.Invoke();
         });
+
+        _sycnConnection.On("SyncingProgress", (string processedPercentage) =>
+        {
+            StudentSyncingProgress.Invoke(processedPercentage);
+        });
+
     }
 }

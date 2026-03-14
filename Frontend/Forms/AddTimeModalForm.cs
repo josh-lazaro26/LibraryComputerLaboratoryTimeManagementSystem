@@ -226,32 +226,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
             new NotificationModalForm(title, message, type).Show(this);
         }
 
-        private async void RestartBtn_Click(object sender, EventArgs e)
+        private  void RestartBtn_Click(object sender, EventArgs e)
         {
-            RestartBtn.Enabled = false;
 
-            try
-            {
-                bool success = await _adminService.RestartPc(_userId);
-
-                if (success)
-                {
-                    ShowNotification("Success", "Restart signal sent successfully.", NotificationType.Information);
-                }
-                else
-                {
-                    ShowNotification("Error", "Failed to send restart signal. Please try again.", NotificationType.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception during restart: {ex.Message}");
-                ShowNotification("Error", ex.Message, NotificationType.Information);
-            }
-            finally
-            {
-                RestartBtn.Enabled = true;
-            }
         }
     }
 }

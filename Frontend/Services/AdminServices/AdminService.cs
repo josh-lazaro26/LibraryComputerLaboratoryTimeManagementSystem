@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminServices
 {
@@ -161,47 +162,54 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
         public async Task<PagedSessionResponse> GetActiveSessions(int pageNumber = 1, int pageSize = 16)
         {
-            var urlBuilder = new StringBuilder("api/v1/accounts");
+            var urlBuilder = new StringBuilder("api/v1/sessions"); 
             bool hasAny = false;
-
-            void AddParam(string name, string value)
+            try
             {
-                urlBuilder.Append(hasAny ? "&" : "?");
-                hasAny = true;
-                urlBuilder.Append(Uri.EscapeDataString(name));
-                urlBuilder.Append("=");
-                urlBuilder.Append(Uri.EscapeDataString(value));
-            }
-
-            AddParam("page_number", pageNumber.ToString());
-            AddParam("page_size", pageSize.ToString());
-
-            if (!string.IsNullOrWhiteSpace(ApiConfig.Token))
-            {
-                Client.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
-            }
-
-            var response = await Client.GetAsync(urlBuilder.ToString());
-            var body = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
-                return null;
-
-            var result = JsonConvert.DeserializeObject<PagedSessionResponse>(body);
-
-            if (result?.Items != null)
-            {
-                var json = JObject.Parse(body);
-                var items = json["items"];
-
-                for (int i = 0; i < result.Items.Count && i < items.Count(); i++)
+                void AddParam(string name, string value)
                 {
-                    result.Items[i].Active = items[i]["active"]?.Value<bool>() ?? false;
+                    urlBuilder.Append(hasAny ? "&" : "?");
+                    hasAny = true;
+                    urlBuilder.Append(Uri.EscapeDataString(name));
+                    urlBuilder.Append("=");
+                    urlBuilder.Append(Uri.EscapeDataString(value));
                 }
-            }
 
-            return result;
+                AddParam("page_number", pageNumber.ToString());
+                AddParam("page_size", pageSize.ToString());
+                AddParam("active", "true");
+                if (!string.IsNullOrWhiteSpace(ApiConfig.Token))
+                {
+                    Client.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+                }
+
+                var response = await Client.GetAsync(urlBuilder.ToString());
+                var body = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
+                    return null;
+
+                var result = JsonConvert.DeserializeObject<PagedSessionResponse>(body);
+
+                if (result?.Items != null)
+                {
+                    var json = JObject.Parse(body);
+                    var items = json["items"];
+
+                    for (int i = 0; i < result.Items.Count && i < items.Count(); i++)
+                    {
+                        result.Items[i].Active = items[i]["active"]?.Value<bool>() ?? false;
+                    }
+                }
+
+                return result;
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show("Error getting sesssions: " + ex.Message);
+                return null;
+            }
         }
 
         public async Task UpdateSession(string userId, string duration)
@@ -420,27 +428,51 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 return false;
             }
         }
-        public async Task<bool> RestartPc(string userId)
+        public async Task<string> GetClientDevices(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-                var payload = JsonConvert.SerializeObject(new { user_id = userId });
-                var content = new StringContent(payload, Encoding.UTF8, "application/json");
+                var urlBuilder = new StringBuilder("api/v1/client-devices");
+                urlBuilder.Append($"?page_number={pageNumber}&page_size={pageSize}");
 
                 Client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
 
-                var response = await Client.PostAsync("api/v1/pc/restart", content);
+                var response = await Client.GetAsync(urlBuilder.ToString());
                 var body = await response.Content.ReadAsStringAsync();
 
-                //Console.WriteLine($"RestartPc Status: {(int)response.StatusCode} {response.StatusCode}");
-                //Console.WriteLine($"RestartPc Body: {body}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"GetClientDevices failed: {response.StatusCode} | {body}");
+                    return null;
+                }
+                
+                Console.WriteLine("Device Body:"+body);
+                return body;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception during GetClientDevices: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<bool> RestartClientDevice(string deviceName)
+        {
+            try
+            {
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.PostAsync(
+                    $"api/v1/client-devices/restart?device_name={Uri.EscapeDataString(deviceName)}",
+                    null);
 
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception during RestartPc: {ex.Message}");
+                Console.WriteLine($"RestartClientDevice failed: {ex.Message}");
                 return false;
             }
         }

@@ -9,6 +9,7 @@ using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.StudentSer
 using LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.UserServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SignalRDemo;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -37,8 +38,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private System.Windows.Forms.Timer _countdownTimer;
         private string _selectedStudentId;
         private string _selectedEvaluationId = null;
-
+        private readonly UnauthenticatedSignalRService _unauthSignalR;
         private readonly SignalRService _signalRService;
+
+        // Add to your fields at the top of MainForm
+        private int _clientDevicesPage = 1;
+        private const int _clientDevicesPageSize = 10;
+        private string _selectedDeviceName = null;
         public MainForm()
         {
             InitializeComponent();
@@ -55,9 +61,16 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             _signalRService = new SignalRService(() => Task.FromResult(ApiConfig.Token));
 
+            _unauthSignalR = new UnauthenticatedSignalRService();
+            _ = _unauthSignalR.InitializeAsync();
+
             SignalRInitialize();
 
-            _signalRService.NewStudentOpenedSession += (Guid userId, string schoolId, TimeSpan availableDuration) =>
+            PcListDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            PcListDgv.MultiSelect = false;
+            PcListDgv.SelectionChanged += PcListDgv_SelectionChanged;
+
+            _signalRService.NewSession += (Guid userId, string schoolId, TimeSpan availableDuration) =>
             {
                 if (InvokeRequired)
                 {
@@ -127,23 +140,28 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 var btn = _timeButtons[i];
                 var lbl = _timeLabels[i];
 
-                if (btn.Tag == null) // vacant slot
+                if (btn.Tag == null)
                 {
-                    // No SessionDto from SignalR anymore — store what we have
-                    btn.Text = schoolId;
                     var sessionId = userId.ToString();
-                    btn.Tag = new SessionDto {Name = schoolId };
+
+                    btn.Text = schoolId;
+                    btn.Tag = new SessionDto
+                    {
+                        Name = schoolId,
+                        Id = sessionId,      
+                        UserId = sessionId,  
+                        Active = true        
+                    };
+
                     _remainingBySessionId[sessionId] = availableDuration;
+
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
-
-                    _remainingBySessionId[userId.ToString()] = availableDuration;
                     lbl.Text = ToMmSs(availableDuration);
                     break;
                 }
             }
         }
-
         private void HandleSessionTerminated(Guid userId)
         {
             var userIdStr = userId.ToString();
@@ -164,11 +182,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                     btn.Enabled = true;
                     btn.ForeColor = SystemColors.ControlLight;
                     lbl.Text = "00:00:00";
-
-                    Console.WriteLine($"Cleared slot {i + 1} for user {userIdStr}");
                     break;
                 }
             }
+            // Keep this reload — it's fine now that active filtering is in place
             _ = LoadActiveSessionsToButtons();
         }
 
@@ -310,6 +327,23 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _panelAnimator.AddPanel(EvaluationListPanel, new Point(818, 138), new Point(679, 138));
             SnapPanelsToCurrentState();
         }
+        private void SetupDevicesAnimation()
+        {
+            if (_panelAnimator == null)
+                _panelAnimator = new PanelPositionAnimator(5, 8);
+
+            _panelAnimator.Clear();
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                MainFormResponsiveLayout.UpdatePanelAnimations(this);
+                SnapPanelsToCurrentState();
+                return;
+            }
+            _panelAnimator.AddPanel(EvaluationTbPanel, new Point(390, 98), new Point(265, 98));
+            SnapPanelsToCurrentState();
+        }
+
 
         private void SetupTimeManagementAnimation()
         {
@@ -358,7 +392,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(ReportBtn);
 
             _panelHandler = new PanelHandler();
-            _panelHandler.AddPanels(DashboardPanel, DatabaseSyncPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel,EvaluationPanel);
+            _panelHandler.AddPanels(DashboardPanel, PcToRestartPanel, AdminReportsPanel, AdminCreationPanel, TimeManagementPanel, ListOfStudentsPanel,EvaluationPanel);
         }
 
         private void WireTimeButtonClicks()
@@ -428,15 +462,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 var btn = _timeButtons[i];
                 var lbl = _timeLabels[i];
 
-                if (btn.Tag is SessionDto s && s.Id != null && _remainingBySessionId.TryGetValue(s.Id, out var remaining))
+                if (btn.Tag is SessionDto s && s.Id != null &&
+                    _remainingBySessionId.TryGetValue(s.Id, out var remaining))
                 {
-                    // Freeze the timer if inactive — keep button text as-is
-                    if (!s.Active)
-                    {
-                        lbl.Text = ToMmSs(remaining); // just display, don't decrement
-                        continue;
-                    }
-
+                    // ← REMOVE the !s.Active freeze block entirely, or change to:
                     remaining = remaining - TimeSpan.FromSeconds(1);
                     if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
 
@@ -491,11 +520,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             HeaderPanelLabel.Text = "Evaluation";
             SetupEvaluationAnimation();
         }
-        private void ListOfStudentsSidebarBtn_Click(object sender, EventArgs e)
+        private async void ListOfDevicesSidebarBtn_Click(object sender, EventArgs e)
+        {
+            _panelHandler.ShowOnly(PcToRestartPanel);
+            HeaderPanelLabel.Text = "PC Management";
+            SetupDevicesAnimation();
+            await LoadClientDevicesAsync(1);
+        }
+        private async void ListOfStudentsSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(ListOfStudentsPanel);
             HeaderPanelLabel.Text = "List of Students";
             SetupStudentCreationAnimation();
+            await LoadClientDevicesAsync(1);
         }
         private async void TimeManagementSidebarBtn_Click(object sender, EventArgs e)
         {
@@ -515,7 +552,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             AdminDgv.DataSource = result.Value.Items;
 
             if (AdminDgv.Columns.Contains("Id"))
-                AdminDgv.Columns["Id"].Visible = false; 
+                AdminDgv.Columns["Id"].Visible = false;
+
+            StyleDataGridView(AdminDgv, MainFormResponsiveLayout.GetFontScale());
         }
 
         private async Task LoadActiveSessionsToButtons()
@@ -526,7 +565,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             var resp = await _adminService.GetActiveSessions(pageNumber: 1, pageSize: 16);
             if (resp == null || !resp.IsSuccess || resp.Items == null) return;
 
-            var sessions = resp.Items.Take(_timeButtons.Count).ToList();
+            var sessions = resp.Items
+                .Where(s => s.Active)        
+                .Take(_timeButtons.Count)
+                .ToList();
             _remainingBySessionId.Clear();
 
             for (int i = 0; i < _timeButtons.Count; i++)
@@ -793,8 +835,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (student == null) return;
 
             _selectedStudentId = student.Id.ToString();
-
-            ListOfStudentStudentIdTb.Text = row.Cells["StudentId"].Value?.ToString();
         }
 
         private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
@@ -851,6 +891,25 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             if (EvaluationDgv.Columns["Id"] != null)
                 EvaluationDgv.Columns["Id"].Visible = false;
+
+            if (EvaluationDgv.Columns["CreatedAt"] != null)       // ← ADD
+                EvaluationDgv.Columns["CreatedAt"].Visible = false;
+
+            if (EvaluationDgv.Columns["LastModifiedAt"] != null)    // ← ADD
+                EvaluationDgv.Columns["LastModifiedAt"].Visible = false;
+
+            // ← ADD THIS BLOCK
+            if (EvaluationDgv.Columns["LikedPercentage"] != null)
+                EvaluationDgv.Columns["LikedPercentage"].HeaderText = "Like %";
+
+            if (EvaluationDgv.Columns["DislikedPercentage"] != null)
+                EvaluationDgv.Columns["DislikedPercentage"].HeaderText = "Dislike %";
+
+            if (EvaluationDgv.Columns["TotalAnswers"] != null)
+                EvaluationDgv.Columns["TotalAnswers"].HeaderText = "Total Answers";
+            // ← END BLOCK
+
+            StyleDataGridView(EvaluationDgv, MainFormResponsiveLayout.GetFontScale());
         }
         private async void UpdateEvaluationBtn_Click(object sender, EventArgs e)
         {
@@ -890,9 +949,182 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
         private void SyncDatabaseBtn_Click(object sender, EventArgs e)
         {
-            var updateSettingRfidForm = new UpdateSettingRfidForm(this);
+            var updateSettingRfidForm = new UpdateSettingRfidForm(this, _signalRService);
             this.Hide();
             updateSettingRfidForm.Show();
+        }
+
+        private async void RestartPcBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_selectedDeviceName))
+            {
+                ShowNotification("Information", "Please select a PC from the list first.", NotificationType.Information);
+                return;
+            }
+
+            using (var dialog = new DialogForm("Restart PC", $"Are you sure you want to restart \"{_selectedDeviceName}\"?"))
+            {
+                if (dialog.ShowDialog(this) != DialogResult.OK || !dialog.IsConfirmed) return;
+
+                RestartPcBtn.Enabled = false;
+                try
+                {
+                    bool success = await _adminService.RestartClientDevice(_selectedDeviceName);
+
+                    if (success)
+                        ShowNotification("Success", $"Restart command sent to {_selectedDeviceName}.", NotificationType.Success);
+                    else
+                        ShowNotification("Error", "Failed to send restart command.", NotificationType.Error);
+                }
+                catch (Exception ex)
+                {
+                    ShowNotification("Error", $"Error: {ex.Message}", NotificationType.Error);
+                }
+                finally
+                {
+                    RestartPcBtn.Enabled = true;
+                }
+            }
+        }
+        private void PcListDgv_SelectionChanged(object sender, EventArgs e)
+        {
+            if (PcListDgv.SelectedRows.Count == 0) return;
+
+            var row = PcListDgv.SelectedRows[0];
+            var device = row.DataBoundItem as ClientDeviceDto;
+
+            if (device != null)
+            {
+                _selectedDeviceName = device.DeviceName;
+                Console.WriteLine($"Selected device: {_selectedDeviceName}");
+            }
+        }
+
+        private async Task LoadClientDevicesAsync(int pageNumber = 1)
+        {
+            var json = await _adminService.GetClientDevices(pageNumber, _clientDevicesPageSize);
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            var jObj = JObject.Parse(json);
+
+            var itemsToken = jObj["items"];
+            if (itemsToken == null) return;
+
+            var devices = itemsToken.ToObject<List<ClientDeviceDto>>();
+
+            PcListDgv.AutoGenerateColumns = true;
+            PcListDgv.DataSource = devices;
+
+            if (PcListDgv.Columns.Contains("Id"))
+                PcListDgv.Columns["Id"].Visible = false;
+
+
+            if (PcListDgv.Columns.Contains("DeviceName"))
+                PcListDgv.Columns["DeviceName"].HeaderText = "Device Name";
+
+            if (PcListDgv.Columns.Contains("ConnectedAt"))
+                PcListDgv.Columns["ConnectedAt"].HeaderText = "Connected At";
+
+            StyleDataGridView(PcListDgv, MainFormResponsiveLayout.GetFontScale());
+
+            var totalCount = jObj["total_count"]?.Value<int>() ?? 0;
+            int totalPages = jObj["total_pages"]?.Value<int>() ?? 1;
+
+            PcPageLabel.Text = $"Page {pageNumber} of {Math.Max(1, totalPages)}";
+            PcPrevPageBtn.Enabled = jObj["has_previous_page"]?.Value<bool>() ?? false;
+            PcNextPageBtn.Enabled = jObj["has_next_page"]?.Value<bool>() ?? false;
+
+            _clientDevicesPage = pageNumber;
+        }
+        private void StyleDataGridView(DataGridView dgv, float fontScale = 1f)
+        {
+            // ── Behavior ──────────────────────────────────────────────────────
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.MultiSelect = false;
+            dgv.ReadOnly = true;
+            dgv.AllowUserToAddRows = false;
+            dgv.RowHeadersVisible = false;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.EnableHeadersVisualStyles = false;
+
+            // ── Sizing (scaled) ───────────────────────────────────────────────
+            dgv.RowTemplate.Height = (int)(38 * fontScale);
+            dgv.ColumnHeadersHeight = (int)(42 * fontScale);
+
+            // ── Fonts (scaled) ────────────────────────────────────────────────
+            float baseSize = 10f * fontScale;
+            dgv.Font = new System.Drawing.Font("Roboto", baseSize);
+            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Roboto", baseSize, System.Drawing.FontStyle.Bold);
+            dgv.DefaultCellStyle.Font = new System.Drawing.Font("Roboto", baseSize);
+
+            // ── Header row — deep green ───────────────────────────────────────
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(6, 64, 43);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(6, 64, 43);
+            dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = Color.White;
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(0);
+            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+
+            // ── Data rows ─────────────────────────────────────────────────────
+            dgv.DefaultCellStyle.BackColor = Color.White;
+            dgv.DefaultCellStyle.ForeColor = Color.FromArgb(25, 25, 25);
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(6, 80, 60);
+            dgv.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgv.DefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+
+            // ── Alternating rows ──────────────────────────────────────────────
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(232, 245, 238);
+            dgv.AlternatingRowsDefaultCellStyle.ForeColor = Color.FromArgb(25, 25, 25);
+            dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(6, 80, 60);
+            dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = Color.White;
+
+            // ── Grid lines ────────────────────────────────────────────────────
+            dgv.BackgroundColor = Color.White;
+            dgv.GridColor = Color.FromArgb(180, 215, 198);
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            // ── Column alignment ──────────────────────────────────────────────
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            // ── Evaluation column weights ─────────────────────────────────────
+            if (dgv.Columns.Contains("Question"))
+                dgv.Columns["Question"].FillWeight = 250;
+            if (dgv.Columns.Contains("LikePercentage"))
+                dgv.Columns["LikePercentage"].FillWeight = 100;
+            if (dgv.Columns.Contains("DislikePercentage"))
+                dgv.Columns["DislikePercentage"].FillWeight = 100;
+            if (dgv.Columns.Contains("TotalAnswers"))
+                dgv.Columns["TotalAnswers"].FillWeight = 100;
+
+            // ── PC Devices column weights ─────────────────────────────────────
+            if (dgv.Columns.Contains("DeviceName"))
+                dgv.Columns["DeviceName"].FillWeight = 250;
+            if (dgv.Columns.Contains("ConnectedAt"))
+                dgv.Columns["ConnectedAt"].FillWeight = 150;
+
+            // ── Admin column weights ──────────────────────────────────────────
+            if (dgv.Columns.Contains("PersonnelId"))
+                dgv.Columns["PersonnelId"].FillWeight = 200;
+            if (dgv.Columns.Contains("RFID"))
+                dgv.Columns["RFID"].FillWeight = 200;
+        }
+
+        private async void PcNextPageBtn_Click(object sender, EventArgs e)
+        {
+            await LoadClientDevicesAsync(_clientDevicesPage + 1);
+        }
+
+        private async void PcPrevPageBtn_Click(object sender, EventArgs e)
+        {
+            if (_clientDevicesPage > 1)
+                await LoadClientDevicesAsync(_clientDevicesPage - 1);
         }
     }
 }

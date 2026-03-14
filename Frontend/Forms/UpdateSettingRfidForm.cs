@@ -10,15 +10,18 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
     public partial class UpdateSettingRfidForm : Form
     {
         private readonly AdminService _adminService;
-        private readonly Form _mainForm;  
+        private readonly Form _mainForm;
+        private readonly SignalRService _signalRService;
         public string ScannedRfid { get; private set; }
 
-        public UpdateSettingRfidForm(Form mainForm)  // UPDATED CONSTRUCTOR
+        public UpdateSettingRfidForm(Form mainForm, SignalRService signalRService)  // UPDATED CONSTRUCTOR
         {
             InitializeComponent();
             _adminService = new AdminService();
             _mainForm = mainForm; 
             this.Shown += (s, e) => RFIDTextBox.Focus();
+            _mainForm = mainForm;
+            _signalRService = signalRService;
         }
 
 
@@ -115,7 +118,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
 
                     ScannedRfid = rfidValue;
 
-                    var updateSettingForm = new UpdateSettingProgressBarForm(_mainForm);  // PASS mainForm
+                    var updateSettingForm = new UpdateSettingProgressBarForm(_mainForm, _signalRService);
                     updateSettingForm.Show();
                     this.Close();
                 }
