@@ -476,5 +476,78 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 return false;
             }
         }
+        public async Task<string> GetStudents(string query = null, int pageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+                var urlBuilder = new StringBuilder("api/v1/users/students");
+                var hasAny = false;
+
+                void AddParam(string name, string value)
+                {
+                    urlBuilder.Append(hasAny ? "&" : "?");
+                    hasAny = true;
+                    urlBuilder.Append(Uri.EscapeDataString(name));
+                    urlBuilder.Append("=");
+                    urlBuilder.Append(Uri.EscapeDataString(value));
+                }
+
+                if (!string.IsNullOrWhiteSpace(query))
+                    AddParam("query", query);
+
+                AddParam("page_number", pageNumber.ToString());
+                AddParam("page_size", pageSize.ToString());
+
+                Console.WriteLine("GetStudents URL: " + urlBuilder.ToString());
+
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.GetAsync(urlBuilder.ToString());
+                var body = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine("GetStudents RESPONSE: " + body);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"GetStudents failed: {response.StatusCode} | {body}");
+                    return null;
+                }
+
+                return body;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception during GetStudents: {ex.Message}");
+                return null;
+            }
+        }
+        public async Task<string> GetSessionHistories(int pageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+                var urlBuilder = new StringBuilder("api/v1/accounts/session-histories");
+                urlBuilder.Append($"?page_number={pageNumber}&page_size={pageSize}");
+
+                Client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
+
+                var response = await Client.GetAsync(urlBuilder.ToString());
+                var body = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("SessionHistories RESPONSE: " + body); // ← THIS
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"GetSessionHistories failed: {response.StatusCode} | {body}");
+                    return null;
+                }
+
+                Console.WriteLine("SessionHistories RESPONSE: " + body);
+                return body;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception during GetSessionHistories: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

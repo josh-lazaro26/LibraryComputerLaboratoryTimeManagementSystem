@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,24 +9,48 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.UserSe
 {
     public class UserDto
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string StudentId { get; set; }
-        public string Course { get; set; }
-        public string YearLevel { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("school_id")]
+        public string SchoolId { get; set; }
+
+        [JsonProperty("course_code")]
+        public string CourseCode { get; set; }
+
+        [JsonProperty("school_year")]
+        public string SchoolYear { get; set; }
+
+        [JsonProperty("enrollment_status")]
+        public string EnrollmentStatus { get; set; }
     }
 
-    public class PagedUserResponse
+    public class SessionHistoryDto
     {
-        public bool IsSuccess { get; set; }
-        public UserValue Value { get; set; }
-    }
+        [JsonProperty("school_id")]
+        public string SchoolId { get; set; }
 
-    public class UserValue
-    {
-        public List<UserDto> Items { get; set; }
+        [JsonProperty("consumed_time")]
+        public string ConsumedTime { get; set; }
+
+        public string FormattedConsumedTime
+        {
+            get
+            {
+                if (!TimeSpan.TryParse(ConsumedTime, out var ts))
+                    return "00:00:00";
+
+                ts = ts.Duration(); // handle negative values
+
+                if (ts.TotalDays >= 1)
+                    return $"{(int)ts.TotalDays}d {ts.Hours:D2}h {ts.Minutes:D2}m {ts.Seconds:D2}s";
+                else
+                    return $"{ts.Hours:D2}h {ts.Minutes:D2}m {ts.Seconds:D2}s";
+            }
+        }
     }
 
     public static class SuperAdminState

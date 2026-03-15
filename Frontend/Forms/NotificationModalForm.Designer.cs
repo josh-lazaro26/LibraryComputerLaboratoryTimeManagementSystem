@@ -103,7 +103,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "NotificationModalForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NotificationModalForm";
+            this.Text = "Internet Laboratory Time Management Systsem";
             this.NotificationTitlePanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

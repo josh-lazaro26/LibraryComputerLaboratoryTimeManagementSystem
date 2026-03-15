@@ -145,7 +145,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DialogForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DialogForm";
+            this.Text = "Internet Laboratory Time Management Systsem";
             this.NotificationTitlePanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

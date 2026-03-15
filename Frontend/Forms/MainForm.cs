@@ -41,6 +41,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private readonly UnauthenticatedSignalRService _unauthSignalR;
         private readonly SignalRService _signalRService;
 
+        private int _studentsPage = 1;
+        private const int _studentsPageSize = 2;
+        private System.Windows.Forms.Timer _searchDebounceTimer;
+
+        private int _reportsPage = 1;
+        private const int _reportsPageSize = 10;
+
         // Add to your fields at the top of MainForm
         private int _clientDevicesPage = 1;
         private const int _clientDevicesPageSize = 10;
@@ -70,12 +77,24 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             PcListDgv.MultiSelect = false;
             PcListDgv.SelectionChanged += PcListDgv_SelectionChanged;
 
+            SearchQuery.TextChanged += SearchQuery_TextChanged;
+            StudentListNextPageBtn.Click += StudentListNextPageBtn_Click;
+            StudentListPrevtPageBtn.Click += StudentListPrevtPageBtn_Click;
+
+            _searchDebounceTimer = new System.Windows.Forms.Timer();
+            _searchDebounceTimer.Interval = 400;
+            _searchDebounceTimer.Tick += async (s, e) =>
+            {
+                _searchDebounceTimer.Stop();
+                var currentQuery = SearchQuery.Text.Trim();
+                Console.WriteLine($"Debounce fired — query: '{currentQuery}'");
+                await LoadStudentsAsync(1, currentQuery);
+            };
             _signalRService.NewSession += (Guid userId, string schoolId, TimeSpan availableDuration) =>
             {
                 if (InvokeRequired)
                 {
                     Invoke(new Action(() => HandleNewSession(userId, schoolId, availableDuration)));
-                    //Console.WriteLine($"Student kwan {userId} Logged in his skol id is {schoolId} his doration is {availableDuration}");
                 }
                 else
                     HandleNewSession(userId, schoolId, availableDuration);
@@ -86,7 +105,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 if (InvokeRequired)
                 {
                     Invoke(new Action(() => HandleSessionTerminated(userId)));
-                    //Console.WriteLine($"User ID kol:{userId} gi logged out");
                 }
                 else
                 {
@@ -236,7 +254,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (SuperAdminState.isSuperAdmin)
             {
                 AdminCreation.Visible = true;
-                ReportBtn.Visible = true;
             }
         }
 
@@ -323,8 +340,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 SnapPanelsToCurrentState();
                 return;
             }
-            _panelAnimator.AddPanel(EvaluationTbPanel, new Point(317, 138), new Point(178, 138));
-            _panelAnimator.AddPanel(EvaluationListPanel, new Point(818, 138), new Point(679, 138));
+
+            _panelAnimator.AddPanel(EvaluationTbPanel, new Point(317, 138), new Point(193, 138));
+            _panelAnimator.AddPanel(EvaluationListPanel, new Point(740, 138), new Point(616, 138));
             SnapPanelsToCurrentState();
         }
         private void SetupDevicesAnimation()
@@ -340,7 +358,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 SnapPanelsToCurrentState();
                 return;
             }
-            _panelAnimator.AddPanel(EvaluationTbPanel, new Point(390, 98), new Point(265, 98));
+
+            _panelAnimator.AddPanel(ListOfDevicesPanel, new Point(390, 98), new Point(265, 98)); // ← fix
             SnapPanelsToCurrentState();
         }
 
@@ -386,6 +405,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _sidebarHoverEffect.Attach(TimeManagementSidebarBtn);
             _sidebarHoverEffect.Attach(SidebarBtn);
             _sidebarHoverEffect.Attach(EvaluationSidebarBtn);
+            _sidebarHoverEffect.Attach(ListOfDevicesSidebarBtn);
             _sidebarHoverEffect.Attach(LogoutBtn);
 
             _sidebarHoverEffect.Attach(AdminCreation);
@@ -514,11 +534,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _panelHandler.ShowOnly(AdminReportsPanel);
             HeaderPanelLabel.Text = "Reports";
         }
-        private void EvaluationSidebarBtn_Click(object sender, EventArgs e)
+        private async void EvaluationSidebarBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(EvaluationPanel);
             HeaderPanelLabel.Text = "Evaluation";
             SetupEvaluationAnimation();
+            await LoadEvaluations();
         }
         private async void ListOfDevicesSidebarBtn_Click(object sender, EventArgs e)
         {
@@ -532,7 +553,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             _panelHandler.ShowOnly(ListOfStudentsPanel);
             HeaderPanelLabel.Text = "List of Students";
             SetupStudentCreationAnimation();
-            await LoadClientDevicesAsync(1);
+            await LoadStudentsAsync(1);
         }
         private async void TimeManagementSidebarBtn_Click(object sender, EventArgs e)
         {
@@ -755,6 +776,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 SetupEvaluationAnimation();
                 _panelAnimator?.Toggle();
             }
+            else if (PcToRestartPanel.Visible)
+            {
+                SetupDevicesAnimation();
+                _panelAnimator?.Toggle();
+            }
             else if (ListOfStudentsPanel.Visible)
             {
                 SetupStudentCreationAnimation();
@@ -842,11 +868,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             new NotificationModalForm(title, message, type).Show(this);
         }
 
-        private void ReportBtn_Click(object sender, EventArgs e)
+        private async void ReportBtn_Click(object sender, EventArgs e)
         {
             _panelHandler.ShowOnly(AdminReportsPanel);
             HeaderPanelLabel.Text = "Admin Reports";
             SetupAdminReportsPanelAnimation();
+            await LoadSessionHistoriesAsync(1); 
         }
 
         private async void AddEvaluationBtn_Click(object sender, EventArgs e)
@@ -1036,9 +1063,84 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
 
             _clientDevicesPage = pageNumber;
         }
+        private async Task LoadStudentsAsync(int pageNumber = 1, string query = null)
+        {
+            Console.WriteLine($"LoadStudentsAsync — page: {pageNumber}, query: '{query}'");
+
+            var json = await _adminService.GetStudents(query, pageNumber, _studentsPageSize);
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            var jObj = JObject.Parse(json);
+
+            var students = jObj["items"].ToObject<List<UserDto>>();
+
+            ListOfStudentDgv.AutoGenerateColumns = true;
+            ListOfStudentDgv.DataSource = students;
+
+            if (ListOfStudentDgv.Columns.Contains("Id"))
+                ListOfStudentDgv.Columns["Id"].Visible = false;
+
+            StyleDataGridView(ListOfStudentDgv, MainFormResponsiveLayout.GetFontScale());
+
+            if (ListOfStudentDgv.Columns.Contains("Name"))
+                ListOfStudentDgv.Columns["Name"].HeaderText = "Name";
+
+            if (ListOfStudentDgv.Columns.Contains("SchoolId"))
+                ListOfStudentDgv.Columns["SchoolId"].HeaderText = "School ID";
+
+            if (ListOfStudentDgv.Columns.Contains("CourseCode"))
+                ListOfStudentDgv.Columns["CourseCode"].HeaderText = "Course Code";
+
+            if (ListOfStudentDgv.Columns.Contains("SchoolYear"))
+                ListOfStudentDgv.Columns["SchoolYear"].HeaderText = "School Year";
+
+            if (ListOfStudentDgv.Columns.Contains("EnrollmentStatus"))
+                ListOfStudentDgv.Columns["EnrollmentStatus"].HeaderText = "Enrollment Status";
+
+            int totalPages = jObj["total_pages"]?.Value<int>() ?? 1;
+            ListOfStudentPageLabel.Text = $"Page {pageNumber} of {Math.Max(1, totalPages)}";
+
+            StudentListPrevtPageBtn.Enabled = jObj["has_previous_page"]?.Value<bool>() ?? false;
+            StudentListNextPageBtn.Enabled = jObj["has_next_page"]?.Value<bool>() ?? false;
+
+            _studentsPage = pageNumber;
+        }
+        private async Task LoadSessionHistoriesAsync(int pageNumber = 1)
+        {
+            var json = await _adminService.GetSessionHistories(pageNumber, _reportsPageSize);
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            var jObj = JObject.Parse(json);
+            var itemsToken = jObj["items"];
+            if (itemsToken == null) return;
+
+            var histories = itemsToken.ToObject<List<SessionHistoryDto>>();
+
+            ReportsDataGridView.AutoGenerateColumns = true;
+            ReportsDataGridView.DataSource = histories;
+
+            if (ReportsDataGridView.Columns.Contains("ConsumedTime"))
+                ReportsDataGridView.Columns["ConsumedTime"].Visible = false;
+
+            if (ReportsDataGridView.Columns.Contains("SchoolId"))
+                ReportsDataGridView.Columns["SchoolId"].HeaderText = "School ID";
+
+            if (ReportsDataGridView.Columns.Contains("FormattedConsumedTime"))
+                ReportsDataGridView.Columns["FormattedConsumedTime"].HeaderText = "Consumed Time";
+
+            StyleDataGridView(ReportsDataGridView, MainFormResponsiveLayout.GetFontScale());
+
+            int totalPages = jObj["total_pages"]?.Value<int>() ?? 1;
+            ReportPageLabel.Text = $"Page {pageNumber} of {Math.Max(1, totalPages)}"; // ← ADD
+
+            ReportsPrevPageBtn.Enabled = jObj["has_previous_page"]?.Value<bool>() ?? false;
+            ReportNextPageBtn.Enabled = jObj["has_next_page"]?.Value<bool>() ?? false;
+
+            _reportsPage = pageNumber;
+        }
+
         private void StyleDataGridView(DataGridView dgv, float fontScale = 1f)
         {
-            // ── Behavior ──────────────────────────────────────────────────────
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv.MultiSelect = false;
@@ -1048,17 +1150,14 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             dgv.BorderStyle = BorderStyle.None;
             dgv.EnableHeadersVisualStyles = false;
 
-            // ── Sizing (scaled) ───────────────────────────────────────────────
-            dgv.RowTemplate.Height = (int)(38 * fontScale);
-            dgv.ColumnHeadersHeight = (int)(42 * fontScale);
+            dgv.RowTemplate.Height = (int)(46 * fontScale);
+            dgv.ColumnHeadersHeight = (int)(50 * fontScale);
+            float baseSize = 14f * fontScale;
 
-            // ── Fonts (scaled) ────────────────────────────────────────────────
-            float baseSize = 10f * fontScale;
             dgv.Font = new System.Drawing.Font("Roboto", baseSize);
             dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Roboto", baseSize, System.Drawing.FontStyle.Bold);
             dgv.DefaultCellStyle.Font = new System.Drawing.Font("Roboto", baseSize);
 
-            // ── Header row — deep green ───────────────────────────────────────
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(6, 64, 43);
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(6, 64, 43);
@@ -1067,25 +1166,21 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(0);
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
 
-            // ── Data rows ─────────────────────────────────────────────────────
             dgv.DefaultCellStyle.BackColor = Color.White;
             dgv.DefaultCellStyle.ForeColor = Color.FromArgb(25, 25, 25);
             dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(6, 80, 60);
             dgv.DefaultCellStyle.SelectionForeColor = Color.White;
             dgv.DefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
 
-            // ── Alternating rows ──────────────────────────────────────────────
             dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(232, 245, 238);
             dgv.AlternatingRowsDefaultCellStyle.ForeColor = Color.FromArgb(25, 25, 25);
             dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(6, 80, 60);
             dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = Color.White;
 
-            // ── Grid lines ────────────────────────────────────────────────────
             dgv.BackgroundColor = Color.White;
             dgv.GridColor = Color.FromArgb(180, 215, 198);
             dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
 
-            // ── Column alignment ──────────────────────────────────────────────
             foreach (DataGridViewColumn col in dgv.Columns)
             {
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -1093,23 +1188,18 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            // ── Evaluation column weights ─────────────────────────────────────
             if (dgv.Columns.Contains("Question"))
-                dgv.Columns["Question"].FillWeight = 250;
-            if (dgv.Columns.Contains("LikePercentage"))
-                dgv.Columns["LikePercentage"].FillWeight = 100;
-            if (dgv.Columns.Contains("DislikePercentage"))
-                dgv.Columns["DislikePercentage"].FillWeight = 100;
+                dgv.Columns["Question"].FillWeight = 150;  
+            if (dgv.Columns.Contains("LikedPercentage"))
+                dgv.Columns["LikedPercentage"].FillWeight = 80;
+            if (dgv.Columns.Contains("DislikedPercentage"))
+                dgv.Columns["DislikedPercentage"].FillWeight = 80;
             if (dgv.Columns.Contains("TotalAnswers"))
                 dgv.Columns["TotalAnswers"].FillWeight = 100;
-
-            // ── PC Devices column weights ─────────────────────────────────────
             if (dgv.Columns.Contains("DeviceName"))
                 dgv.Columns["DeviceName"].FillWeight = 250;
             if (dgv.Columns.Contains("ConnectedAt"))
                 dgv.Columns["ConnectedAt"].FillWeight = 150;
-
-            // ── Admin column weights ──────────────────────────────────────────
             if (dgv.Columns.Contains("PersonnelId"))
                 dgv.Columns["PersonnelId"].FillWeight = 200;
             if (dgv.Columns.Contains("RFID"))
@@ -1126,6 +1216,44 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (_clientDevicesPage > 1)
                 await LoadClientDevicesAsync(_clientDevicesPage - 1);
         }
+
+        private void SearchQuery_TextChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine($"TextChanged fired — text: '{SearchQuery.Text}'"); // ← ADD
+            _searchDebounceTimer.Stop();
+            _searchDebounceTimer.Start();
+        }
+        private async void StudentListPrevtPageBtn_Click(object sender, EventArgs e)
+        {
+            StudentListNextPageBtn.Enabled = false;
+            StudentListPrevtPageBtn.Enabled = false;
+            if (_studentsPage > 1)
+                await LoadStudentsAsync(_studentsPage - 1, SearchQuery.Text.Trim());
+        }
+
+        private async void StudentListNextPageBtn_Click(object sender, EventArgs e)
+        {
+            StudentListNextPageBtn.Enabled = false;
+            StudentListPrevtPageBtn.Enabled = false;
+            await LoadStudentsAsync(_studentsPage + 1, SearchQuery.Text.Trim());
+        }
+
+        private async void ReportsPrevPageBtn_Click(object sender, EventArgs e)
+        {
+            ReportsPrevPageBtn.Enabled = false;
+            ReportNextPageBtn.Enabled = false;
+            if (_reportsPage > 1)
+                await LoadSessionHistoriesAsync(_reportsPage - 1);
+        }
+
+        private async void ReportNextPageBtn_Click(object sender, EventArgs e)
+        {
+            ReportsPrevPageBtn.Enabled = false;
+            ReportNextPageBtn.Enabled = false;
+            await LoadSessionHistoriesAsync(_reportsPage + 1);
+        }
+
+
     }
 }
 

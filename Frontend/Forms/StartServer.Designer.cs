@@ -74,6 +74,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartServer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Internet Laboratory Time Management Systsem";
             this.ResumeLayout(false);
 
         }

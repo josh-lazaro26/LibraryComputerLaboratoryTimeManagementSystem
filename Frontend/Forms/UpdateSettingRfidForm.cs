@@ -18,10 +18,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
         {
             InitializeComponent();
             _adminService = new AdminService();
-            _mainForm = mainForm; 
-            this.Shown += (s, e) => RFIDTextBox.Focus();
             _mainForm = mainForm;
+            this.Shown += (s, e) => RFIDTextBox.Focus();
             _signalRService = signalRService;
+
+            this.FormClosed += (s, e) => _mainForm.Show();
         }
 
 
@@ -130,6 +131,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
                     RFIDTextBox.Focus();
                 }
             }
+        }
+
+        private void StudentRfidCloseBtn_Click(object sender, EventArgs e)
+        {
+            _mainForm.Show();
+            this.Close();
         }
     }
 }

@@ -48,6 +48,9 @@
             this.PcNextPageBtn = new System.Windows.Forms.Button();
             this.AdminReportsPanel = new System.Windows.Forms.Panel();
             this.ReportDgvPanel = new System.Windows.Forms.Panel();
+            this.ReportPageLabel = new System.Windows.Forms.Label();
+            this.ReportNextPageBtn = new System.Windows.Forms.Button();
+            this.ReportsPrevPageBtn = new System.Windows.Forms.Button();
             this.PrintReportBtn = new System.Windows.Forms.Button();
             this.ReportsDataGridView = new System.Windows.Forms.DataGridView();
             this.AdminCreationPanel = new System.Windows.Forms.Panel();
@@ -103,6 +106,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ListOfStudentsPanel = new System.Windows.Forms.Panel();
             this.StudentsTablePanel = new System.Windows.Forms.Panel();
+            this.ListOfStudentPageLabel = new System.Windows.Forms.Label();
+            this.StudentListNextPageBtn = new System.Windows.Forms.Button();
+            this.StudentListPrevtPageBtn = new System.Windows.Forms.Button();
+            this.StudentIdTbPanelL = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.SearchQuery = new System.Windows.Forms.TextBox();
             this.ListOfStudentDgv = new System.Windows.Forms.DataGridView();
             this.MainFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentTimeBtn1Elipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
@@ -178,11 +187,6 @@
             this.PcNextPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.PcRestartBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.PcListDgvElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.StudentListPrevtPageBtn = new System.Windows.Forms.Button();
-            this.StudentListNextPageBtn = new System.Windows.Forms.Button();
-            this.SearchQuery = new System.Windows.Forms.TextBox();
-            this.StudentIdTbPanelL = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.StudentListNextPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentListPrevtPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.DashboardPanel.SuspendLayout();
@@ -206,6 +210,8 @@
             this.TimeManagementBtnPanel1.SuspendLayout();
             this.ListOfStudentsPanel.SuspendLayout();
             this.StudentsTablePanel.SuspendLayout();
+            this.StudentIdTbPanelL.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ListOfStudentDgv)).BeginInit();
             this.HeaderPanel.SuspendLayout();
             this.SidebarPanel.SuspendLayout();
@@ -214,8 +220,6 @@
             this.EvaluationTbPanel.SuspendLayout();
             this.EvaluationListPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).BeginInit();
-            this.StudentIdTbPanelL.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // DashboardPanel
@@ -289,7 +293,7 @@
             this.AdminCreation.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.AdminCreation.Image = ((System.Drawing.Image)(resources.GetObject("AdminCreation.Image")));
             this.AdminCreation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AdminCreation.Location = new System.Drawing.Point(0, 493);
+            this.AdminCreation.Location = new System.Drawing.Point(0, 553);
             this.AdminCreation.Name = "AdminCreation";
             this.AdminCreation.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.AdminCreation.Size = new System.Drawing.Size(300, 57);
@@ -388,14 +392,16 @@
             // PcPageLabel
             // 
             this.PcPageLabel.AutoSize = true;
-            this.PcPageLabel.Location = new System.Drawing.Point(370, 19);
+            this.PcPageLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PcPageLabel.Location = new System.Drawing.Point(345, 19);
             this.PcPageLabel.Name = "PcPageLabel";
-            this.PcPageLabel.Size = new System.Drawing.Size(54, 25);
+            this.PcPageLabel.Size = new System.Drawing.Size(61, 29);
             this.PcPageLabel.TabIndex = 4;
             this.PcPageLabel.Text = "Page";
             // 
             // PcListDgv
             // 
+            this.PcListDgv.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PcListDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PcListDgv.Location = new System.Drawing.Point(13, 70);
             this.PcListDgv.Name = "PcListDgv";
@@ -472,12 +478,64 @@
             // ReportDgvPanel
             // 
             this.ReportDgvPanel.BackColor = System.Drawing.Color.Transparent;
+            this.ReportDgvPanel.Controls.Add(this.ReportPageLabel);
+            this.ReportDgvPanel.Controls.Add(this.ReportNextPageBtn);
+            this.ReportDgvPanel.Controls.Add(this.ReportsPrevPageBtn);
             this.ReportDgvPanel.Controls.Add(this.PrintReportBtn);
             this.ReportDgvPanel.Controls.Add(this.ReportsDataGridView);
             this.ReportDgvPanel.Location = new System.Drawing.Point(311, 83);
             this.ReportDgvPanel.Name = "ReportDgvPanel";
             this.ReportDgvPanel.Size = new System.Drawing.Size(955, 675);
             this.ReportDgvPanel.TabIndex = 4;
+            // 
+            // ReportPageLabel
+            // 
+            this.ReportPageLabel.AutoSize = true;
+            this.ReportPageLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F);
+            this.ReportPageLabel.Location = new System.Drawing.Point(401, 34);
+            this.ReportPageLabel.Name = "ReportPageLabel";
+            this.ReportPageLabel.Size = new System.Drawing.Size(61, 29);
+            this.ReportPageLabel.TabIndex = 24;
+            this.ReportPageLabel.Text = "Page";
+            // 
+            // ReportNextPageBtn
+            // 
+            this.ReportNextPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReportNextPageBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.ReportNextPageBtn.FlatAppearance.BorderSize = 0;
+            this.ReportNextPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReportNextPageBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.ReportNextPageBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ReportNextPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("ReportNextPageBtn.Image")));
+            this.ReportNextPageBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ReportNextPageBtn.Location = new System.Drawing.Point(712, 604);
+            this.ReportNextPageBtn.Name = "ReportNextPageBtn";
+            this.ReportNextPageBtn.Size = new System.Drawing.Size(220, 54);
+            this.ReportNextPageBtn.TabIndex = 23;
+            this.ReportNextPageBtn.Text = "Next Page";
+            this.ReportNextPageBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ReportNextPageBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.ReportNextPageBtn.UseVisualStyleBackColor = false;
+            this.ReportNextPageBtn.Click += new System.EventHandler(this.ReportNextPageBtn_Click);
+            // 
+            // ReportsPrevPageBtn
+            // 
+            this.ReportsPrevPageBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.ReportsPrevPageBtn.FlatAppearance.BorderSize = 0;
+            this.ReportsPrevPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReportsPrevPageBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.ReportsPrevPageBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ReportsPrevPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("ReportsPrevPageBtn.Image")));
+            this.ReportsPrevPageBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ReportsPrevPageBtn.Location = new System.Drawing.Point(21, 604);
+            this.ReportsPrevPageBtn.Name = "ReportsPrevPageBtn";
+            this.ReportsPrevPageBtn.Size = new System.Drawing.Size(220, 54);
+            this.ReportsPrevPageBtn.TabIndex = 22;
+            this.ReportsPrevPageBtn.Text = "Prev Page";
+            this.ReportsPrevPageBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ReportsPrevPageBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ReportsPrevPageBtn.UseVisualStyleBackColor = false;
+            this.ReportsPrevPageBtn.Click += new System.EventHandler(this.ReportsPrevPageBtn_Click);
             // 
             // PrintReportBtn
             // 
@@ -492,7 +550,7 @@
             this.PrintReportBtn.Location = new System.Drawing.Point(338, 604);
             this.PrintReportBtn.Name = "PrintReportBtn";
             this.PrintReportBtn.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.PrintReportBtn.Size = new System.Drawing.Size(268, 56);
+            this.PrintReportBtn.Size = new System.Drawing.Size(283, 54);
             this.PrintReportBtn.TabIndex = 3;
             this.PrintReportBtn.Text = " Print Report";
             this.PrintReportBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -503,10 +561,10 @@
             this.ReportsDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ReportsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ReportsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ReportsDataGridView.Location = new System.Drawing.Point(21, 37);
+            this.ReportsDataGridView.Location = new System.Drawing.Point(21, 80);
             this.ReportsDataGridView.Name = "ReportsDataGridView";
             this.ReportsDataGridView.RowHeadersWidth = 62;
-            this.ReportsDataGridView.Size = new System.Drawing.Size(911, 540);
+            this.ReportsDataGridView.Size = new System.Drawing.Size(911, 497);
             this.ReportsDataGridView.TabIndex = 0;
             this.ReportsDataGridView.TabStop = false;
             // 
@@ -526,19 +584,19 @@
             this.AdminTablePanel.Controls.Add(this.AdminDgv);
             this.AdminTablePanel.Controls.Add(this.UpdateAdmin_Btn);
             this.AdminTablePanel.Controls.Add(this.DeleteAdmin_Btn);
-            this.AdminTablePanel.Location = new System.Drawing.Point(784, 124);
+            this.AdminTablePanel.Location = new System.Drawing.Point(764, 124);
             this.AdminTablePanel.Name = "AdminTablePanel";
-            this.AdminTablePanel.Size = new System.Drawing.Size(460, 600);
+            this.AdminTablePanel.Size = new System.Drawing.Size(480, 600);
             this.AdminTablePanel.TabIndex = 27;
             // 
             // AdminDgv
             // 
             this.AdminDgv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AdminDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AdminDgv.Location = new System.Drawing.Point(13, 14);
+            this.AdminDgv.Location = new System.Drawing.Point(11, 14);
             this.AdminDgv.Name = "AdminDgv";
             this.AdminDgv.RowHeadersWidth = 62;
-            this.AdminDgv.Size = new System.Drawing.Size(436, 499);
+            this.AdminDgv.Size = new System.Drawing.Size(458, 499);
             this.AdminDgv.TabIndex = 6;
             this.AdminDgv.TabStop = false;
             this.AdminDgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdminDgv_CellClick);
@@ -1248,14 +1306,97 @@
             // 
             // StudentsTablePanel
             // 
+            this.StudentsTablePanel.Controls.Add(this.ListOfStudentPageLabel);
             this.StudentsTablePanel.Controls.Add(this.StudentListNextPageBtn);
             this.StudentsTablePanel.Controls.Add(this.StudentListPrevtPageBtn);
             this.StudentsTablePanel.Controls.Add(this.StudentIdTbPanelL);
             this.StudentsTablePanel.Controls.Add(this.ListOfStudentDgv);
-            this.StudentsTablePanel.Location = new System.Drawing.Point(314, 111);
+            this.StudentsTablePanel.Location = new System.Drawing.Point(314, 131);
             this.StudentsTablePanel.Name = "StudentsTablePanel";
-            this.StudentsTablePanel.Size = new System.Drawing.Size(952, 641);
+            this.StudentsTablePanel.Size = new System.Drawing.Size(952, 627);
             this.StudentsTablePanel.TabIndex = 24;
+            // 
+            // ListOfStudentPageLabel
+            // 
+            this.ListOfStudentPageLabel.AutoSize = true;
+            this.ListOfStudentPageLabel.Font = new System.Drawing.Font("Roboto Condensed", 18F);
+            this.ListOfStudentPageLabel.Location = new System.Drawing.Point(412, 539);
+            this.ListOfStudentPageLabel.Name = "ListOfStudentPageLabel";
+            this.ListOfStudentPageLabel.Size = new System.Drawing.Size(61, 29);
+            this.ListOfStudentPageLabel.TabIndex = 22;
+            this.ListOfStudentPageLabel.Text = "Page";
+            // 
+            // StudentListNextPageBtn
+            // 
+            this.StudentListNextPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.StudentListNextPageBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.StudentListNextPageBtn.FlatAppearance.BorderSize = 0;
+            this.StudentListNextPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentListNextPageBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.StudentListNextPageBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.StudentListNextPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("StudentListNextPageBtn.Image")));
+            this.StudentListNextPageBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.StudentListNextPageBtn.Location = new System.Drawing.Point(640, 524);
+            this.StudentListNextPageBtn.Name = "StudentListNextPageBtn";
+            this.StudentListNextPageBtn.Size = new System.Drawing.Size(220, 54);
+            this.StudentListNextPageBtn.TabIndex = 21;
+            this.StudentListNextPageBtn.Text = "Next Page";
+            this.StudentListNextPageBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.StudentListNextPageBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.StudentListNextPageBtn.UseVisualStyleBackColor = false;
+            // 
+            // StudentListPrevtPageBtn
+            // 
+            this.StudentListPrevtPageBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
+            this.StudentListPrevtPageBtn.FlatAppearance.BorderSize = 0;
+            this.StudentListPrevtPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StudentListPrevtPageBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
+            this.StudentListPrevtPageBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.StudentListPrevtPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("StudentListPrevtPageBtn.Image")));
+            this.StudentListPrevtPageBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.StudentListPrevtPageBtn.Location = new System.Drawing.Point(96, 524);
+            this.StudentListPrevtPageBtn.Name = "StudentListPrevtPageBtn";
+            this.StudentListPrevtPageBtn.Size = new System.Drawing.Size(220, 54);
+            this.StudentListPrevtPageBtn.TabIndex = 20;
+            this.StudentListPrevtPageBtn.Text = "Prev Page";
+            this.StudentListPrevtPageBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.StudentListPrevtPageBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.StudentListPrevtPageBtn.UseVisualStyleBackColor = false;
+            this.StudentListPrevtPageBtn.Click += new System.EventHandler(this.StudentListPrevtPageBtn_Click);
+            // 
+            // StudentIdTbPanelL
+            // 
+            this.StudentIdTbPanelL.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StudentIdTbPanelL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.StudentIdTbPanelL.Controls.Add(this.pictureBox2);
+            this.StudentIdTbPanelL.Controls.Add(this.SearchQuery);
+            this.StudentIdTbPanelL.Location = new System.Drawing.Point(554, 0);
+            this.StudentIdTbPanelL.Name = "StudentIdTbPanelL";
+            this.StudentIdTbPanelL.Size = new System.Drawing.Size(306, 47);
+            this.StudentIdTbPanelL.TabIndex = 17;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(8, 6);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(31, 33);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox2.TabIndex = 25;
+            this.pictureBox2.TabStop = false;
+            // 
+            // SearchQuery
+            // 
+            this.SearchQuery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.SearchQuery.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.SearchQuery.Font = new System.Drawing.Font("Roboto", 18F);
+            this.SearchQuery.Location = new System.Drawing.Point(47, 9);
+            this.SearchQuery.Margin = new System.Windows.Forms.Padding(0);
+            this.SearchQuery.Name = "SearchQuery";
+            this.SearchQuery.Size = new System.Drawing.Size(240, 29);
+            this.SearchQuery.TabIndex = 2;
+            this.SearchQuery.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.SearchQuery.TextChanged += new System.EventHandler(this.SearchQuery_TextChanged);
             // 
             // ListOfStudentDgv
             // 
@@ -1502,10 +1643,12 @@
             // UpdateStudentBtnElipse
             // 
             this.UpdateStudentBtnElipse.ElipseRadius = 5;
+            this.UpdateStudentBtnElipse.TargetControl = this;
             // 
             // DeleteStudentBtnElipse
             // 
             this.DeleteStudentBtnElipse.ElipseRadius = 5;
+            this.DeleteStudentBtnElipse.TargetControl = this;
             // 
             // ListOfStudentDgvElipse
             // 
@@ -1632,7 +1775,7 @@
             this.ReportBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ReportBtn.Image = ((System.Drawing.Image)(resources.GetObject("ReportBtn.Image")));
             this.ReportBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ReportBtn.Location = new System.Drawing.Point(0, 553);
+            this.ReportBtn.Location = new System.Drawing.Point(0, 493);
             this.ReportBtn.Name = "ReportBtn";
             this.ReportBtn.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.ReportBtn.Size = new System.Drawing.Size(300, 57);
@@ -1640,7 +1783,6 @@
             this.ReportBtn.Text = "        Report";
             this.ReportBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ReportBtn.UseVisualStyleBackColor = false;
-            this.ReportBtn.Visible = false;
             this.ReportBtn.Click += new System.EventHandler(this.ReportBtn_Click);
             // 
             // LogoutBtn
@@ -1695,7 +1837,7 @@
             this.EvaluationTbPanel.Controls.Add(this.EvaluationTb);
             this.EvaluationTbPanel.Location = new System.Drawing.Point(317, 138);
             this.EvaluationTbPanel.Name = "EvaluationTbPanel";
-            this.EvaluationTbPanel.Size = new System.Drawing.Size(470, 620);
+            this.EvaluationTbPanel.Size = new System.Drawing.Size(412, 620);
             this.EvaluationTbPanel.TabIndex = 1;
             // 
             // AddEvaluationBtn
@@ -1707,7 +1849,7 @@
             this.AddEvaluationBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.AddEvaluationBtn.Image = ((System.Drawing.Image)(resources.GetObject("AddEvaluationBtn.Image")));
             this.AddEvaluationBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AddEvaluationBtn.Location = new System.Drawing.Point(104, 546);
+            this.AddEvaluationBtn.Location = new System.Drawing.Point(76, 546);
             this.AddEvaluationBtn.Name = "AddEvaluationBtn";
             this.AddEvaluationBtn.Size = new System.Drawing.Size(263, 56);
             this.AddEvaluationBtn.TabIndex = 4;
@@ -1731,16 +1873,16 @@
             this.EvaluationTb.Location = new System.Drawing.Point(19, 71);
             this.EvaluationTb.Multiline = true;
             this.EvaluationTb.Name = "EvaluationTb";
-            this.EvaluationTb.Size = new System.Drawing.Size(433, 437);
+            this.EvaluationTb.Size = new System.Drawing.Size(380, 451);
             this.EvaluationTb.TabIndex = 0;
             // 
             // EvaluationListPanel
             // 
             this.EvaluationListPanel.Controls.Add(this.UpdateEvaluationBtn);
             this.EvaluationListPanel.Controls.Add(this.EvaluationDgv);
-            this.EvaluationListPanel.Location = new System.Drawing.Point(818, 138);
+            this.EvaluationListPanel.Location = new System.Drawing.Point(740, 138);
             this.EvaluationListPanel.Name = "EvaluationListPanel";
-            this.EvaluationListPanel.Size = new System.Drawing.Size(447, 620);
+            this.EvaluationListPanel.Size = new System.Drawing.Size(525, 620);
             this.EvaluationListPanel.TabIndex = 0;
             // 
             // UpdateEvaluationBtn
@@ -1752,7 +1894,7 @@
             this.UpdateEvaluationBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.UpdateEvaluationBtn.Image = ((System.Drawing.Image)(resources.GetObject("UpdateEvaluationBtn.Image")));
             this.UpdateEvaluationBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UpdateEvaluationBtn.Location = new System.Drawing.Point(143, 546);
+            this.UpdateEvaluationBtn.Location = new System.Drawing.Point(175, 546);
             this.UpdateEvaluationBtn.Name = "UpdateEvaluationBtn";
             this.UpdateEvaluationBtn.Size = new System.Drawing.Size(175, 56);
             this.UpdateEvaluationBtn.TabIndex = 2;
@@ -1766,7 +1908,7 @@
             this.EvaluationDgv.Location = new System.Drawing.Point(14, 17);
             this.EvaluationDgv.Name = "EvaluationDgv";
             this.EvaluationDgv.RowHeadersWidth = 62;
-            this.EvaluationDgv.Size = new System.Drawing.Size(421, 505);
+            this.EvaluationDgv.Size = new System.Drawing.Size(499, 505);
             this.EvaluationDgv.TabIndex = 1;
             this.EvaluationDgv.SelectionChanged += new System.EventHandler(this.EvaluationDgv_SelectionChanged);
             // 
@@ -1815,77 +1957,6 @@
             this.PcListDgvElipse.ElipseRadius = 10;
             this.PcListDgvElipse.TargetControl = this.PcListDgv;
             // 
-            // StudentListPrevtPageBtn
-            // 
-            this.StudentListPrevtPageBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.StudentListPrevtPageBtn.FlatAppearance.BorderSize = 0;
-            this.StudentListPrevtPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StudentListPrevtPageBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.StudentListPrevtPageBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.StudentListPrevtPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("StudentListPrevtPageBtn.Image")));
-            this.StudentListPrevtPageBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.StudentListPrevtPageBtn.Location = new System.Drawing.Point(96, 524);
-            this.StudentListPrevtPageBtn.Name = "StudentListPrevtPageBtn";
-            this.StudentListPrevtPageBtn.Size = new System.Drawing.Size(220, 54);
-            this.StudentListPrevtPageBtn.TabIndex = 20;
-            this.StudentListPrevtPageBtn.Text = "Prev Page";
-            this.StudentListPrevtPageBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.StudentListPrevtPageBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.StudentListPrevtPageBtn.UseVisualStyleBackColor = false;
-            // 
-            // StudentListNextPageBtn
-            // 
-            this.StudentListNextPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.StudentListNextPageBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(105)))));
-            this.StudentListNextPageBtn.FlatAppearance.BorderSize = 0;
-            this.StudentListNextPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StudentListNextPageBtn.Font = new System.Drawing.Font("Roboto Black", 21.75F, System.Drawing.FontStyle.Bold);
-            this.StudentListNextPageBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.StudentListNextPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("StudentListNextPageBtn.Image")));
-            this.StudentListNextPageBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.StudentListNextPageBtn.Location = new System.Drawing.Point(640, 524);
-            this.StudentListNextPageBtn.Name = "StudentListNextPageBtn";
-            this.StudentListNextPageBtn.Size = new System.Drawing.Size(220, 54);
-            this.StudentListNextPageBtn.TabIndex = 21;
-            this.StudentListNextPageBtn.Text = "Next Page";
-            this.StudentListNextPageBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.StudentListNextPageBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.StudentListNextPageBtn.UseVisualStyleBackColor = false;
-            // 
-            // SearchQuery
-            // 
-            this.SearchQuery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.SearchQuery.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.SearchQuery.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.SearchQuery.Font = new System.Drawing.Font("Roboto", 18F);
-            this.SearchQuery.Location = new System.Drawing.Point(47, 9);
-            this.SearchQuery.Margin = new System.Windows.Forms.Padding(0);
-            this.SearchQuery.Name = "SearchQuery";
-            this.SearchQuery.Size = new System.Drawing.Size(240, 29);
-            this.SearchQuery.TabIndex = 2;
-            this.SearchQuery.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // StudentIdTbPanelL
-            // 
-            this.StudentIdTbPanelL.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StudentIdTbPanelL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.StudentIdTbPanelL.Controls.Add(this.pictureBox2);
-            this.StudentIdTbPanelL.Controls.Add(this.SearchQuery);
-            this.StudentIdTbPanelL.Location = new System.Drawing.Point(554, 7);
-            this.StudentIdTbPanelL.Name = "StudentIdTbPanelL";
-            this.StudentIdTbPanelL.Size = new System.Drawing.Size(306, 47);
-            this.StudentIdTbPanelL.TabIndex = 17;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(8, 6);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(31, 33);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox2.TabIndex = 25;
-            this.pictureBox2.TabStop = false;
-            // 
             // StudentListNextPageBtnElipse
             // 
             this.StudentListNextPageBtnElipse.ElipseRadius = 5;
@@ -1903,20 +1974,20 @@
             this.ClientSize = new System.Drawing.Size(1280, 780);
             this.Controls.Add(this.SidebarPanel);
             this.Controls.Add(this.HeaderPanel);
+            this.Controls.Add(this.AdminReportsPanel);
+            this.Controls.Add(this.EvaluationPanel);
             this.Controls.Add(this.ListOfStudentsPanel);
             this.Controls.Add(this.DashboardPanel);
             this.Controls.Add(this.PcToRestartPanel);
             this.Controls.Add(this.AdminCreationPanel);
             this.Controls.Add(this.TimeManagementPanel);
-            this.Controls.Add(this.AdminReportsPanel);
-            this.Controls.Add(this.EvaluationPanel);
             this.Font = new System.Drawing.Font("Roboto Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "2";
+            this.Text = "Internet Laboratory Time Management Systsem";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.DashboardPanel.ResumeLayout(false);
             this.DashboardPanel.PerformLayout();
@@ -1928,6 +1999,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PcListDgv)).EndInit();
             this.AdminReportsPanel.ResumeLayout(false);
             this.ReportDgvPanel.ResumeLayout(false);
+            this.ReportDgvPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).EndInit();
             this.AdminCreationPanel.ResumeLayout(false);
             this.AdminTablePanel.ResumeLayout(false);
@@ -1950,6 +2022,10 @@
             this.TimeManagementBtnPanel1.PerformLayout();
             this.ListOfStudentsPanel.ResumeLayout(false);
             this.StudentsTablePanel.ResumeLayout(false);
+            this.StudentsTablePanel.PerformLayout();
+            this.StudentIdTbPanelL.ResumeLayout(false);
+            this.StudentIdTbPanelL.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ListOfStudentDgv)).EndInit();
             this.HeaderPanel.ResumeLayout(false);
             this.SidebarPanel.ResumeLayout(false);
@@ -1959,9 +2035,6 @@
             this.EvaluationTbPanel.PerformLayout();
             this.EvaluationListPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).EndInit();
-            this.StudentIdTbPanelL.ResumeLayout(false);
-            this.StudentIdTbPanelL.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2124,5 +2197,9 @@
         public System.Windows.Forms.TextBox SearchQuery;
         private Bunifu.Framework.UI.BunifuElipse StudentListNextPageBtnElipse;
         private Bunifu.Framework.UI.BunifuElipse StudentListPrevtPageBtnElipse;
+        public System.Windows.Forms.Button ReportNextPageBtn;
+        public System.Windows.Forms.Button ReportsPrevPageBtn;
+        public System.Windows.Forms.Label ReportPageLabel;
+        public System.Windows.Forms.Label ListOfStudentPageLabel;
     }
 }

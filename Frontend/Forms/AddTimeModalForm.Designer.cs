@@ -225,6 +225,7 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "AddTimeModalForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Internet Laboratory Time Management Systsem";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AddTimeModalForm_FormClosed);
             this.AddTimePanel.ResumeLayout(false);
             this.AddTimePanel.PerformLayout();
