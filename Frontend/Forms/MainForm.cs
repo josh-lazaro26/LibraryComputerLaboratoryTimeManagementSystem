@@ -38,19 +38,23 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
         private System.Windows.Forms.Timer _countdownTimer;
         private string _selectedStudentId;
         private string _selectedEvaluationId = null;
-        private readonly UnauthenticatedSignalRService _unauthSignalR;
+
         private readonly SignalRService _signalRService;
+        private readonly UnauthenticatedSignalRService _unauthSignalR;
 
         private int _studentsPage = 1;
-        private const int _studentsPageSize = 2;
-        private System.Windows.Forms.Timer _searchDebounceTimer;
+        private const int _studentsPageSize = 20;
 
         private int _reportsPage = 1;
-        private const int _reportsPageSize = 10;
+        private const int _reportsPageSize = 20;
 
         // Add to your fields at the top of MainForm
         private int _clientDevicesPage = 1;
-        private const int _clientDevicesPageSize = 10;
+        private const int _clientDevicesPageSize = 20;
+
+        private System.Windows.Forms.Timer _searchDebounceTimer;
+        private System.Windows.Forms.Timer _reportSearchDebounceTimer;
+
         private string _selectedDeviceName = null;
         public MainForm()
         {
@@ -90,6 +94,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 Console.WriteLine($"Debounce fired — query: '{currentQuery}'");
                 await LoadStudentsAsync(1, currentQuery);
             };
+
+            ReportSearchQuery.TextChanged += ReportSearchQuery_TextChanged;
+
+            _reportSearchDebounceTimer = new System.Windows.Forms.Timer();
+            _reportSearchDebounceTimer.Interval = 400;
+            _reportSearchDebounceTimer.Tick += async (s, e) =>
+            {
+                _reportSearchDebounceTimer.Stop();
+                var currentQuery = ReportSearchQuery.Text.Trim();
+                Console.WriteLine($"Report debounce fired — query: '{currentQuery}'");
+                await LoadSessionHistoriesAsync(1);
+            };
+
             _signalRService.NewSession += (Guid userId, string schoolId, TimeSpan availableDuration) =>
             {
                 if (InvokeRequired)
@@ -1122,23 +1139,25 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             if (ReportsDataGridView.Columns.Contains("ConsumedTime"))
                 ReportsDataGridView.Columns["ConsumedTime"].Visible = false;
 
+            if (ReportsDataGridView.Columns.Contains("FormattedConsumedTime"))
+                ReportsDataGridView.Columns["FormattedConsumedTime"].HeaderText = "Consumed Time";
+
             if (ReportsDataGridView.Columns.Contains("SchoolId"))
                 ReportsDataGridView.Columns["SchoolId"].HeaderText = "School ID";
 
-            if (ReportsDataGridView.Columns.Contains("FormattedConsumedTime"))
-                ReportsDataGridView.Columns["FormattedConsumedTime"].HeaderText = "Consumed Time";
+            if (ReportsDataGridView.Columns.Contains("FullName"))
+                ReportsDataGridView.Columns["FullName"].HeaderText = "Full Name";
 
             StyleDataGridView(ReportsDataGridView, MainFormResponsiveLayout.GetFontScale());
 
             int totalPages = jObj["total_pages"]?.Value<int>() ?? 1;
-            ReportPageLabel.Text = $"Page {pageNumber} of {Math.Max(1, totalPages)}"; // ← ADD
+            ReportPageLabel.Text = $"Page {pageNumber} of {Math.Max(1, totalPages)}";
 
             ReportsPrevPageBtn.Enabled = jObj["has_previous_page"]?.Value<bool>() ?? false;
             ReportNextPageBtn.Enabled = jObj["has_next_page"]?.Value<bool>() ?? false;
 
             _reportsPage = pageNumber;
         }
-
         private void StyleDataGridView(DataGridView dgv, float fontScale = 1f)
         {
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1253,7 +1272,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             await LoadSessionHistoriesAsync(_reportsPage + 1);
         }
 
-
+        private void ReportSearchQuery_TextChanged(object sender, EventArgs e)
+        {
+            _reportSearchDebounceTimer.Stop();
+            _reportSearchDebounceTimer.Start();
+        }
     }
 }
 

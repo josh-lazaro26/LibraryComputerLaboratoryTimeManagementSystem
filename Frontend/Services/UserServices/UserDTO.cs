@@ -33,6 +33,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.UserSe
         [JsonProperty("school_id")]
         public string SchoolId { get; set; }
 
+        [JsonProperty("full_name")]
+        public string FullName { get; set; }
+
         [JsonProperty("consumed_time")]
         public string ConsumedTime { get; set; }
 
@@ -42,9 +45,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.UserSe
             {
                 if (!TimeSpan.TryParse(ConsumedTime, out var ts))
                     return "00:00:00";
-
-                ts = ts.Duration(); // handle negative values
-
+                ts = ts.Duration();
                 if (ts.TotalDays >= 1)
                     return $"{(int)ts.TotalDays}d {ts.Hours:D2}h {ts.Minutes:D2}m {ts.Seconds:D2}s";
                 else

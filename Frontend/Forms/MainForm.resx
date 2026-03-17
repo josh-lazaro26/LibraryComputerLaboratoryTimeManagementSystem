@@ -214,6 +214,19 @@
         rkJggg==
 </value>
   </data>
+  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAQ
+        lAAAEJQBAkcyUQAAAA50RVh0U29mdHdhcmUARmlnbWGesZZjAAABf0lEQVRYR+2W4XHCMAyFXzIBG5QR
+        2AA2KRvABnQTRmCEjtARGIER6L2i3D2LEGLZuXJcvjv/SWz5WZJlATNvzKIFvhrguwHODXC1ceE3ADsA
+        S79oCpYmohMwOFrgOJmwFtibB+42fjIuAPbeXhEWnmQj3ELzCeBDpq4AbAGc/HzakHlxzDNq/Axg7ef1
+        wPBqfvEQxZ6iUQ3TDxPaTxpgwTWynuGL5xST0nkmR0wHRamnGOoQ9I66O34yYONsRQ6GnRg4+Z+5aLkA
+        cPD/n+IM8DaVsi0KmyazXedSNAWYj3m4mFehyGbR4gcU2dSr6qpxlJUIYj3KY8qktmcnm4OcKGRAaeR9
+        s/YkG1ZYjfnGT8igTpF1vU+VpwO3HinMaz2uRl/7McYo36+k/WAe+UlRNMHVOG+fVnEK5W162OZWa9TM
+        U9EWNukga4qiB7RHGhxWb7rwJl6uKYpwE9YShkYfYeYXRbC96Ev+SUVFmUWNZRY1lkSU//lf/IkKNf8z
+        r8QvH1jq+l5YzXsAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="ReportNextPageBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAW
@@ -315,7 +328,7 @@
   <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAQ
-        lQAAEJUB0ADQtQAAAA50RVh0U29mdHdhcmUARmlnbWGesZZjAAABf0lEQVRYR+2W4XHCMAyFXzIBG5QR
+        lAAAEJQBAkcyUQAAAA50RVh0U29mdHdhcmUARmlnbWGesZZjAAABf0lEQVRYR+2W4XHCMAyFXzIBG5QR
         2AA2KRvABnQTRmCEjtARGIER6L2i3D2LEGLZuXJcvjv/SWz5WZJlATNvzKIFvhrguwHODXC1ceE3ADsA
         S79oCpYmohMwOFrgOJmwFtibB+42fjIuAPbeXhEWnmQj3ELzCeBDpq4AbAGc/HzakHlxzDNq/Axg7ef1
         wPBqfvEQxZ6iUQ3TDxPaTxpgwTWynuGL5xST0nkmR0wHRamnGOoQ9I66O34yYONsRQ6GnRg4+Z+5aLkA
@@ -329,7 +342,7 @@
     <value>17, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>50</value>
+    <value>324</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -8586,5 +8599,14 @@
   </metadata>
   <metadata name="StudentListPrevtPageBtnElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 202</value>
+  </metadata>
+  <metadata name="ReportsPrevPageBtnElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>209, 202</value>
+  </metadata>
+  <metadata name="ReportSearchQueryPanelElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>576, 201</value>
+  </metadata>
+  <metadata name="ReportNextPageBtnElipse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>392, 202</value>
   </metadata>
 </root>

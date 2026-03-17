@@ -565,12 +565,20 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.ReportsDataGridView.Location = new Point(2, 50);
             form.ReportsDataGridView.Font = new Font("Roboto", 14f);
 
+            form.ReportSearchQueryPanel.Size = new Size(306, 47);
+            form.ReportSearchQueryPanel.Location = new Point(624, 19);
+            form.ReportSearchQuery.Font = new Font("Roboto", 18f);
+            form.ReportSearchQuery.Size = new Size(286, 29);
+            form.ReportSearchQuery.Location = new Point(10, (47 - 29) / 2);
+
             form.ReportPageLabel.Font = new Font("Roboto Condensed", 18f);
             form.ReportPageLabel.Location = new Point(401, 34);            
 
             RestoreActionBtn(form.ReportsPrevPageBtn, 21, 604, 220, 54);
             RestoreActionBtn(form.PrintReportBtn, 338, 604, 283, 54);
             RestoreActionBtn(form.ReportNextPageBtn, 712, 604, 220, 54);
+
+
 
             // ── Evaluation ────────────────────────────────────────────────
             form.EvaluationTbPanel.Size = new Size(470, 620);
@@ -733,7 +741,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.ReportsDataGridView.Font = ScaleFont("Roboto", 14f);
 
             form.ReportPageLabel.Font = ScaleFont("Roboto Condensed", 18f); 
-            form.ReportPageLabel.Location = ScaleLocation(401, 34);         
+            form.ReportPageLabel.Location = ScaleLocation(401, 34);
+
+            form.ReportSearchQueryPanel.Size = ScaleSize(306, 47);
+            form.ReportSearchQueryPanel.Location = ScaleLocation(624, 19);
+            form.ReportSearchQuery.Font = ScaleFont("Roboto", 18f);
+            form.ReportSearchQuery.Size = new Size(form.ReportSearchQueryPanel.Width - 20, (int)(29 * _scaleY));
+            form.ReportSearchQuery.Location = new Point(10, (form.ReportSearchQueryPanel.Height - form.ReportSearchQuery.Height) / 2);
 
             ScaleActionBtn(form.ReportsPrevPageBtn, 21, 604, 220, 54);
             ScaleActionBtn(form.PrintReportBtn, 338, 604, 283, 54);

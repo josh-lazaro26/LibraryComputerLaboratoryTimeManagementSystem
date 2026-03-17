@@ -189,6 +189,12 @@
             this.PcListDgvElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentListNextPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentListPrevtPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.ReportSearchQueryPanel = new System.Windows.Forms.Panel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.ReportSearchQuery = new System.Windows.Forms.TextBox();
+            this.ReportsPrevPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.ReportSearchQueryPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.ReportNextPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.DashboardPanel.SuspendLayout();
             this.WelcomeAdminPanel.SuspendLayout();
             this.PcToRestartPanel.SuspendLayout();
@@ -220,6 +226,8 @@
             this.EvaluationTbPanel.SuspendLayout();
             this.EvaluationListPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).BeginInit();
+            this.ReportSearchQueryPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // DashboardPanel
@@ -478,6 +486,7 @@
             // ReportDgvPanel
             // 
             this.ReportDgvPanel.BackColor = System.Drawing.Color.Transparent;
+            this.ReportDgvPanel.Controls.Add(this.ReportSearchQueryPanel);
             this.ReportDgvPanel.Controls.Add(this.ReportPageLabel);
             this.ReportDgvPanel.Controls.Add(this.ReportNextPageBtn);
             this.ReportDgvPanel.Controls.Add(this.ReportsPrevPageBtn);
@@ -1967,6 +1976,55 @@
             this.StudentListPrevtPageBtnElipse.ElipseRadius = 5;
             this.StudentListPrevtPageBtnElipse.TargetControl = this.StudentListPrevtPageBtn;
             // 
+            // ReportSearchQueryPanel
+            // 
+            this.ReportSearchQueryPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ReportSearchQueryPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.ReportSearchQueryPanel.Controls.Add(this.pictureBox3);
+            this.ReportSearchQueryPanel.Controls.Add(this.ReportSearchQuery);
+            this.ReportSearchQueryPanel.Location = new System.Drawing.Point(624, 19);
+            this.ReportSearchQueryPanel.Name = "ReportSearchQueryPanel";
+            this.ReportSearchQueryPanel.Size = new System.Drawing.Size(306, 47);
+            this.ReportSearchQueryPanel.TabIndex = 25;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(8, 6);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(31, 33);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox3.TabIndex = 25;
+            this.pictureBox3.TabStop = false;
+            // 
+            // ReportSearchQuery
+            // 
+            this.ReportSearchQuery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.ReportSearchQuery.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ReportSearchQuery.Font = new System.Drawing.Font("Roboto", 18F);
+            this.ReportSearchQuery.Location = new System.Drawing.Point(47, 9);
+            this.ReportSearchQuery.Margin = new System.Windows.Forms.Padding(0);
+            this.ReportSearchQuery.Name = "ReportSearchQuery";
+            this.ReportSearchQuery.Size = new System.Drawing.Size(240, 29);
+            this.ReportSearchQuery.TabIndex = 2;
+            this.ReportSearchQuery.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ReportSearchQuery.TextChanged += new System.EventHandler(this.ReportSearchQuery_TextChanged);
+            // 
+            // ReportsPrevPageBtnElipse
+            // 
+            this.ReportsPrevPageBtnElipse.ElipseRadius = 5;
+            this.ReportsPrevPageBtnElipse.TargetControl = this.ReportsPrevPageBtn;
+            // 
+            // ReportSearchQueryPanelElipse
+            // 
+            this.ReportSearchQueryPanelElipse.ElipseRadius = 10;
+            this.ReportSearchQueryPanelElipse.TargetControl = this.ReportSearchQuery;
+            // 
+            // ReportNextPageBtnElipse
+            // 
+            this.ReportNextPageBtnElipse.ElipseRadius = 5;
+            this.ReportNextPageBtnElipse.TargetControl = this.ReportNextPageBtn;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 13F);
@@ -2035,6 +2093,9 @@
             this.EvaluationTbPanel.PerformLayout();
             this.EvaluationListPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).EndInit();
+            this.ReportSearchQueryPanel.ResumeLayout(false);
+            this.ReportSearchQueryPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2201,5 +2262,11 @@
         public System.Windows.Forms.Button ReportsPrevPageBtn;
         public System.Windows.Forms.Label ReportPageLabel;
         public System.Windows.Forms.Label ListOfStudentPageLabel;
+        public System.Windows.Forms.Panel ReportSearchQueryPanel;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        public System.Windows.Forms.TextBox ReportSearchQuery;
+        private Bunifu.Framework.UI.BunifuElipse ReportsPrevPageBtnElipse;
+        private Bunifu.Framework.UI.BunifuElipse ReportSearchQueryPanelElipse;
+        private Bunifu.Framework.UI.BunifuElipse ReportNextPageBtnElipse;
     }
 }

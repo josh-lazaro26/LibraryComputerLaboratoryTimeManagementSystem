@@ -186,6 +186,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
                 var response = await Client.GetAsync(urlBuilder.ToString());
                 var body = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("GetActiveSessions URL: " + urlBuilder.ToString());
+                Console.WriteLine("GetActiveSessions RESPONSE: " + body); // ← ADD THIS
+                Console.WriteLine("GetActiveSessions STATUS: " + response.StatusCode); // ← ADD THIS
 
                 if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
                     return null;
@@ -289,17 +292,15 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
             var response = await Client.GetAsync(url);
 
-            var body = await response.Content.ReadAsStringAsync();
+                var body = await response.Content.ReadAsStringAsync();
 
-                var obj = JObject.Parse(body);
-
-                var itemsCount = obj["value"]?["items"]?.Count() ?? 0;
-
-                if (!response.IsSuccessStatusCode)
+                if (string.IsNullOrWhiteSpace(body))  // ← ADD THIS CHECK
                 {
-                    Console.WriteLine("Request failed.");
+                    Console.WriteLine("GetAdmins returned empty body.");
                     return null;
                 }
+
+                var obj = JObject.Parse(body);
 
                 return body;
             }
@@ -493,7 +494,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 }
 
                 if (!string.IsNullOrWhiteSpace(query))
-                    AddParam("query", query);
+                    AddParam("search_query", query);
 
                 AddParam("page_number", pageNumber.ToString());
                 AddParam("page_size", pageSize.ToString());
@@ -521,12 +522,15 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 return null;
             }
         }
-        public async Task<string> GetSessionHistories(int pageNumber = 1, int pageSize = 10)
+        public async Task<string> GetSessionHistories(int pageNumber = 1, int pageSize = 10, string query = null)
         {
             try
             {
                 var urlBuilder = new StringBuilder("api/v1/accounts/session-histories");
                 urlBuilder.Append($"?page_number={pageNumber}&page_size={pageSize}");
+
+                if (!string.IsNullOrWhiteSpace(query))
+                    urlBuilder.Append($"&search_query={Uri.EscapeDataString(query)}");
 
                 Client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", ApiConfig.Token);
