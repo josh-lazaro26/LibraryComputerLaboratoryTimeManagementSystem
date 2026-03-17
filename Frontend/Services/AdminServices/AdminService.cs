@@ -187,8 +187,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
                 var response = await Client.GetAsync(urlBuilder.ToString());
                 var body = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("GetActiveSessions URL: " + urlBuilder.ToString());
-                Console.WriteLine("GetActiveSessions RESPONSE: " + body); // ← ADD THIS
-                Console.WriteLine("GetActiveSessions STATUS: " + response.StatusCode); // ← ADD THIS
+                Console.WriteLine("GetActiveSessions RESPONSE: " + body);
+                Console.WriteLine("GetActiveSessions STATUS: " + response.StatusCode);
 
                 if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(body))
                     return null;
