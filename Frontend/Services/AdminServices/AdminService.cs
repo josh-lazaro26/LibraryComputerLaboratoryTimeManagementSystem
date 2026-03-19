@@ -162,7 +162,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Services.AdminS
 
         public async Task<PagedSessionResponse> GetActiveSessions(int pageNumber = 1, int pageSize = 16)
         {
-            var urlBuilder = new StringBuilder("api/v1/sessions"); 
+            var urlBuilder = new StringBuilder("api/v1/accounts"); 
             bool hasAny = false;
             try
             {
