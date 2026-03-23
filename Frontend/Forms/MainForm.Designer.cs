@@ -48,6 +48,9 @@
             this.PcNextPageBtn = new System.Windows.Forms.Button();
             this.AdminReportsPanel = new System.Windows.Forms.Panel();
             this.ReportDgvPanel = new System.Windows.Forms.Panel();
+            this.ReportSearchQueryPanel = new System.Windows.Forms.Panel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.ReportSearchQuery = new System.Windows.Forms.TextBox();
             this.ReportPageLabel = new System.Windows.Forms.Label();
             this.ReportNextPageBtn = new System.Windows.Forms.Button();
             this.ReportsPrevPageBtn = new System.Windows.Forms.Button();
@@ -189,9 +192,6 @@
             this.PcListDgvElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentListNextPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.StudentListPrevtPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.ReportSearchQueryPanel = new System.Windows.Forms.Panel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.ReportSearchQuery = new System.Windows.Forms.TextBox();
             this.ReportsPrevPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.ReportSearchQueryPanelElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.ReportNextPageBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
@@ -202,6 +202,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PcListDgv)).BeginInit();
             this.AdminReportsPanel.SuspendLayout();
             this.ReportDgvPanel.SuspendLayout();
+            this.ReportSearchQueryPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).BeginInit();
             this.AdminCreationPanel.SuspendLayout();
             this.AdminTablePanel.SuspendLayout();
@@ -226,8 +228,6 @@
             this.EvaluationTbPanel.SuspendLayout();
             this.EvaluationListPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).BeginInit();
-            this.ReportSearchQueryPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // DashboardPanel
@@ -496,6 +496,42 @@
             this.ReportDgvPanel.Name = "ReportDgvPanel";
             this.ReportDgvPanel.Size = new System.Drawing.Size(955, 675);
             this.ReportDgvPanel.TabIndex = 4;
+            // 
+            // ReportSearchQueryPanel
+            // 
+            this.ReportSearchQueryPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ReportSearchQueryPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.ReportSearchQueryPanel.Controls.Add(this.pictureBox3);
+            this.ReportSearchQueryPanel.Controls.Add(this.ReportSearchQuery);
+            this.ReportSearchQueryPanel.Location = new System.Drawing.Point(624, 19);
+            this.ReportSearchQueryPanel.Name = "ReportSearchQueryPanel";
+            this.ReportSearchQueryPanel.Size = new System.Drawing.Size(306, 47);
+            this.ReportSearchQueryPanel.TabIndex = 25;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(8, 6);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(31, 33);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox3.TabIndex = 25;
+            this.pictureBox3.TabStop = false;
+            // 
+            // ReportSearchQuery
+            // 
+            this.ReportSearchQuery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.ReportSearchQuery.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ReportSearchQuery.Font = new System.Drawing.Font("Roboto", 18F);
+            this.ReportSearchQuery.Location = new System.Drawing.Point(47, 9);
+            this.ReportSearchQuery.Margin = new System.Windows.Forms.Padding(0);
+            this.ReportSearchQuery.Name = "ReportSearchQuery";
+            this.ReportSearchQuery.Size = new System.Drawing.Size(240, 29);
+            this.ReportSearchQuery.TabIndex = 2;
+            this.ReportSearchQuery.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ReportSearchQuery.TextChanged += new System.EventHandler(this.ReportSearchQuery_TextChanged);
             // 
             // ReportPageLabel
             // 
@@ -1976,40 +2012,6 @@
             this.StudentListPrevtPageBtnElipse.ElipseRadius = 5;
             this.StudentListPrevtPageBtnElipse.TargetControl = this.StudentListPrevtPageBtn;
             // 
-            // ReportSearchQueryPanel
-            // 
-            this.ReportSearchQueryPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ReportSearchQueryPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.ReportSearchQueryPanel.Controls.Add(this.pictureBox3);
-            this.ReportSearchQueryPanel.Controls.Add(this.ReportSearchQuery);
-            this.ReportSearchQueryPanel.Location = new System.Drawing.Point(624, 19);
-            this.ReportSearchQueryPanel.Name = "ReportSearchQueryPanel";
-            this.ReportSearchQueryPanel.Size = new System.Drawing.Size(306, 47);
-            this.ReportSearchQueryPanel.TabIndex = 25;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(8, 6);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(31, 33);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox3.TabIndex = 25;
-            this.pictureBox3.TabStop = false;
-            // 
-            // ReportSearchQuery
-            // 
-            this.ReportSearchQuery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.ReportSearchQuery.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ReportSearchQuery.Font = new System.Drawing.Font("Roboto", 18F);
-            this.ReportSearchQuery.Location = new System.Drawing.Point(47, 9);
-            this.ReportSearchQuery.Margin = new System.Windows.Forms.Padding(0);
-            this.ReportSearchQuery.Name = "ReportSearchQuery";
-            this.ReportSearchQuery.Size = new System.Drawing.Size(240, 29);
-            this.ReportSearchQuery.TabIndex = 2;
-            this.ReportSearchQuery.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ReportSearchQuery.TextChanged += new System.EventHandler(this.ReportSearchQuery_TextChanged);
-            // 
             // ReportsPrevPageBtnElipse
             // 
             this.ReportsPrevPageBtnElipse.ElipseRadius = 5;
@@ -2058,6 +2060,9 @@
             this.AdminReportsPanel.ResumeLayout(false);
             this.ReportDgvPanel.ResumeLayout(false);
             this.ReportDgvPanel.PerformLayout();
+            this.ReportSearchQueryPanel.ResumeLayout(false);
+            this.ReportSearchQueryPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReportsDataGridView)).EndInit();
             this.AdminCreationPanel.ResumeLayout(false);
             this.AdminTablePanel.ResumeLayout(false);
@@ -2093,9 +2098,6 @@
             this.EvaluationTbPanel.PerformLayout();
             this.EvaluationListPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EvaluationDgv)).EndInit();
-            this.ReportSearchQueryPanel.ResumeLayout(false);
-            this.ReportSearchQueryPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
         }

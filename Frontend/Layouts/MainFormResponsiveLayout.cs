@@ -562,23 +562,21 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
             form.ReportDgvPanel.Location = new Point(311, 83);
             form.ReportsDataGridView.Dock = DockStyle.None;
             form.ReportsDataGridView.Size = new Size(951, 500);
-            form.ReportsDataGridView.Location = new Point(2, 50);
+            form.ReportsDataGridView.Location = new Point(2, 60);
             form.ReportsDataGridView.Font = new Font("Roboto", 14f);
 
             form.ReportSearchQueryPanel.Size = new Size(306, 47);
-            form.ReportSearchQueryPanel.Location = new Point(624, 19);
+            form.ReportSearchQueryPanel.Location = new Point(624, 5); 
             form.ReportSearchQuery.Font = new Font("Roboto", 18f);
             form.ReportSearchQuery.Size = new Size(286, 29);
             form.ReportSearchQuery.Location = new Point(10, (47 - 29) / 2);
 
             form.ReportPageLabel.Font = new Font("Roboto Condensed", 18f);
-            form.ReportPageLabel.Location = new Point(401, 34);            
+            form.ReportPageLabel.Location = new Point(401, 10);
 
-            RestoreActionBtn(form.ReportsPrevPageBtn, 21, 604, 220, 54);
-            RestoreActionBtn(form.PrintReportBtn, 338, 604, 283, 54);
-            RestoreActionBtn(form.ReportNextPageBtn, 712, 604, 220, 54);
-
-
+            RestoreActionBtn(form.ReportsPrevPageBtn, 21, 614, 220, 54);
+            RestoreActionBtn(form.PrintReportBtn, 338, 614, 283, 54);
+            RestoreActionBtn(form.ReportNextPageBtn, 712, 614, 220, 54);
 
             // ── Evaluation ────────────────────────────────────────────────
             form.EvaluationTbPanel.Size = new Size(470, 620);
@@ -737,21 +735,21 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.FORMS
                 form.ReportDgvPanel.Width - 4,
                 form.ReportDgvPanel.Height - btnH - (padding * 3) - (int)(50 * _scaleY)
             );
-            form.ReportsDataGridView.Location = new Point(2, (int)(50 * _scaleY));
+            form.ReportsDataGridView.Location = new Point(2, (int)(60 * _scaleY));
             form.ReportsDataGridView.Font = ScaleFont("Roboto", 14f);
 
-            form.ReportPageLabel.Font = ScaleFont("Roboto Condensed", 18f); 
-            form.ReportPageLabel.Location = ScaleLocation(401, 34);
+            form.ReportPageLabel.Font = ScaleFont("Roboto Condensed", 18f);
+            form.ReportPageLabel.Location = ScaleLocation(401, 10);
 
             form.ReportSearchQueryPanel.Size = ScaleSize(306, 47);
-            form.ReportSearchQueryPanel.Location = ScaleLocation(624, 19);
+            form.ReportSearchQueryPanel.Location = ScaleLocation(624, 5);
             form.ReportSearchQuery.Font = ScaleFont("Roboto", 18f);
             form.ReportSearchQuery.Size = new Size(form.ReportSearchQueryPanel.Width - 20, (int)(29 * _scaleY));
             form.ReportSearchQuery.Location = new Point(10, (form.ReportSearchQueryPanel.Height - form.ReportSearchQuery.Height) / 2);
 
-            ScaleActionBtn(form.ReportsPrevPageBtn, 21, 604, 220, 54);
-            ScaleActionBtn(form.PrintReportBtn, 338, 604, 283, 54);
-            ScaleActionBtn(form.ReportNextPageBtn, 712, 604, 220, 54);
+            ScaleActionBtn(form.ReportsPrevPageBtn, 21, 614, 220, 54);
+            ScaleActionBtn(form.PrintReportBtn, 338, 614, 283, 54);
+            ScaleActionBtn(form.ReportNextPageBtn, 712, 614, 220, 54);
         }
         private static void RestoreTimeBtnPanel(Panel panel, Point location, Button[] buttons, Label[] labels)
         {
