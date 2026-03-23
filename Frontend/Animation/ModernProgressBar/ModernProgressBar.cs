@@ -42,7 +42,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
         private Rectangle _barTrackRect;
 
         // ── Constructor ───────────────────────────────────────────────────
-
+        public void SetProgress(string percentageString, string message, string stepLabel = "")
+        {
+            if (!double.TryParse(percentageString.TrimEnd('%'), out double percent)) return;
+            SetProgress((int)percent, message, stepLabel);
+        }
         public ModernProgressForm()
         {
             this.Text = "";

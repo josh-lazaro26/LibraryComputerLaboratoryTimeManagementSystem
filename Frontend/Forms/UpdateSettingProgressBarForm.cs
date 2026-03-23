@@ -32,7 +32,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
         private void OnSyncingProgress(string processedPercentage)
         {
             if (_syncCompleted) return;
-            if (!double.TryParse(processedPercentage.TrimEnd('%'), out double percent)) return;
 
             if (this.InvokeRequired)
             {
@@ -40,11 +39,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
                 return;
             }
 
-            // Server's 0–100% maps into the Step 3 band: progress bar 50–75
-            int mapped = 50 + (int)(percent / 100.0 * 25);
-            SetProgress(mapped, $"Syncing enrolled students... {(int)percent}%", "Step 3 of 4");
-        }
+            if (!double.TryParse(processedPercentage.TrimEnd('%'), out double percent)) return;
 
+            SetProgress(processedPercentage, $"Syncing enrolled students... {(int)percent}%", "Step 3 of 4");
+        }
         private void ShowNotification(string title, string message, NotificationType type = NotificationType.Information)
         {
             new NotificationModalForm(title, message, type).Show(this);
@@ -54,32 +52,24 @@ namespace LibraryComputerLaboratoryTimeManagementSystem.Frontend.Forms
         {
             try
             {
-                SetProgress(10, "Preparing sync...", "Step 1 of 4");
-                await Task.Delay(1000);
+                SetProgress(0, "Preparing sync...", "Step 1 of 4");
+                await Task.Delay(300);
 
-                SetProgress(30, "Connecting to database...", "Step 2 of 4");
-                await Task.Delay(1000);
+                SetProgress(10, "Connecting to database...", "Step 2 of 4");
 
-                // Step 3: trigger the sync — live progress arrives via OnSyncingProgress
-                SetProgress(50, "Syncing enrolled students...", "Step 3 of 4");
+                // Hand off completely to SignalR — backend drives 0–100%
                 bool success = await _adminService.UpdateSetting(true);
-
-                // Step 4: wait a moment so SignalR pushes can finish arriving
-                SetProgress(75, "Finalizing sync...", "Step 4 of 4");
-                await Task.Delay(2000);
 
                 _syncCompleted = true;
 
-                if (success)
-                {
-                    SetProgress(100, "Sync complete!", "Done");
-                    await Task.Delay(1000);
-                    ShowNotification("Success", "Student enrollment synced successfully.", NotificationType.Success);
-                }
-                else
+                if (!success)
                 {
                     SetProgress(0, "Sync failed.", "Error");
                     ShowNotification("Error", "Failed to sync with the database. Please try again.", NotificationType.Error);
+                }
+                else
+                {
+                    ShowNotification("Success", "Student enrollment synced successfully.", NotificationType.Success);
                 }
             }
             catch (Exception ex)
